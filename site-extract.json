@@ -1,0 +1,260 @@
+{
+  "pages": {
+    "home": {
+      "name": "Home",
+      "route": "home",
+      "title": "Home",
+      "texts": [
+        "Welcome to Independence High School's iGEM website!",
+        "STEM DAY-\nOur STEM day is coming in April! Please see our STEM day page for more information.",
+        "SPONSORS NEEDED-\nWe are currently seeking funding and sponsors. Please see our sponsor page if you want to become one.\u00a0\n\n\tDONATIONS NEEDED-\nWe are currently seek funding and donations. Please see our donations page to learn more about how you can help.",
+        "Interested in iGEM?-",
+        "Interested in Indy iGEM? You can come to our meetings! iGEM takes place on Wednesdays after school in room 2517 at Independence High School.",
+        "SPONSORS NEEDED",
+        "-\nWe are currently seeking funding and sponsors. Please see our sponsor page if you want to become one.",
+        "DONATIONS NEEDED",
+        "-\nWe are currently seeking funding and donations. Please see our donations page to learn more about how you can help.",
+        "Latest News:"
+      ],
+      "images": [
+        "https://independenceigem.square.site/uploads/b/19dca2f43e7aabe901cea381c12b8e23e76f37058c8af131aa22b28125e96e06/igemlogo1_1669672331.png"
+      ]
+    },
+    "about-igem": {
+      "name": "Join iGEM!",
+      "route": "about-igem",
+      "title": "What is iGEM?",
+      "texts": [
+        "What is IGEM?",
+        "International Genetically Engineered Machines (iGEM) is an international student competition founded by MIT focused in the fields of synthetic biology. High schools, colleges, and entrepreneurial teams from all across the globe come together every year to compete in iGEM. Ambitious students dare to change the world by creating biological systems to that have the potential to solve problems in their communities or in the world. iGEM is a great opportunity for students with different backgrounds to come together and pursue science research and engineering!",
+        "If you're interested in science research, iGEM is for you! Come to room 2517 for our interest meeting on Wednesday, September 10th after school or Thursday, September 11th at 9 AM.",
+        "This could be you!",
+        "What is iGEM?"
+      ],
+      "images": [
+        "https://independenceigem.square.site/uploads/b/19dca2f43e7aabe901cea381c12b8e23e76f37058c8af131aa22b28125e96e06/3-D_DNA-56a09ae45f9b58eba4b20266_1670268578.jpg"
+      ]
+    },
+    "contact-us": {
+      "name": "Contact Us",
+      "route": "contact-us",
+      "title": "Contact Us",
+      "texts": [],
+      "images": []
+    },
+    "donations": {
+      "name": "Donations",
+      "route": "donations",
+      "title": "Donations",
+      "texts": [
+        "Thank you for your consideration for your TAX-DEDUCTIBLE donation towards Independence iGEM!",
+        "Thank you for your donation towards Independence High School iGEM! Your donation will go towards helping young scientists find their passion in doing original science research. \n\nInstructions to donate:",
+        "Write a check with the specified amount with the recipient as <Independence High School iGEM>",
+        "Mail your TAX-DEDUCTIBLE donation check to our school address!",
+        "Address: 23115 Learning Cir, Ashburn, VA 20148"
+      ],
+      "images": []
+    },
+    "our-projects": {
+      "name": "Our Projects",
+      "route": "our-projects",
+      "title": "Our Projects",
+      "texts": [
+        "This year, we will work on developing non-toxic treatments for the innate immune system. Through a decade of study, the innate immune system has been revealed to demonstrate a previously unexpected paradigm-- capability of memory. However, this memory has been shown to be the underlying cause of chronic low-grade inflammation, chronic expression of pro-inflammatory cytokines, and innate immune system imbalance in diseases like obesity, atherosclerosis, sepsis, and even some types of cancer. This type of \"memory\" is characterized as an evolutionary response to acute injury, and it primary functions through the toll-like receptor 4 intracellular pathway (TLR4). Recently, studies have demonstrated that a drug known as 4-phenylbutyric acid (4-PBA), a drug previously used to treat urinary diseases, is capable of a type \"reprogramming\" by inhibiting the TLR4 pathway. However, 4-PBA and similar phenylbutyrates have also been demonstrated to cause acute hepatotoxicity, exacerbate bipolar and related disorders, cause amenorrhea, cause extreme appetite loss, cause neurotoxicity, etc.\n\nThis year, we will research alternatives to 4-PBA by looking for different molecules with similar attributes and potentials to inhibit the TLR4 pathway, and subsequently running tests on them. Phase 1 will consist of utilization of predictive software to simulate interactions of the molecular alternatives, and Phase 2 will consist of successful candidates of Phase 1 being tested on murine macrophage cultures through western blot and ELISA assays. If Phase 2 demonstrates success, we will look into potentially performing a Phase 3 involving flow cytometry to gain more detailed insight.\n\nThis is our most ambitious project yet, so stay tuned and support us throughout the year!\n\nReadings: https://doi.org/10.1161/CIRCRESAHA.124.325023, https://www.science.org/doi/10.1126/science.adf6582, image courtesy of https://li.biol.vt.edu/",
+        "2025-present project:",
+        "Restoring balance in innate immunity",
+        "This year, we will work on developing an mRNA vaccine for lyme disease. Although mRNA vaccines have been thought to be more efficient than traditional vaccines for many years, only in 2020 was the first mRNA vaccine approved by the FDA (for COVID-19). We hope to innovate in the vaccine field by creating an mRNA vaccine designed to combat against lyme disease, building on a previous lyme mRNA vaccine created by University of Pennsylvania in 2023.",
+        "2023-2025 project:\nLyme disease mRNA vaccine",
+        "We will create a bacteria that will mimic insect specific symbiotic bacteria (Wolbachia) to combat a vector-borne disease (lyme disease), we will use Drosophila Melanogaster (fruit flies) as our insect model and proof of principle. To create our mimic, we\u2019ll add surface protein genes that are found in Wolbachia to BL21 or DH5-alpha cells (we will confirm the surface proteins by ELISA using antibodies against Wolbachia surface protein). Once our mimic is well established through several fruit fly generations (we will confirm this by PCR), we will add a fluorescent gene that will be activated by products generated by the Lyme disease bacteria (we will first do in-vitro studies to make sure it works). If this works, we will do the same work on ticks which are the natural vectors for lyme disease and we will add another gene that will inactivate the lyme bacteria. If our insects are released in the wild, they will mate and pass on our mimic bacteria. If they come in contact with the lyme disease, our ticks will generate the fluorescent marker which flags the insect as a lyme disease active organism, making them easier to identify, and at the same time, it will inactivate the lyme bacteria. If this works, we will be able to use this technology with other variants of lymes disease to combat Lymes and its side effects.",
+        "2021-2022 project:",
+        "Lyme-bacteria-inactivating gene drives"
+      ],
+      "images": []
+    },
+    "our-team": {
+      "name": "Our Team",
+      "route": "our-team",
+      "title": "Our Team",
+      "texts": [
+        "The Independence High School iGEM team is a biology team composed of around 20 members in all years of high school. The team is in its first year competing at the MIT-run international competition, so the aspiring team relies much on the support of the community. The members of our team are all highly devoted towards gaining a better understanding in the fields of synthetic biology. We strive to create and innovate in directions that will benefit society.\n In the process, we are developing outstanding future researchers and biologists that will go on to have successful careers in any field of science they pursue.",
+        "Our Team"
+      ],
+      "images": []
+    },
+    "photo-gallery": {
+      "name": "Photo Gallery",
+      "route": "photo-gallery",
+      "title": "Photo Gallery",
+      "texts": [],
+      "images": []
+    },
+    "progress-and-updates-blog": {
+      "name": "Progress & Updates Blog",
+      "route": "progress-and-updates-blog",
+      "title": "Progress & Updates Blog",
+      "texts": [
+        "SEPTEMBER 2025:",
+        "Happy September! As the school year starts back up, so are we! Our project idea is in its final drafts, and our interest meeting is just around the corner. We look forward to a successful year of iGEM!",
+        "------------------------------------------------------------------------",
+        "JUNE 2024:\nHappy June! STEM day was a huge success! Both the kids and the volunteers had a wonderful time learning about and teaching science. Looking ahead, we are planning to meet in the summer to further our progress on our recent project, and current sponsor Mr. Saavedra will sadly be leaving us.\n\n------------------------------------------------------------------------\n\nMAY 2024:\nHappy May! All of our new members have learned so much over these past few months about the basics of biotechnology and common protocols performed in the lab. Now, we prepare for our biggest fundraising event of the year, STEM day. Be sure to come check it out to participate in some cool science activities!\n\n------------------------------------------------------------------------\n\nJANUARY 2024: \nHappy new year! Our club has been rapidly growing, from what felt like a few kids to a 20 person team with specialized departments! Many of us are fairly inexperienced, so we are all learning so much about biotechnology. We know that this year will be monumental in our club's history!",
+        "Progress & Updates Blog"
+      ],
+      "images": []
+    },
+    "sponsors": {
+      "name": "Sponsors",
+      "route": "sponsors",
+      "title": "Sponsors",
+      "texts": [
+        "Thank you for taking the time to look at our Sponsors Page. As a first year school, it is very hard raising enough funds to compete in the iGEM competition. That is why we rely on companies and businesses for financial support. For more information on the program, budget, and on how your company can get involved, see the Independence iGEM Letter of Support below.",
+        "Sponsors:",
+        "Independence High School iGEM Letter of Support (OUTDATED)"
+      ],
+      "images": []
+    },
+    "stem-day": {
+      "name": "STEM Day 2026",
+      "route": "stem-day",
+      "title": "Stem Day",
+      "texts": [
+        "STEM Day 2026",
+        "STEM day is an event run by Independence High School's iGEM team that focuses on bringing fun STEM activities to young minds. Make your way through a series of 20+ STEM-related stations and collect a free prize at the end! We got over 300+ visitors last year and would love to make this year's STEM day even bigger!",
+        "STEM Day is an event run by Independence High Schoo",
+        "What is",
+        "STEM",
+        "day?",
+        "Vortex Canon",
+        "Planetarium",
+        "Air Trajectory",
+        "Strawberry DNA Extraction",
+        "Ocean Zones",
+        "Elephant Toothpaste",
+        "Hovercrafts",
+        "AND DOZENS MORE!",
+        "STEM Day 2026 Events Include...",
+        "Check out pictures from STEM Day 2025!",
+        "Where:",
+        "Independence High School",
+        ", 23115 Learning Circle, Ashburn, VA 20148\n\nWhen:",
+        "February 28, 10AM - 3PM",
+        "FREE ENTRY FOR VISITORS OF ALL AGES! No sign-ups required!",
+        "FREE ENTRY FOR VISITORS OF ALL AGES!",
+        "No sign-ups required!",
+        "Event Details",
+        "Get STEM Day Updates!"
+      ],
+      "images": [
+        "https://independenceigem.square.site/uploads/b/19dca2f43e7aabe901cea381c12b8e23e76f37058c8af131aa22b28125e96e06/360_F_240458662_XswFeC9NtGm4nkR8FAcwPdYSIzKGgM53_1676324698.jpg"
+      ]
+    }
+  },
+  "assets": [
+    "https://independenceigem.square.site/uploads/b/19dca2f43e7aabe901cea381c12b8e23e76f37058c8af131aa22b28125e96e06/3-D_DNA-56a09ae45f9b58eba4b20266_1670268578.jpg",
+    "https://independenceigem.square.site/uploads/b/19dca2f43e7aabe901cea381c12b8e23e76f37058c8af131aa22b28125e96e06/360_F_240458662_XswFeC9NtGm4nkR8FAcwPdYSIzKGgM53_1676324698.jpg",
+    "https://independenceigem.square.site/uploads/b/19dca2f43e7aabe901cea381c12b8e23e76f37058c8af131aa22b28125e96e06/igemlogo1_1669672331.png"
+  ],
+  "site": {
+    "title": "INDEPENDENCE HIGH SCHOOL\nIGEM TEAM",
+    "primaryColor": "#479f7b",
+    "secondaryColors": [
+      {
+        "id": "--color-secondary-minimal-green-wdYZoP",
+        "value": "#141414"
+      }
+    ],
+    "instagram": "independence_igem",
+    "address": "Address: 23115 Learning Cir, Ashburn, VA 20148"
+  },
+  "nav": [
+    {
+      "id": "eac29610-0ce6-11f1-872a-7d04d2131ac6",
+      "name": "Join iGEM!",
+      "route": "about-igem",
+      "title": "What is iGEM?",
+      "featureType": null,
+      "description": "",
+      "hidden": false
+    },
+    {
+      "id": "eac26830-0ce6-11f1-ba28-e72a018abefa",
+      "name": "Contact Us",
+      "route": "contact-us",
+      "title": "Contact Us",
+      "featureType": null,
+      "description": "",
+      "hidden": false
+    },
+    {
+      "id": "eac2d420-0ce6-11f1-a2fc-1d4b5800d194",
+      "name": "Donations",
+      "route": "donations",
+      "title": "Donations",
+      "featureType": null,
+      "description": "",
+      "hidden": false
+    },
+    {
+      "id": "eac33060-0ce6-11f1-9201-a56923b03acd",
+      "name": "Home",
+      "route": "home",
+      "title": "Home",
+      "featureType": null,
+      "description": "",
+      "hidden": false
+    },
+    {
+      "id": "eac37dd0-0ce6-11f1-9d16-db39031408ca",
+      "name": "Our Projects",
+      "route": "our-projects",
+      "title": "Our Projects",
+      "featureType": null,
+      "description": "",
+      "hidden": false
+    },
+    {
+      "id": "eac3d840-0ce6-11f1-a4a9-f1911e534294",
+      "name": "Our Team",
+      "route": "our-team",
+      "title": "Our Team",
+      "featureType": null,
+      "description": "",
+      "hidden": false
+    },
+    {
+      "id": "eac416d0-0ce6-11f1-89b6-27e81d8b059b",
+      "name": "Photo Gallery",
+      "route": "photo-gallery",
+      "title": "Photo Gallery",
+      "featureType": null,
+      "description": "",
+      "hidden": false
+    },
+    {
+      "id": "eac45230-0ce6-11f1-9b47-8b9ca88c05da",
+      "name": "Progress & Updates Blog",
+      "route": "progress-and-updates-blog",
+      "title": "Progress & Updates Blog",
+      "featureType": null,
+      "description": "",
+      "hidden": false
+    },
+    {
+      "id": "eac48d20-0ce6-11f1-8183-4dcac2609c7b",
+      "name": "Sponsors",
+      "route": "sponsors",
+      "title": "Sponsors",
+      "featureType": null,
+      "description": "",
+      "hidden": false
+    },
+    {
+      "id": "eac4c240-0ce6-11f1-ba09-955428c8cd45",
+      "name": "STEM Day 2026",
+      "route": "stem-day",
+      "title": "Stem Day",
+      "featureType": null,
+      "description": "",
+      "hidden": false
+    }
+  ]
+}
