@@ -88,9 +88,19 @@ function App() {
 
   return (
     <div className="app-shell">
+      <a className="skip-link" href="#main-content">
+        Skip to main content
+      </a>
       <header className="site-header">
-        <a href="#/home" className="brand">
-          <img src={site.logo} alt="Independence High School iGEM logo" />
+        <div className="header-accent" aria-hidden="true" />
+        <a
+          href="#/home"
+          className="brand"
+          aria-label="Independence High School iGEM — home"
+        >
+          <span className="brand-mark">
+            <img src={site.logo} alt="" />
+          </span>
           <div>
             <strong>{site.name}</strong>
             <span>Student synthetic biology team</span>
@@ -102,6 +112,7 @@ function App() {
               key={item.route}
               href={`#/${item.route}`}
               className={route === item.route ? "is-active" : ""}
+              aria-current={route === item.route ? "page" : undefined}
             >
               {item.name}
             </a>
@@ -109,7 +120,9 @@ function App() {
         </nav>
       </header>
 
-      <main className="page">{renderPage(route)}</main>
+      <main id="main-content" className="page stagger" tabIndex={-1}>
+        {renderPage(route)}
+      </main>
 
       <footer className="site-footer">
         <div>
@@ -127,11 +140,16 @@ function App() {
   );
 }
 
-function PageHeader({ title, intro }) {
+function PageHeader({ title, intro, variant = "default" }) {
   return (
-    <section className="page-header">
+    <section
+      className={`page-header${variant === "hero" ? " page-header--hero" : ""}`}
+    >
+      {variant === "hero" ? (
+        <p className="page-header-kicker">Independence High School · iGEM</p>
+      ) : null}
       <h1>{title}</h1>
-      {intro ? <p>{intro}</p> : null}
+      {intro ? <p className="page-header-intro">{intro}</p> : null}
     </section>
   );
 }
@@ -175,6 +193,7 @@ function HomePage() {
   return (
     <>
       <PageHeader
+        variant="hero"
         title={source.pages.home.texts[0]}
         intro={site.meeting}
       />
