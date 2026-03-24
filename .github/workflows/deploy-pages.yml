@@ -31,6 +31,9 @@ jobs:
         run: npm ci
 
       - name: Build site
+        env:
+          # Project site URL: https://<owner>.github.io/<repository>/
+          VITE_BASE_PATH: /${{ github.event.repository.name }}/
         run: npm run build
 
       - name: Upload Pages artifact

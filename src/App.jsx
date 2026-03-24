@@ -34,6 +34,8 @@ const navItems = navOrder
     shortName: navLabelOverride[item.route] ?? item.name,
   }));
 
+const baseUrl = import.meta.env.BASE_URL;
+
 const site = {
   name: "Independence High School iGEM",
   instagramHandle: source.site.instagram,
@@ -41,9 +43,9 @@ const site = {
   address: source.site.address.replace("Learning Cir", "Learning Circle"),
   meeting:
     "Interested in Indy iGEM? You can come to our meetings! iGEM takes place on Wednesdays after school in room 2517 at Independence High School.",
-  logo: "./assets/igem-logo.png",
-  stemImage: "./assets/stem-day.jpg",
-  sponsorPdf: "./assets/igem-letter-of-support.pdf",
+  logo: `${baseUrl}assets/igem-logo.png`,
+  stemImage: `${baseUrl}assets/stem-day.jpg`,
+  sponsorPdf: `${baseUrl}assets/igem-letter-of-support.pdf`,
 };
 
 const projectSections = [
