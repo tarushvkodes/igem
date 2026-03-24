@@ -14,11 +14,12 @@ const navOrder = [
   "contact-us",
 ];
 
-const navItems = navOrder.map((route) => source.nav.find((item) => item.route === route));
+const navItems = navOrder
+  .map((route) => source.nav.find((item) => item.route === route))
+  .filter(Boolean);
 
 const site = {
   name: "Independence High School iGEM",
-  shortName: "Indy iGEM",
   instagramHandle: source.site.instagram,
   instagramUrl: `https://www.instagram.com/${source.site.instagram}/`,
   address: source.site.address.replace("Learning Cir", "Learning Circle"),
@@ -27,54 +28,39 @@ const site = {
   logo: "./assets/igem-logo.png",
   dnaImage: "./assets/dna.jpg",
   stemImage: "./assets/stem-day.jpg",
+  sponsorPdf: "./assets/igem-letter-of-support.pdf",
 };
 
-const projectCards = [
+const projectSections = [
   {
-    years: "2025 to present",
-    title: "Restoring balance in innate immunity",
+    years: source.pages["our-projects"].texts[1],
+    title: source.pages["our-projects"].texts[2],
     body: source.pages["our-projects"].texts[0],
   },
   {
-    years: "2023 to 2025",
+    years: source.pages["our-projects"].texts[4],
     title: "Lyme disease mRNA vaccine",
     body: source.pages["our-projects"].texts[3],
   },
   {
-    years: "2021 to 2022",
-    title: "Lyme-bacteria-inactivating gene drives",
+    years: source.pages["our-projects"].texts[6],
+    title: source.pages["our-projects"].texts[7],
     body: source.pages["our-projects"].texts[5],
   },
 ];
 
-const updateEntries = [
+const updates = [
   {
-    date: source.pages["progress-and-updates-blog"].texts[0],
-    text: source.pages["progress-and-updates-blog"].texts[1],
+    title: source.pages["progress-and-updates-blog"].texts[0],
+    body: source.pages["progress-and-updates-blog"].texts[1],
   },
   {
-    date: "JUNE 2024 / MAY 2024 / JANUARY 2024",
-    text: source.pages["progress-and-updates-blog"].texts[3],
+    title: "June 2024 / May 2024 / January 2024",
+    body: source.pages["progress-and-updates-blog"].texts[3],
   },
 ];
 
-const galleryItems = [
-  {
-    title: "Club identity",
-    image: site.logo,
-    caption: "The iGEM logo image used on the original home page banner.",
-  },
-  {
-    title: "Join iGEM visual",
-    image: site.dnaImage,
-    caption: 'The DNA image featured on the original "What is iGEM?" page.',
-  },
-  {
-    title: "STEM Day visual",
-    image: site.stemImage,
-    caption: 'The STEM Day image used on the original "STEM Day 2026" page.',
-  },
-];
+const stemActivities = source.pages["stem-day"].texts.slice(6, 14);
 
 function getRoute() {
   const hash = window.location.hash.replace(/^#\/?/, "").trim();
@@ -93,65 +79,37 @@ function App() {
     return () => window.removeEventListener("hashchange", onChange);
   }, []);
 
-  const activePage = useMemo(
-    () => source.pages[route] ?? source.pages.home,
-    [route],
-  );
+  const activePage = useMemo(() => source.pages[route] ?? source.pages.home, [route]);
 
   useEffect(() => {
     document.title = `${activePage.title} | ${site.name}`;
+    window.scrollTo(0, 0);
   }, [activePage]);
 
   return (
     <div className="app-shell">
-      <SiteFrame route={route}>{renderPage(route)}</SiteFrame>
-    </div>
-  );
-}
-
-function SiteFrame({ route, children }) {
-  return (
-    <div className="brutalist-site">
       <header className="site-header">
-        <a href="#/home" className="brand-block">
+        <a href="#/home" className="brand">
           <img src={site.logo} alt="Independence High School iGEM logo" />
           <div>
-            <span className="kicker">Student biotech club</span>
             <strong>{site.name}</strong>
+            <span>Student synthetic biology team</span>
           </div>
         </a>
-        <div className="header-stamp">
-          <span>Ashburn, VA</span>
-          <span>MIT iGEM pathway</span>
-        </div>
+        <nav className="top-nav" aria-label="Primary">
+          {navItems.map((item) => (
+            <a
+              key={item.route}
+              href={`#/${item.route}`}
+              className={route === item.route ? "is-active" : ""}
+            >
+              {item.name}
+            </a>
+          ))}
+        </nav>
       </header>
 
-      <div className="app-grid">
-        <aside className="sidebar">
-          <p className="sidebar-label">Site map</p>
-          <nav className="sidebar-nav">
-            {navItems.map((item) => (
-              <a
-                key={item.route}
-                href={`#/${item.route}`}
-                className={route === item.route ? "is-active" : ""}
-              >
-                <span>{item.name}</span>
-                <small>{item.title}</small>
-              </a>
-            ))}
-          </nav>
-          <div className="sidebar-note">
-            <p>Original site details retained.</p>
-            <p>{site.address}</p>
-            <a href={site.instagramUrl} target="_blank" rel="noreferrer">
-              @{site.instagramHandle}
-            </a>
-          </div>
-        </aside>
-
-        <main className="page-shell">{children}</main>
-      </div>
+      <main className="page">{renderPage(route)}</main>
 
       <footer className="site-footer">
         <div>
@@ -161,7 +119,7 @@ function SiteFrame({ route, children }) {
         <div>
           <p>{site.meeting}</p>
           <a href={site.instagramUrl} target="_blank" rel="noreferrer">
-            Follow @{site.instagramHandle}
+            @{site.instagramHandle}
           </a>
         </div>
       </footer>
@@ -169,15 +127,20 @@ function SiteFrame({ route, children }) {
   );
 }
 
-function PageIntro({ title, dek, stamp }) {
+function PageHeader({ title, intro }) {
   return (
-    <section className="page-intro">
-      <div className="page-intro-main">
-        <p className="kicker">Independence High School iGEM</p>
-        <h1>{title}</h1>
-        <p className="dek">{dek}</p>
-      </div>
-      <div className="intro-stamp">{stamp}</div>
+    <section className="page-header">
+      <h1>{title}</h1>
+      {intro ? <p>{intro}</p> : null}
+    </section>
+  );
+}
+
+function SectionCard({ title, children, className = "" }) {
+  return (
+    <section className={`section-card ${className}`.trim()}>
+      {title ? <h2>{title}</h2> : null}
+      {children}
     </section>
   );
 }
@@ -211,65 +174,43 @@ function renderPage(route) {
 function HomePage() {
   return (
     <>
-      <PageIntro
-        title="Biotech with scraped knuckles."
-        dek={source.pages.home.texts[0]}
-        stamp="BRUTALIST EDITION"
+      <PageHeader
+        title={source.pages.home.texts[0]}
+        intro={site.meeting}
       />
 
-      <section className="hero-slab">
-        <div className="hero-copy">
-          <p>{site.meeting}</p>
-          <div className="action-row">
-            <a href="#/about-igem" className="action-block">
-              Learn what iGEM is
+      <div className="content-grid">
+        <SectionCard title="Latest News">
+          <p>{source.pages.home.texts[1]}</p>
+          <p>{source.pages["progress-and-updates-blog"].texts[1]}</p>
+        </SectionCard>
+
+        <SectionCard title="Sponsors Needed">
+          <p>{source.pages.home.texts[6]}</p>
+        </SectionCard>
+
+        <SectionCard title="Donations Needed">
+          <p>{source.pages.home.texts[8]}</p>
+        </SectionCard>
+      </div>
+
+      <div className="content-grid feature-grid">
+        <SectionCard title="Join iGEM!" className="feature-copy">
+          <p>{source.pages["about-igem"].texts[1]}</p>
+          <div className="button-row">
+            <a href="#/about-igem" className="button-link">
+              Learn more
             </a>
-            <a href="#/donations" className="action-block alt">
-              Help fund the team
+            <a href="#/our-projects" className="button-link secondary">
+              Our projects
             </a>
           </div>
-        </div>
-        <div className="hero-aside">
-          <img src={site.logo} alt="Indy iGEM logo" />
-          <ul>
-            <li>{source.pages.home.texts[1]}</li>
-            <li>{source.pages.home.texts[2]}</li>
-          </ul>
-        </div>
-      </section>
+        </SectionCard>
 
-      <section className="brutal-grid">
-        <article className="panel">
-          <span className="panel-tag">Latest news</span>
-          <h2>{source.pages.home.texts[9]}</h2>
-          <p>{source.pages["progress-and-updates-blog"].texts[1]}</p>
-        </article>
-        <article className="panel acid">
-          <span className="panel-tag">Join the club</span>
-          <h2>{source.pages.home.texts[3]}</h2>
-          <p>{source.pages.home.texts[4]}</p>
-        </article>
-        <article className="panel">
-          <span className="panel-tag">Need</span>
-          <h2>{source.pages.home.texts[5]}</h2>
-          <p>{source.pages.home.texts[6]}</p>
-          <h2>{source.pages.home.texts[7]}</h2>
-          <p>{source.pages.home.texts[8]}</p>
-        </article>
-      </section>
-
-      <section className="link-wall">
-        {projectCards.map((project) => (
-          <a key={project.title} href="#/our-projects" className="wall-card">
-            <small>{project.years}</small>
-            <strong>{project.title}</strong>
-          </a>
-        ))}
-        <a href="#/stem-day" className="wall-card accent">
-          <small>Community event</small>
-          <strong>STEM Day 2026</strong>
-        </a>
-      </section>
+        <div className="image-frame">
+          <img src={site.logo} alt="Independence iGEM logo" />
+        </div>
+      </div>
     </>
   );
 }
@@ -277,21 +218,19 @@ function HomePage() {
 function AboutPage() {
   return (
     <>
-      <PageIntro
+      <PageHeader
         title={source.pages["about-igem"].texts[0]}
-        dek={source.pages["about-igem"].texts[1]}
-        stamp="JOIN iGEM!"
+        intro={source.pages["about-igem"].texts[1]}
       />
-      <section className="split-block">
-        <div className="panel">
-          <span className="panel-tag">Original join note</span>
+
+      <div className="content-grid feature-grid">
+        <SectionCard title="Join iGEM!">
           <p>{source.pages["about-igem"].texts[2]}</p>
-          <p>{source.pages["about-igem"].texts[3]}</p>
+        </SectionCard>
+        <div className="image-frame">
+          <img src={site.dnaImage} alt="DNA image from the original site" />
         </div>
-        <div className="media-panel">
-          <img src={site.dnaImage} alt="DNA illustration from original site" />
-        </div>
-      </section>
+      </div>
     </>
   );
 }
@@ -299,22 +238,19 @@ function AboutPage() {
 function TeamPage() {
   return (
     <>
-      <PageIntro
+      <PageHeader
         title={source.pages["our-team"].title}
-        dek={source.pages["our-team"].texts[0]}
-        stamp="AROUND 20 MEMBERS"
+        intro={source.pages["our-team"].texts[0]}
       />
-      <section className="brutal-grid">
-        <article className="panel">
-          <span className="panel-tag">Who they are</span>
+
+      <div className="content-grid two-up">
+        <SectionCard title="About the Team">
           <p>{source.pages["our-team"].texts[0]}</p>
-        </article>
-        <article className="panel acid">
-          <span className="panel-tag">Where to find them</span>
+        </SectionCard>
+        <SectionCard title="Meetings">
           <p>{site.meeting}</p>
-          <p>{site.address}</p>
-        </article>
-      </section>
+        </SectionCard>
+      </div>
     </>
   );
 }
@@ -322,22 +258,16 @@ function TeamPage() {
 function ProjectsPage() {
   return (
     <>
-      <PageIntro
-        title={source.pages["our-projects"].title}
-        dek="Three phases of club research pulled from the original site, presented as blunt project dossiers."
-        stamp="RESEARCH DOSSIERS"
-      />
-      <section className="stack">
-        {projectCards.map((project) => (
-          <article key={project.title} className="project-strip">
-            <div className="project-meta">
-              <span>{project.years}</span>
-              <h2>{project.title}</h2>
-            </div>
+      <PageHeader title={source.pages["our-projects"].title} />
+
+      <div className="stack">
+        {projectSections.map((project) => (
+          <SectionCard key={project.title} title={project.title}>
+            <p className="meta-line">{project.years}</p>
             <p>{project.body}</p>
-          </article>
+          </SectionCard>
         ))}
-      </section>
+      </div>
     </>
   );
 }
@@ -345,32 +275,35 @@ function ProjectsPage() {
 function StemDayPage() {
   return (
     <>
-      <PageIntro
+      <PageHeader
         title={source.pages["stem-day"].texts[0]}
-        dek={source.pages["stem-day"].texts[1]}
-        stamp="300+ VISITORS LAST YEAR"
+        intro={source.pages["stem-day"].texts[1]}
       />
-      <section className="split-block">
-        <div className="media-panel">
-          <img src={site.stemImage} alt="Original STEM Day graphic" />
+
+      <div className="content-grid feature-grid">
+        <div className="image-frame">
+          <img src={site.stemImage} alt="STEM Day image from the original site" />
         </div>
-        <div className="panel acid">
-          <span className="panel-tag">Event details</span>
+        <SectionCard title="Event Details">
           <p>
             {source.pages["stem-day"].texts[16]} {source.pages["stem-day"].texts[17]}
             {source.pages["stem-day"].texts[18]}
           </p>
           <p>{source.pages["stem-day"].texts[19]}</p>
           <p>{source.pages["stem-day"].texts[20]}</p>
+        </SectionCard>
+      </div>
+
+      <SectionCard title="STEM Day 2026 Events Include...">
+        <div className="tag-grid">
+          {stemActivities.map((activity) => (
+            <span key={activity} className="tag">
+              {activity}
+            </span>
+          ))}
+          <span className="tag">{source.pages["stem-day"].texts[13]}</span>
         </div>
-      </section>
-      <section className="link-wall">
-        {source.pages["stem-day"].texts.slice(6, 14).map((activity) => (
-          <div key={activity} className="wall-card">
-            <strong>{activity}</strong>
-          </div>
-        ))}
-      </section>
+      </SectionCard>
     </>
   );
 }
@@ -378,19 +311,15 @@ function StemDayPage() {
 function UpdatesPage() {
   return (
     <>
-      <PageIntro
-        title={source.pages["progress-and-updates-blog"].title}
-        dek="An archive of club momentum, exactly the kind of running log that suits a raw, poster-heavy aesthetic."
-        stamp="PROGRESS LOG"
-      />
-      <section className="stack">
-        {updateEntries.map((entry) => (
-          <article key={entry.date} className="update-block">
-            <div className="update-date">{entry.date}</div>
-            <p>{entry.text}</p>
-          </article>
+      <PageHeader title={source.pages["progress-and-updates-blog"].title} />
+
+      <div className="stack">
+        {updates.map((entry) => (
+          <SectionCard key={entry.title} title={entry.title}>
+            <p>{entry.body}</p>
+          </SectionCard>
         ))}
-      </section>
+      </div>
     </>
   );
 }
@@ -398,22 +327,21 @@ function UpdatesPage() {
 function GalleryPage() {
   return (
     <>
-      <PageIntro
+      <PageHeader
         title={source.pages["photo-gallery"].title}
-        dek="The original site exposed a gallery page with minimal body copy, so this page turns the original visual assets into a hard-edged archive wall."
-        stamp="VISUAL ARCHIVE"
+        intro="Images from the current site."
       />
-      <section className="gallery-grid">
-        {galleryItems.map((item) => (
-          <figure key={item.title} className="gallery-card">
-            <img src={item.image} alt={item.title} />
-            <figcaption>
-              <strong>{item.title}</strong>
-              <p>{item.caption}</p>
-            </figcaption>
-          </figure>
+
+      <div className="gallery-grid">
+        {[site.logo, site.dnaImage, site.stemImage].map((image, index) => (
+          <div key={image} className="gallery-tile">
+            <img
+              src={image}
+              alt={index === 0 ? "Club logo" : index === 1 ? "DNA illustration" : "STEM Day image"}
+            />
+          </div>
         ))}
-      </section>
+      </div>
     </>
   );
 }
@@ -421,26 +349,29 @@ function GalleryPage() {
 function SponsorsPage() {
   return (
     <>
-      <PageIntro
+      <PageHeader
         title={source.pages.sponsors.title}
-        dek={source.pages.sponsors.texts[0]}
-        stamp="SPONSORS NEEDED"
+        intro={source.pages.sponsors.texts[0]}
       />
-      <section className="brutal-grid">
-        <article className="panel acid">
-          <span className="panel-tag">Original callout</span>
-          <h2>{source.pages.sponsors.texts[1]}</h2>
+
+      <div className="content-grid two-up">
+        <SectionCard title="Sponsors">
           <p>{source.pages.sponsors.texts[0]}</p>
-        </article>
-        <article className="panel">
-          <span className="panel-tag">Referenced asset</span>
-          <h2>{source.pages.sponsors.texts[2]}</h2>
-          <p>
-            The original site references a letter of support below this heading,
-            but no linked file was exposed in the extracted site data.
-          </p>
-        </article>
-      </section>
+          <div className="button-row">
+            <a href={site.sponsorPdf} className="button-link" target="_blank" rel="noreferrer">
+              Open Letter of Support
+            </a>
+          </div>
+        </SectionCard>
+
+        <SectionCard title={source.pages.sponsors.texts[2]}>
+          <iframe
+            className="pdf-frame"
+            src={site.sponsorPdf}
+            title="Independence High School iGEM Letter of Support"
+          />
+        </SectionCard>
+      </div>
     </>
   );
 }
@@ -448,27 +379,19 @@ function SponsorsPage() {
 function DonationsPage() {
   return (
     <>
-      <PageIntro
+      <PageHeader
         title={source.pages.donations.title}
-        dek={source.pages.donations.texts[0]}
-        stamp="TAX-DEDUCTIBLE"
+        intro={source.pages.donations.texts[0]}
       />
-      <section className="stack">
-        <article className="project-strip">
-          <div className="project-meta">
-            <span>Original instructions</span>
-            <h2>How to donate</h2>
-          </div>
-          <div>
-            <p>{source.pages.donations.texts[1]}</p>
-            <ol className="steps-list">
-              <li>{source.pages.donations.texts[2]}</li>
-              <li>{source.pages.donations.texts[3]}</li>
-              <li>{source.pages.donations.texts[4]}</li>
-            </ol>
-          </div>
-        </article>
-      </section>
+
+      <SectionCard title="Instructions to Donate">
+        <p>{source.pages.donations.texts[1]}</p>
+        <ol className="steps-list">
+          <li>{source.pages.donations.texts[2]}</li>
+          <li>{source.pages.donations.texts[3]}</li>
+          <li>{source.pages.donations.texts[4]}</li>
+        </ol>
+      </SectionCard>
     </>
   );
 }
@@ -476,27 +399,23 @@ function DonationsPage() {
 function ContactPage() {
   return (
     <>
-      <PageIntro
-        title={source.pages["contact-us"].title}
-        dek="The original contact page carried its title but little body copy. This version preserves the contact intent and surfaces the club details already present across the site."
-        stamp="GET IN TOUCH"
-      />
-      <section className="brutal-grid">
-        <article className="panel">
-          <span className="panel-tag">Address</span>
+      <PageHeader title={source.pages["contact-us"].title} />
+
+      <div className="content-grid three-up">
+        <SectionCard title="Address">
           <p>{site.address}</p>
-        </article>
-        <article className="panel acid">
-          <span className="panel-tag">Instagram</span>
-          <a href={site.instagramUrl} target="_blank" rel="noreferrer">
-            @{site.instagramHandle}
-          </a>
-        </article>
-        <article className="panel">
-          <span className="panel-tag">Meetings</span>
+        </SectionCard>
+        <SectionCard title="Instagram">
+          <p>
+            <a href={site.instagramUrl} target="_blank" rel="noreferrer">
+              @{site.instagramHandle}
+            </a>
+          </p>
+        </SectionCard>
+        <SectionCard title="Meetings">
           <p>{site.meeting}</p>
-        </article>
-      </section>
+        </SectionCard>
+      </div>
     </>
   );
 }
