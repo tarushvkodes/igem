@@ -8,15 +8,31 @@ const navOrder = [
   "our-projects",
   "stem-day",
   "progress-and-updates-blog",
-  "photo-gallery",
   "sponsors",
   "donations",
   "contact-us",
 ];
 
+/** Shorter labels for a tighter nav */
+const navLabelOverride = {
+  home: "Home",
+  "about-igem": "About",
+  "our-team": "Team",
+  "our-projects": "Projects",
+  "stem-day": "STEM Day",
+  "progress-and-updates-blog": "Updates",
+  sponsors: "Sponsors",
+  donations: "Donate",
+  "contact-us": "Contact",
+};
+
 const navItems = navOrder
   .map((route) => source.nav.find((item) => item.route === route))
-  .filter(Boolean);
+  .filter(Boolean)
+  .map((item) => ({
+    ...item,
+    shortName: navLabelOverride[item.route] ?? item.name,
+  }));
 
 const site = {
   name: "Independence High School iGEM",
@@ -26,7 +42,6 @@ const site = {
   meeting:
     "Interested in Indy iGEM? You can come to our meetings! iGEM takes place on Wednesdays after school in room 2517 at Independence High School.",
   logo: "./assets/igem-logo.png",
-  dnaImage: "./assets/dna.jpg",
   stemImage: "./assets/stem-day.jpg",
   sponsorPdf: "./assets/igem-letter-of-support.pdf",
 };
@@ -63,12 +78,14 @@ const updates = [
 const stemActivities = source.pages["stem-day"].texts.slice(6, 14);
 
 function getRoute() {
-  const hash = window.location.hash.replace(/^#\/?/, "").trim();
-  return navOrder.includes(hash) ? hash : "home";
+  const raw = window.location.hash.replace(/^#\/?/, "").trim();
+  if (raw === "photo-gallery") return "home";
+  return navOrder.includes(raw) ? raw : "home";
 }
 
 function App() {
   const [route, setRoute] = useState(getRoute());
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const onChange = () => setRoute(getRoute());
@@ -78,6 +95,26 @@ function App() {
     }
     return () => window.removeEventListener("hashchange", onChange);
   }, []);
+
+  useEffect(() => {
+    const raw = window.location.hash.replace(/^#\/?/, "").trim();
+    if (raw === "photo-gallery") {
+      window.location.hash = "/home";
+    }
+  }, []);
+
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [route]);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (e) => {
+      if (e.key === "Escape") setMenuOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [menuOpen]);
 
   const activePage = useMemo(() => source.pages[route] ?? source.pages.home, [route]);
 
@@ -93,20 +130,35 @@ function App() {
       </a>
       <header className="site-header">
         <div className="header-accent" aria-hidden="true" />
-        <a
-          href="#/home"
-          className="brand"
-          aria-label="Independence High School iGEM — home"
+        <div className="header-bar">
+          <a
+            href="#/home"
+            className="brand"
+            aria-label="Independence High School iGEM — home"
+          >
+            <span className="brand-mark">
+              <img src={site.logo} alt="" />
+            </span>
+            <div className="brand-text">
+              <strong>{site.name}</strong>
+              <span>Synthetic biology · Independence HS</span>
+            </div>
+          </a>
+          <button
+            type="button"
+            className="nav-toggle"
+            aria-expanded={menuOpen}
+            aria-controls="primary-nav"
+            onClick={() => setMenuOpen((o) => !o)}
+          >
+            {menuOpen ? "Close" : "Menu"}
+          </button>
+        </div>
+        <nav
+          id="primary-nav"
+          className={`top-nav${menuOpen ? " is-open" : ""}`}
+          aria-label="Primary"
         >
-          <span className="brand-mark">
-            <img src={site.logo} alt="" />
-          </span>
-          <div>
-            <strong>{site.name}</strong>
-            <span>Student synthetic biology team</span>
-          </div>
-        </a>
-        <nav className="top-nav" aria-label="Primary">
           {navItems.map((item) => (
             <a
               key={item.route}
@@ -114,7 +166,7 @@ function App() {
               className={route === item.route ? "is-active" : ""}
               aria-current={route === item.route ? "page" : undefined}
             >
-              {item.name}
+              {item.shortName}
             </a>
           ))}
         </nav>
@@ -175,8 +227,6 @@ function renderPage(route) {
       return <StemDayPage />;
     case "progress-and-updates-blog":
       return <UpdatesPage />;
-    case "photo-gallery":
-      return <GalleryPage />;
     case "sponsors":
       return <SponsorsPage />;
     case "donations":
@@ -198,38 +248,48 @@ function HomePage() {
         intro={site.meeting}
       />
 
-      <div className="content-grid">
-        <SectionCard title="Latest News">
+      <div className="content-grid content-grid--two">
+        <SectionCard title="News & updates">
           <p>{source.pages.home.texts[1]}</p>
           <p>{source.pages["progress-and-updates-blog"].texts[1]}</p>
-        </SectionCard>
-
-        <SectionCard title="Sponsors Needed">
-          <p>{source.pages.home.texts[6]}</p>
-        </SectionCard>
-
-        <SectionCard title="Donations Needed">
-          <p>{source.pages.home.texts[8]}</p>
-        </SectionCard>
-      </div>
-
-      <div className="content-grid feature-grid">
-        <SectionCard title="Join iGEM!" className="feature-copy">
-          <p>{source.pages["about-igem"].texts[1]}</p>
           <div className="button-row">
-            <a href="#/about-igem" className="button-link">
-              Learn more
+            <a href="#/stem-day" className="button-link secondary">
+              STEM Day
             </a>
-            <a href="#/our-projects" className="button-link secondary">
-              Our projects
+            <a href="#/progress-and-updates-blog" className="button-link secondary">
+              All updates
             </a>
           </div>
         </SectionCard>
 
-        <div className="image-frame">
-          <img src={site.logo} alt="Independence iGEM logo" />
-        </div>
+        <SectionCard title="Support the team">
+          <p>{source.pages.home.texts[6]}</p>
+          <p>{source.pages.home.texts[8]}</p>
+          <div className="button-row">
+            <a href="#/sponsors" className="button-link">
+              Sponsors
+            </a>
+            <a href="#/donations" className="button-link secondary">
+              Donate
+            </a>
+          </div>
+        </SectionCard>
       </div>
+
+      <SectionCard title="Join iGEM!" className="join-card">
+        <p>{source.pages["about-igem"].texts[1]}</p>
+        <div className="button-row">
+          <a href="#/about-igem" className="button-link">
+            About iGEM
+          </a>
+          <a href="#/our-projects" className="button-link secondary">
+            Our projects
+          </a>
+          <a href="#/contact-us" className="button-link secondary">
+            Contact
+          </a>
+        </div>
+      </SectionCard>
     </>
   );
 }
@@ -242,14 +302,9 @@ function AboutPage() {
         intro={source.pages["about-igem"].texts[1]}
       />
 
-      <div className="content-grid feature-grid">
-        <SectionCard title="Join iGEM!">
-          <p>{source.pages["about-igem"].texts[2]}</p>
-        </SectionCard>
-        <div className="image-frame">
-          <img src={site.dnaImage} alt="DNA image from the original site" />
-        </div>
-      </div>
+      <SectionCard title="Join iGEM!">
+        <p>{source.pages["about-igem"].texts[2]}</p>
+      </SectionCard>
     </>
   );
 }
@@ -299,11 +354,8 @@ function StemDayPage() {
         intro={source.pages["stem-day"].texts[1]}
       />
 
-      <div className="content-grid feature-grid">
-        <div className="image-frame">
-          <img src={site.stemImage} alt="STEM Day image from the original site" />
-        </div>
-        <SectionCard title="Event Details">
+      <div className="content-grid feature-grid feature-grid--stem">
+        <SectionCard title="Event Details" className="stem-details">
           <p>
             {source.pages["stem-day"].texts[16]} {source.pages["stem-day"].texts[17]}
             {source.pages["stem-day"].texts[18]}
@@ -311,6 +363,9 @@ function StemDayPage() {
           <p>{source.pages["stem-day"].texts[19]}</p>
           <p>{source.pages["stem-day"].texts[20]}</p>
         </SectionCard>
+        <div className="image-frame image-frame--photo">
+          <img src={site.stemImage} alt="STEM Day at Independence High School" />
+        </div>
       </div>
 
       <SectionCard title="STEM Day 2026 Events Include...">
@@ -337,28 +392,6 @@ function UpdatesPage() {
           <SectionCard key={entry.title} title={entry.title}>
             <p>{entry.body}</p>
           </SectionCard>
-        ))}
-      </div>
-    </>
-  );
-}
-
-function GalleryPage() {
-  return (
-    <>
-      <PageHeader
-        title={source.pages["photo-gallery"].title}
-        intro="Images from the current site."
-      />
-
-      <div className="gallery-grid">
-        {[site.logo, site.dnaImage, site.stemImage].map((image, index) => (
-          <div key={image} className="gallery-tile">
-            <img
-              src={image}
-              alt={index === 0 ? "Club logo" : index === 1 ? "DNA illustration" : "STEM Day image"}
-            />
-          </div>
         ))}
       </div>
     </>
