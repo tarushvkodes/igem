@@ -1,50 +1,39 @@
 # Independence High School iGEM
 
-GitHub Pages-ready Vite site for Independence High School's iGEM club.
+Static **HTML, CSS, and JavaScript** site (no Vite, no React). Works on **GitHub Pages** as-is.
 
-## Local development
+## Files
+
+| Path | Role |
+|------|------|
+| `index.html` | Page shell |
+| `css/styles.css` | Styles |
+| `js/app.js` | Hash routing (`#/home`, …) and rendering |
+| `site-extract.json` | Page copy and nav metadata |
+| `assets/` | Images and PDF (logo, STEM photo, letter of support) |
+
+## Local preview
+
+`fetch()` needs **HTTP** (opening `index.html` as `file://` will not load the JSON).
 
 ```bash
-npm install
-npm run dev
+# Python
+python -m http.server 8080
 ```
 
-## Production build
+Then open `http://localhost:8080/`.
 
 ```bash
-npm run build
+# Node (one-off)
+npx --yes serve .
 ```
-
-The finished static site is generated in `dist/`.
 
 ## GitHub Pages
 
-Use GitHub Pages with **Source: GitHub Actions** (not “Deploy from a branch”).
+Use **Source: GitHub Actions**. The workflow copies `index.html`, `site-extract.json`, `css/`, `js/`, and `assets/` into `dist/` and publishes that folder.
 
-The workflow at `.github/workflows/deploy-pages.yml` runs `npm ci` and `npm run build`, then uploads `dist/`. The build sets:
+For a **project site** at `https://<owner>.github.io/<repo>/`, relative URLs (`assets/…`, `site-extract.json`) resolve correctly. Hash links (`#/about-igem`) need no server rewrite.
 
-`VITE_BASE_PATH=/<repository-name>/`
+## Editing content
 
-so asset URLs match a **project site** at `https://<owner>.github.io/<repo>/` (for this repo, `/igem/`).
-
-- **Hash routes** (`#/home`, etc.) work on Pages without a `404.html` rewrite.
-- **`public/.nojekyll`** turns off Jekyll so static files are served as-is.
-- **`import.meta.env.BASE_URL`** in `App.jsx` keeps images and the sponsor PDF on the correct path.
-
-### User or organization site (site at domain root)
-
-If the repo is `<user>.github.io` and the site lives at `https://<user>.github.io/` (no repo segment), set the build base to `/` instead—for example remove `VITE_BASE_PATH` from the workflow or set it to `/`.
-
-### Test a Pages-style build locally
-
-```bash
-# Windows PowerShell
-$env:VITE_BASE_PATH = "/igem/"
-npm run build
-npx vite preview
-```
-
-```bash
-# macOS / Linux
-VITE_BASE_PATH=/igem/ npm run build && npx vite preview
-```
+Change text in `site-extract.json` or adjust layout/logic in `js/app.js`.
