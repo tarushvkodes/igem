@@ -90,6 +90,7 @@ body::after {
   background-size: 200px 200px;
 }
 
+#app,
 #root {
   position: relative;
   z-index: 1;
@@ -132,6 +133,7 @@ img {
   transform: translateY(0);
 }
 
+#app,
 #root,
 .app-shell {
   min-height: 100vh;
@@ -518,6 +520,78 @@ img {
   order: 1;
 }
 
+.stem-showcase {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: 22px;
+  align-items: start;
+}
+
+.stem-details--feature {
+  min-height: 100%;
+  background:
+    linear-gradient(180deg, rgba(255, 253, 248, 0.96), rgba(247, 241, 232, 0.95)),
+    var(--surface);
+}
+
+.stem-photo-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-auto-rows: 110px;
+  grid-auto-flow: dense;
+  gap: 14px;
+}
+
+.stem-photo-card {
+  grid-column: span 3;
+  grid-row: span 2;
+  margin: 0;
+}
+
+.stem-photo-card--poster {
+  grid-column: span 2;
+}
+
+.stem-photo-card--feature {
+  grid-column: span 4;
+}
+
+.image-frame--stem-gallery {
+  height: 100%;
+  min-height: 0;
+}
+
+.stem-photo-card--poster .image-frame--stem-gallery {
+  height: 100%;
+}
+
+.stem-activity-section {
+  overflow: hidden;
+}
+
+.stem-activity-section::before {
+  content: "";
+  position: absolute;
+  inset: auto -8% -30% 45%;
+  height: 220px;
+  background: radial-gradient(circle, rgba(20, 92, 79, 0.12), transparent 68%);
+  pointer-events: none;
+}
+
+.stem-activity-section > * {
+  position: relative;
+}
+
+.stem-activity-card {
+  background:
+    linear-gradient(180deg, rgba(255, 253, 248, 0.94), rgba(240, 233, 222, 0.96)),
+    var(--surface);
+}
+
+.stem-activity-card h2 {
+  font-size: 1.02rem;
+}
+
 .two-up {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
@@ -759,7 +833,8 @@ img {
   .content-grid--two,
   .feature-grid,
   .two-up,
-  .three-up {
+  .three-up,
+  .stem-showcase {
     grid-template-columns: 1fr;
   }
 
@@ -777,6 +852,18 @@ img {
   .image-frame--photo img {
     max-height: none;
     min-height: 200px;
+  }
+
+  .stem-photo-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: 160px;
+  }
+
+  .stem-photo-card,
+  .stem-photo-card--poster,
+  .stem-photo-card--feature {
+    grid-column: span 1;
+    grid-row: span 1;
   }
 }
 
@@ -869,5 +956,26 @@ img {
 
   .pdf-frame {
     min-height: 280px;
+  }
+
+  .stem-photo-grid {
+    grid-template-columns: 1fr;
+    grid-auto-rows: auto;
+  }
+
+  .image-frame--stem-gallery,
+  .stem-photo-card--poster .image-frame--stem-gallery {
+    aspect-ratio: 16 / 11;
+    height: auto;
+  }
+
+  .stem-photo-card--feature .image-frame--stem-gallery {
+    aspect-ratio: 16 / 11;
+  }
+
+  .stem-photo-card,
+  .stem-photo-card--poster,
+  .stem-photo-card--feature {
+    grid-row: span 1;
   }
 }
