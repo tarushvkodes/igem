@@ -1,6 +1,8 @@
 (function () {
   "use strict";
 
+  const ASSET_VERSION = window.__ASSET_VERSION__ || "2026-04-17-2";
+
   const NAV_ROUTES = [
     "home",
     "about-igem",
@@ -742,7 +744,9 @@
     if (!root) return;
 
     try {
-      const res = await fetch(new URL("site-extract.json", window.location.href));
+      const dataUrl = new URL("site-extract.json", window.location.href);
+      dataUrl.searchParams.set("v", ASSET_VERSION);
+      const res = await fetch(dataUrl, { cache: "no-store" });
       if (!res.ok) throw new Error("HTTP " + res.status);
       initFromData(await res.json());
     } catch (error) {
