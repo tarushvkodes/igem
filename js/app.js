@@ -4,8 +4,6 @@
   const NAV_ROUTES = [
     "home",
     "about-igem",
-    "our-team",
-    "our-projects",
     "stem-day",
     "progress-and-updates-blog",
     "sponsors",
@@ -16,13 +14,15 @@
   const NAV_LABELS = {
     home: "Home",
     "about-igem": "About",
-    "our-team": "Team",
-    "our-projects": "Projects",
     "stem-day": "STEM Day",
     "progress-and-updates-blog": "Updates",
     sponsors: "Sponsors",
     donations: "Donate",
     "contact-us": "Contact",
+  };
+
+  const PAGE_TITLES = {
+    "about-igem": "About Our STEM Program",
   };
 
   const STEM_PHOTOS = [
@@ -124,7 +124,7 @@
       instagramUrl: `https://www.instagram.com/${data.site.instagram}/`,
       address: data.site.address.replace("Learning Cir", "Learning Circle"),
       meeting:
-        "Interested in Indy iGEM? You can come to our meetings! iGEM takes place on Wednesdays after school in room 2517 at Independence High School.",
+        "Interested in STEM outreach, leadership, and hands-on science at Indy? Join us on Wednesdays after school in room 2517 at Independence High School.",
       logo: "assets/igem-logo.png",
       sponsorPdf: "assets/igem-letter-of-support.pdf",
     };
@@ -231,7 +231,11 @@
 
     if (variant === "hero") {
       sec.appendChild(
-        textEl("p", "page-header-kicker", "Independence High School · iGEM"),
+        textEl(
+          "p",
+          "page-header-kicker",
+          "Independence High School · STEM Leadership",
+        ),
       );
     }
 
@@ -351,7 +355,6 @@
 
   function homePage() {
     const home = getPage("home");
-    const about = getPage("about-igem");
     const updates = getPage("progress-and-updates-blog");
 
     return [
@@ -379,12 +382,17 @@
         ]),
       ]),
       sectionCard(
-        "Join iGEM!",
+        "STEM Leadership at Indy",
         [
-          createParagraph(about.texts[1]),
+          createParagraph(
+            "Our current focus is building a strong student-led STEM community through outreach, event planning, mentoring, and hands-on learning experiences for younger students.",
+          ),
+          createParagraph(
+            "iGEM remains a future possibility, but right now we are prioritizing accessible STEM programming and leadership opportunities that make an immediate impact on our school and community.",
+          ),
           buttonRow([
-            { href: "#/about-igem", label: "About iGEM" },
-            { href: "#/our-projects", label: "Our projects", secondary: true },
+            { href: "#/about-igem", label: "About Us" },
+            { href: "#/stem-day", label: "STEM Day", secondary: true },
             { href: "#/contact-us", label: "Contact", secondary: true },
           ]),
         ],
@@ -394,10 +402,29 @@
   }
 
   function aboutPage() {
-    const page = getPage("about-igem");
     return [
-      pageHeader(page.texts[0], page.texts[1]),
-      sectionCard("Join iGEM!", [createParagraph(page.texts[2])]),
+      pageHeader(
+        "About Our STEM Program",
+        "We are building a student-led STEM community at Independence High School centered on outreach, leadership, and hands-on learning.",
+      ),
+      createGrid("content-grid content-grid--two", [
+        sectionCard("What We Focus On", [
+          createParagraph(
+            "Our students design and lead STEM experiences that help younger learners explore science, technology, engineering, and math in a welcoming, exciting way.",
+          ),
+          createParagraph(
+            "That includes community events like STEM Day, peer leadership, planning interactive activities, and creating opportunities for students to grow as communicators, mentors, and problem-solvers.",
+          ),
+        ]),
+        sectionCard("Where iGEM Fits In", [
+          createParagraph(
+            "The iGEM competition is still something we may pursue in the future as our program grows and the right opportunity comes together.",
+          ),
+          createParagraph(
+            "For now, our priority is strengthening local STEM outreach and giving students meaningful leadership experience that benefits both our team and the wider community.",
+          ),
+        ]),
+      ]),
     ];
   }
 
@@ -506,8 +533,6 @@
   const PAGE_BUILDERS = {
     home: homePage,
     "about-igem": aboutPage,
-    "our-team": teamPage,
-    "our-projects": projectsPage,
     "stem-day": stemDayPage,
     "progress-and-updates-blog": updatesPage,
     sponsors: sponsorsPage,
@@ -559,7 +584,8 @@
     closeNavMenu();
 
     const activePage = getPage(route);
-    document.title = activePage.title + " | " + state.site.name;
+    document.title =
+      (PAGE_TITLES[route] ?? activePage.title) + " | " + state.site.name;
     window.scrollTo(0, 0);
   }
 
@@ -580,7 +606,7 @@
     brandText.className = "brand-text";
     brandText.appendChild(textEl("strong", "", state.site.name));
     brandText.appendChild(
-      textEl("span", "", "Synthetic biology · Independence HS"),
+      textEl("span", "", "Student STEM outreach · Independence HS"),
     );
 
     brand.appendChild(mark);
@@ -618,8 +644,20 @@
     right.appendChild(createParagraph(state.site.meeting));
     right.appendChild(createInstagramLink());
 
+    const credit = document.createElement("div");
+    credit.className = "site-footer-credit";
+    credit.appendChild(document.createTextNode("a site by "));
+    credit.appendChild(
+      createLink({
+        href: "https://tarushv.com",
+        label: "tarushv",
+        external: true,
+      }),
+    );
+
     footer.appendChild(left);
     footer.appendChild(right);
+    footer.appendChild(credit);
     return footer;
   }
 
