@@ -231,16 +231,6 @@
     sec.className =
       "page-header" + (variant === "hero" ? " page-header--hero" : "");
 
-    if (variant === "hero") {
-      sec.appendChild(
-        textEl(
-          "p",
-          "page-header-kicker",
-          "Independence High School · STEM Leadership",
-        ),
-      );
-    }
-
     sec.appendChild(textEl("h1", "", title));
     if (intro) sec.appendChild(textEl("p", "page-header-intro", intro));
     return sec;
@@ -607,9 +597,6 @@
     const brandText = document.createElement("div");
     brandText.className = "brand-text";
     brandText.appendChild(textEl("strong", "", state.site.name));
-    brandText.appendChild(
-      textEl("span", "", "Student STEM outreach · Independence HS"),
-    );
 
     brand.appendChild(mark);
     brand.appendChild(brandText);
