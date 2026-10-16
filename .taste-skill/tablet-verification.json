@@ -1,0 +1,72 @@
+[
+  {
+    "fonts": true,
+    "headingProblems": [],
+    "overflow": false,
+    "route": "home",
+    "width": 768
+  },
+  {
+    "fonts": true,
+    "headingProblems": [],
+    "overflow": false,
+    "route": "about-igem",
+    "width": 768
+  },
+  {
+    "fonts": true,
+    "headingProblems": [],
+    "overflow": false,
+    "route": "our-team",
+    "width": 768
+  },
+  {
+    "fonts": true,
+    "headingProblems": [],
+    "overflow": false,
+    "route": "our-projects",
+    "width": 768
+  },
+  {
+    "fonts": true,
+    "headingProblems": [],
+    "overflow": false,
+    "route": "photo-gallery",
+    "width": 768
+  },
+  {
+    "fonts": true,
+    "headingProblems": [],
+    "overflow": false,
+    "route": "progress-and-updates-blog",
+    "width": 768
+  },
+  {
+    "fonts": true,
+    "headingProblems": [],
+    "overflow": false,
+    "route": "stem-day",
+    "width": 768
+  },
+  {
+    "fonts": true,
+    "headingProblems": [],
+    "overflow": false,
+    "route": "sponsors",
+    "width": 768
+  },
+  {
+    "fonts": true,
+    "headingProblems": [],
+    "overflow": false,
+    "route": "donations",
+    "width": 768
+  },
+  {
+    "fonts": true,
+    "headingProblems": [],
+    "overflow": false,
+    "route": "contact-us",
+    "width": 768
+  }
+]

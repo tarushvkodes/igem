@@ -1,0 +1,18 @@
+{
+  "reducedMotion": {
+    "matches": true,
+    "animations": 0,
+    "title": "STEM\nConnect",
+    "controls": 4,
+    "overflow": false
+  },
+  "noJavaScript": {
+    "fallback": true,
+    "appHidden": true,
+    "text": "STEM Connect\n\nStudent-led science and outreach at Independence High School in Ashburn, Virginia. Wednesdays after school in Room 2517. Confirm the schedule before visiting.\n\nConnecting students through STEM. Inspiring the next generation.\n\nExplore activities\n\nStrawberry DNA Bracelets. Kids mash, filter and separate strawberry DNA, then take home a tiny bracelet keepsake.\n\nMicroscopes, Fossils, and Nature Stations. Bug observations, fossil digs, plant propagation and ocean activities connect biology and Earth science.\n\nContact the team to join. Read all STEM Day activities on the original site.",
+    "links": [
+      "https://independenceigem.square.site/contact-us",
+      "https://independenceigem.square.site/stem-day"
+    ]
+  }
+}

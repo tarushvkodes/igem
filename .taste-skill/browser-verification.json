@@ -1,0 +1,124 @@
+{
+  "mobileRoutes": [
+    {
+      "headingProblems": [],
+      "overflow": false,
+      "route": "home",
+      "title": "STEM\nConnect",
+      "width": 390
+    },
+    {
+      "headingProblems": [],
+      "overflow": false,
+      "route": "about-igem",
+      "title": "Science,\nshared",
+      "width": 390
+    },
+    {
+      "headingProblems": [],
+      "overflow": false,
+      "route": "our-team",
+      "title": "Our people",
+      "width": 390
+    },
+    {
+      "headingProblems": [],
+      "overflow": false,
+      "route": "our-projects",
+      "title": "Research archive",
+      "width": 390
+    },
+    {
+      "headingProblems": [],
+      "overflow": false,
+      "route": "photo-gallery",
+      "title": "Science, in company",
+      "width": 390
+    },
+    {
+      "headingProblems": [],
+      "overflow": false,
+      "route": "progress-and-updates-blog",
+      "title": "How we got here",
+      "width": 390
+    },
+    {
+      "headingProblems": [],
+      "overflow": false,
+      "route": "stem-day",
+      "title": "A school of discovery",
+      "width": 390
+    },
+    {
+      "headingProblems": [],
+      "overflow": false,
+      "route": "sponsors",
+      "title": "Support\nscience",
+      "width": 390
+    },
+    {
+      "headingProblems": [],
+      "overflow": false,
+      "route": "donations",
+      "title": "Help ideas\ngrow",
+      "width": 390
+    },
+    {
+      "headingProblems": [],
+      "overflow": false,
+      "route": "contact-us",
+      "title": "Come say hello",
+      "width": 390
+    }
+  ],
+  "contentChecks": [
+    {
+      "fullOriginalContent": true,
+      "route": "about-igem"
+    },
+    {
+      "fullOriginalContent": true,
+      "route": "our-team"
+    },
+    {
+      "fullOriginalContent": true,
+      "route": "our-projects",
+      "method": "All six original paragraphs compared independently after whitespace normalization."
+    },
+    {
+      "fullOriginalContent": true,
+      "route": "sponsors"
+    },
+    {
+      "articles": 4,
+      "fullOriginalContent": true,
+      "route": "progress-and-updates-blog"
+    },
+    {
+      "address": true,
+      "historicalPayee": true,
+      "route": "donations"
+    },
+    {
+      "contact": true,
+      "newsletter": true,
+      "route": "contact-us"
+    },
+    {
+      "focused": "gene-drives",
+      "route": "project-deep-link",
+      "visible": true
+    },
+    {
+      "fallback": true,
+      "route": "unknown"
+    }
+  ],
+  "correctedResearchCheck": "All six source paragraphs from site-extract indices 0,3,5 found verbatim after whitespace normalization. The initial whole-body check used textContent without paragraph separators and was corrected to paragraph comparison.",
+  "interactionChecks": {
+    "pointer": "Chemistry selected. Water Wonders and Chemical Reactions Corner shown. Exactly one pressed control.",
+    "keyboard": "Tab from Chemistry and Enter selected Making & coding. Hovercraft + Paper Airplane Lab and Engineering + Coding Challenges shown. Focus preserved.",
+    "touchTargets": "All four interest buttons measured 52px high at 390px.",
+    "menu": "Menu opens with 10 links. Escape closes it and returns focus to nav-toggle."
+  }
+}

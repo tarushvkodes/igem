@@ -1,0 +1,23 @@
+about-igem: 0 FAIL, 2 WARN. 1440px 17 moving elements, 768px 17 moving elements, 390px 17 moving elements
+contact-us: 0 FAIL, 2 WARN. 1440px 16 moving elements, 768px 16 moving elements, 390px 16 moving elements
+donations: 0 FAIL, 3 WARN. 1440px 15 moving elements, 768px 15 moving elements, 390px 15 moving elements
+home: 0 FAIL, 2 WARN. 1440px 37 moving elements, 768px 37 moving elements, 390px 36 moving elements
+our-projects: 0 FAIL, 2 WARN. 1440px 26 moving elements, 768px 26 moving elements, 390px 26 moving elements
+our-team: 0 FAIL, 2 WARN. 1440px 16 moving elements, 768px 16 moving elements, 390px 16 moving elements
+photo-gallery: 0 FAIL, 2 WARN. 1440px 16 moving elements, 768px 16 moving elements, 390px 16 moving elements
+progress-and-updates-blog: 0 FAIL, 3 WARN. 1440px 22 moving elements, 768px 22 moving elements, 390px 22 moving elements
+sponsors: 0 FAIL, 2 WARN. 1440px 16 moving elements, 768px 16 moving elements, 390px 16 moving elements
+stem-day: 0 FAIL, 2 WARN. 1440px 40 moving elements, 768px 40 moving elements, 390px 40 moving elements
+
+TASTESKILL · LINT   3 file(s)
+
+WARN
+  [copy] Stock marketing phrase. Say the specific thing the product does.  (5×)
+      index.html:8  next generation
+      index.html:10  next generation
+      index.html:24  next generation
+      js/app.js:128  next generation
+      js/app.js:289  next generation
+
+RESULT: 0 FAIL, 5 WARN
+Interface fragments marked data-ui keep their own borders and shadows. Any other line that must keep a flagged pattern for a real reason can carry the comment taste-skill-ignore.

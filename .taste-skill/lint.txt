@@ -1,0 +1,12 @@
+TASTESKILL · LINT   3 file(s)
+
+WARN
+  [copy] Stock marketing phrase. Say the specific thing the product does.  (5×)
+      index.html:8  next generation
+      index.html:10  next generation
+      index.html:24  next generation
+      js/app.js:127  next generation
+      js/app.js:288  next generation
+
+RESULT: 0 FAIL, 5 WARN
+Interface fragments marked data-ui keep their own borders and shadows. Any other line that must keep a flagged pattern for a real reason can carry the comment taste-skill-ignore.

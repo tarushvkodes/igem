@@ -5,18 +5,17 @@
   const CONTACT = "https://independenceigem.square.site/contact-us";
   const NEWSLETTER = "https://independenceigem.square.site/stem-day";
   const ADDRESS = "23115 Learning Circle, Ashburn, VA 20148";
-  const MEETING = "Wednesdays after school · Room 2517";
   const CONFIRM_MEETING = "Please confirm the current meeting schedule with the team before visiting.";
   const PHOTOS = [
-    { src: "stem-day-2026-station.webp", alt: "Student volunteers guiding a young visitor through a hands-on science station", caption: "Small discoveries. Shared excitement.", group: "Community archive" },
-    { src: "stem-day-2026-fossils.webp", alt: "Children exploring a fossil dig table beside a volunteer in a dinosaur costume", caption: "A little digging, a lot of discovery.", group: "Community archive" },
-    { src: "stem-day-2026-face-painting.webp", alt: "A student volunteer painting a visitor’s face at a community activity table", caption: "Science makes room for creativity.", group: "Community archive" },
+    { src: "stem-day-2026-station.webp", alt: "Student volunteers guiding a young visitor through a hands-on science station", caption: "Students sharing hands-on science.", group: "Community archive" },
+    { src: "stem-day-2026-face-painting.webp", alt: "Fossil dig trays beside a student volunteer in a dinosaur costume", caption: "Fossil trays and a prehistoric visitor.", group: "STEM Day archive" },
+    { src: "stem-day-2026-fossils.webp", alt: "Student volunteers at a face-painting table with a handmade National Art Honor Society sign", caption: "A creative corner at STEM Day.", group: "STEM Day archive" },
     { src: "stem-day-2026-poster.webp", alt: "A handmade STEM Day welcome poster outside Independence High School", caption: "An invitation to get curious.", group: "Event materials" },
-    { src: "archive-1.jpeg", alt: "Blue gloved hands forming a heart in front of an Indy Nation shirt", caption: "A love of science, and a sense of belonging.", group: "Historical iGEM gallery" },
-    { src: "archive-2.jpeg", alt: "Gloved hands handling a laboratory bottle beside colorful sample tubes", caption: "Learning our way around the lab.", group: "Historical iGEM gallery" },
-    { src: "archive-3.jpeg", alt: "Gloved hand connecting a cable to an illuminated gel electrophoresis tank", caption: "Seeing the science in a different light.", group: "Historical iGEM gallery" },
-    { src: "archive-4.jpeg", alt: "A gloved hand using a micropipette above laboratory sample tubes", caption: "Practice, precision, and a good question.", group: "Historical iGEM gallery" },
-    { src: "archive-5.png", alt: "A student pipetting at a school laboratory bench with electrophoresis equipment", caption: "Research starts with hands-on learning.", group: "Historical iGEM gallery" },
+    { src: "archive-1.jpeg", alt: "Blue gloved hands forming a heart in front of an Indy Nation shirt", caption: "An Indy Nation welcome from the laboratory.", group: "Historical iGEM gallery" },
+    { src: "archive-2.jpeg", alt: "Gloved hands handling a laboratory bottle beside colorful sample tubes", caption: "Samples and equipment at the lab bench.", group: "Historical iGEM gallery" },
+    { src: "archive-3.jpeg", alt: "Gloved hand connecting a cable to an illuminated gel electrophoresis tank", caption: "Connecting the gel electrophoresis tank.", group: "Historical iGEM gallery" },
+    { src: "archive-4.jpeg", alt: "A gloved hand using a micropipette above laboratory sample tubes", caption: "Practising with a micropipette.", group: "Historical iGEM gallery" },
+    { src: "archive-5.png", alt: "A student pipetting at a school laboratory bench with electrophoresis equipment", caption: "A student working at the laboratory bench.", group: "Historical iGEM gallery" },
   ];
   const STEM_ACTIVITY_HIGHLIGHTS = [
     {
@@ -83,92 +82,109 @@
     return text.split(/\n\s*\n/).filter(Boolean).map((part) => `<p>${escape(part)}</p>`).join("");
   }
 
+  const INTERESTS = [
+    { id: "life", label: "Living things", items: [3, 4], photo: 1 },
+    { id: "chemistry", label: "Chemistry", items: [1, 2], photo: 0 },
+    { id: "engineering", label: "Making & coding", items: [0, 5], photo: 7 },
+    { id: "everyday", label: "Art & everyday science", items: [6, 7], photo: 2 },
+  ];
+
   function link(route, label, className = "text-link") {
-    return `<a class="${className}" href="#/${route}">${label}<span aria-hidden="true">↗</span></a>`;
+    return `<a class="${className}" href="#/${route}">${label}</a>`;
   }
 
   function external(href, label, className = "text-link") {
-    return `<a class="${className}" href="${href}" target="_blank" rel="noopener noreferrer">${label}<span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a>`;
+    return `<a class="${className}" href="${href}" target="_blank" rel="noopener noreferrer">${label}<span class="sr-only"> (opens in a new tab)</span></a>`;
   }
 
   function photo(index, className = "", eager = false) {
     const item = PHOTOS[index];
-    return `<figure class="photo ${className}"><div class="photo-frame"><img src="assets/${item.src}" alt="${escape(item.alt)}" loading="${eager ? "eager" : "lazy"}" decoding="async"${eager ? ' fetchpriority="high"' : ""} /></div><figcaption><span>${item.caption}</span><span>${item.group}</span></figcaption></figure>`;
+    return `<figure class="photo ${className}"><div class="photo-frame"><img src="assets/${item.src}" alt="${escape(item.alt)}" width="1600" height="1200" loading="${eager ? "eager" : "lazy"}" decoding="async"${eager ? ' fetchpriority="high"' : ""} /></div><figcaption>${item.caption} ${item.group}.</figcaption></figure>`;
   }
 
-  function heading(eyebrow, title, intro = "") {
-    return `<header class="page-intro wrap"><p class="eyebrow">${eyebrow}</p><h1 tabindex="-1">${title}</h1>${intro ? `<p class="page-lede">${intro}</p>` : ""}</header>`;
+  function heading(title, intro, tone = "paper") {
+    return `<header class="page-intro field ${tone}"><div class="wrap"><h1 tabindex="-1">${title}</h1><p class="lede">${intro}</p></div></header>`;
   }
 
   function joinStrip() {
-    return `<section class="join-strip wrap"><div><p class="eyebrow">There’s a place for your curiosity</p><h2>Come with a question.<br>Leave with <em>a connection.</em></h2></div>${link("about-igem", "Find your place", "round-link")}</section>`;
+    return `<section class="join-chapter field lime"><div class="join-image">${photo(3)}</div><div class="join-copy"><h2>See you in 2517</h2><p>Wednesdays after school at Independence High School. Bring your interests. No research background needed.</p>${link("about-igem", "Join STEM Connect", "button-link")}<p class="note">Confirm the current meeting schedule before visiting.</p></div></section>`;
+  }
+
+  function masthead() {
+    return `<div class="masthead" aria-label="STEM Connect in our school and community">${photo(0, "mast-photo-a", true)}<div class="room-tile"><p class="room-number">Room<br>2517</p></div>${photo(1, "mast-photo-b", true)}${photo(6, "mast-photo-c", true)}${photo(3, "mast-photo-d", true)}</div>`;
+  }
+
+  function activityResult(interest) {
+    return `<div class="interest-photo">${photo(interest.photo)}</div><div class="interest-stories">${interest.items.map((index) => `<article><h3>${STEM_ACTIVITY_HIGHLIGHTS[index].title}</h3><p>${STEM_ACTIVITY_HIGHLIGHTS[index].body}</p></article>`).join("")}<p class="note">From our activity planning archive. Future activities are not yet announced.</p>${link("stem-day", "Explore all activities")}</div>`;
+  }
+
+  function activityBrowser() {
+    return `<section class="interest-chapter field forest"><div class="wrap"><div class="chapter-top"><h2>Find your experiment</h2><p>Pick an interest. Explore real activities from our STEM Day planning archive.</p></div><div class="interest-controls" role="group" aria-label="STEM interests">${INTERESTS.map((interest, index) => `<button type="button" data-interest="${interest.id}" aria-pressed="${index === 0}">${interest.label}</button>`).join("")}</div><div id="activity-results" class="interest-result" aria-live="polite" aria-atomic="true">${activityResult(INTERESTS[0])}</div></div></section>`;
   }
 
   function homePage() {
-    return `<section class="home-hero wrap"><div class="hero-copy"><p class="eyebrow"><span class="live-dot"></span> Student-led. Community-minded.</p><h1 tabindex="-1">Curiosity<br>brings us<br><em>together.</em></h1><p class="hero-lede">Connecting students through STEM.<br>Inspiring the next generation.</p>${link("about-igem", "Get to know us", "button-link")}<p class="hero-location">Independence High School<br>Ashburn, Virginia</p></div><div class="hero-visual">${photo(0, "hero-photo", true)}<div class="hero-stamp" aria-hidden="true"><img src="assets/stem-connect.svg" alt="" /><span>Ideas grow<br>when we connect.</span></div><span class="photo-index" aria-hidden="true">01 / IN OUR ELEMENT</span></div></section>
-      <div class="word-band" aria-hidden="true"><span>Ask.</span><i>✳</i><span>Explore.</span><i>✳</i><span>Connect.</span><i>✳</i><span>Repeat.</span></div>
-      <section class="mission wrap"><p class="eyebrow">A shared spark</p><div><h2>Big ideas begin<br>with a simple <em>“what if?”</em></h2><div class="mission-bottom"><p>We’re STEM Connect, a student-led community at Independence High School. We bring science beyond the classroom through hands-on learning, outreach, and opportunities to lead.</p>${link("our-team", "Meet our community")}</div></div></section>
-      <section class="feature-event wrap"><div class="event-image">${photo(1)}</div><div class="event-copy"><p class="eyebrow">Out in the community / Event archive</p><h2>Little hands.<br><em>Big discoveries.</em></h2><p>From strawberry DNA to flying hovercrafts, STEM Day opens a world of questions for younger learners and the students who guide them.</p><div class="event-facts"><div><strong>20+</strong><span>stations in the source listing</span></div><div><strong>300+</strong><span>visitors reported for the prior year</span></div></div>${link("stem-day", "Explore STEM Day")}</div></section>
-      <section class="paths wrap"><div class="section-top"><p class="eyebrow">Follow your curiosity</p><p>More ways to connect.</p></div>${link("our-projects", '<span><small>01 / Our foundations</small>Research with a purpose</span>', "path-row")}${link("photo-gallery", '<span><small>02 / Moments that matter</small>See us in our element</span>', "path-row")}${link("sponsors", '<span><small>03 / Make it possible</small>Help the next idea grow</span>', "path-row")}</section>${joinStrip()}`;
+    return `<section class="home-hero field paper">${masthead()}<div class="hero-bottom wrap"><div class="hero-intro"><p>Student-led science and outreach at Independence High School in Ashburn, Virginia.</p>${link("about-igem", "Join STEM Connect", "button-link")}</div><h1 tabindex="-1"><span class="line"><span>STEM</span></span> <span class="line"><span>Connect</span></span></h1></div></section>
+      <section class="statement-chapter field sage"><div class="wrap"><p class="brand-statement">Connecting students through STEM. Inspiring the next generation.</p><div class="statement-bottom"><p>We take the questions we ask after school and turn them into hands-on discoveries for younger learners.</p>${link("our-team", "Meet our people")}</div></div></section>
+      ${activityBrowser()}
+      <section class="community-board field paper"><div class="board-heading"><h2>From our room<br>to the community</h2></div><div class="board-photo">${photo(0)}</div><div class="board-room"><p class="room-number">2517</p><p>Wednesdays after school.<br>Independence High School.</p>${link("about-igem", "Come along")}</div><div class="board-list"><p>Design an activity.<br>Mentor a younger learner.<br>Welcome a family.<br>Try something new.</p></div><div class="board-story"><p>We began as Independence iGEM. Today, STEM Connect focuses on outreach.</p>${link("our-projects", "Read our research history")}</div></section>
+      <section class="history-chapter field cream"><div class="wrap history-text"><p>Our laboratory work, school-day questions and community events have a home here. Explore the ${link("photo-gallery", "photographs")}, read the ${link("progress-and-updates-blog", "original updates")} or help with the next chapter through ${link("sponsors", "community support")}.</p></div></section>${joinStrip()}`;
   }
 
   function aboutPage() {
-    return `${heading("About STEM Connect", "Good questions.<br><em>Great company.</em>", "Connecting students through STEM. Inspiring the next generation.")}
-      <section class="split-section wrap"><div class="reading"><h2>Science is better<br>when it’s <em>shared.</em></h2><p>STEM Connect is a student-led community at Independence High School in Ashburn, Virginia. We create opportunities to explore science, technology, engineering, and math together.</p><p>Our focus is hands-on discovery, community outreach, and student leadership. We plan interactive activities, mentor younger learners, and make room for different interests and experience levels.</p><p>Formerly Independence iGEM, we no longer compete in iGEM. Our earlier research remains here as a clearly marked archive of the work that shaped us.</p>${link("our-projects", "Explore our research archive")}</div>${photo(4, "about-photo")}</section>
-      <section class="meeting-panel wrap"><p class="eyebrow">Join us</p><div><h2>Bring your curiosity.<br><em>We’ll bring the questions.</em></h2><p>No research background needed. Come explore outreach, activity planning, mentoring, and hands-on science with other students.</p><p class="meeting-time">${MEETING}</p><p>Independence High School<br>${CONFIRM_MEETING}</p>${link("contact-us", "Connect with the team", "button-link")}</div></section>
-      <section class="archive-note wrap"><p class="eyebrow">Where we started / Original iGEM introduction</p><div class="reading">${paragraphs(collections.about[1])}<p class="fine-print">The introduction above is preserved as historical context. STEM Connect does not currently participate in the competition.</p><h3>Historical interest meeting notice</h3>${paragraphs(collections.about[2])}<p class="fine-print">This is a past notice from the original site, not a current invitation. Use the meeting information above and confirm before visiting.</p></div></section>`;
+    return `${heading("Science,<br>shared", "A student-led outreach community at Independence High School in Ashburn, Virginia.", "sage")}
+      <section class="field paper story-split wrap"><div class="reading"><h2>A place to explore</h2><p>STEM Connect creates opportunities to explore science, technology, engineering, and math together.</p><p>Our focus is hands-on discovery, community outreach, and student leadership. We plan interactive activities, mentor younger learners, and make room for different interests and experience levels.</p><p>Formerly Independence iGEM, we no longer compete in iGEM. Our earlier research remains here as a record of the work that shaped us.</p>${link("our-projects", "Read our research history")}</div>${photo(4)}</section>
+      <section class="meeting-chapter field forest wrap"><h2>Room 2517</h2><div><p class="lede">Wednesdays after school.<br>Independence High School.</p><p>No research background needed. Explore activity planning, mentoring, and hands-on science with other students.</p><p>${CONFIRM_MEETING}</p>${link("contact-us", "Contact the team", "button-link")}</div></section>
+      <section class="archive-chapter field cream wrap"><h2>Our iGEM beginnings</h2><div class="reading"><p class="note">The original introduction and interest-meeting notice below are historical. STEM Connect no longer competes in iGEM.</p>${paragraphs(collections.about[1])}<h3>Past interest meeting</h3>${paragraphs(collections.about[2])}</div></section>`;
   }
 
   function teamPage() {
-    return `${heading("Our people", "Different interests.<br><em>One shared spark.</em>", "Students, makers, mentors, and question-askers. A community built by showing up for each other.")}
-      <section class="team-feature wrap"><figure class="photo team-photo"><div class="photo-frame"><img src="assets/team-2024.png" alt="Historical Independence iGEM team posing together on school bleachers" loading="eager" /></div><figcaption><span>The Independence iGEM team, from our archive.</span><span>Source photo dated August 2024</span></figcaption></figure><div class="team-caption"><p class="eyebrow">Our foundations</p><p>Our name has changed. Our curiosity connects us.</p></div></section>
-      <section class="mission wrap"><p class="eyebrow">Student-led, together</p><div><h2>Find your people.<br>Find your <em>next question.</em></h2><div class="mission-bottom"><p>There are many ways to contribute, from designing an activity and explaining a scientific idea to welcoming families and helping an event run. Bring the skills you have and make space for something new.</p>${link("about-igem", "Join STEM Connect")}</div></div></section>
-      <section class="archive-note wrap"><p class="eyebrow">Original team description / Historical</p><div class="reading">${paragraphs(collections.team)}<p class="fine-print">This original description documents an earlier iGEM team. The membership count and competition plans are historical, not a current roster or commitment.</p></div></section>${joinStrip()}`;
+    return `${heading("Our people", "Students, makers, mentors and question-askers. A community built by showing up for each other.")}
+      <section class="team-chapter field forest wrap"><figure class="photo team-photo"><div class="photo-frame"><img src="assets/team-2024.png" width="640" height="318" alt="Historical Independence iGEM team together on the school bleachers" loading="eager" /></div><figcaption>The Independence iGEM team on the school bleachers, from the August 2024 archive.</figcaption></figure><div class="team-story"><h2>Bring what you love</h2><p>From designing an activity and explaining an idea to welcoming families, there are many ways to contribute. Bring the skills you have and make space for something new.</p>${link("about-igem", "Join STEM Connect", "button-link")}</div></section>
+      <section class="archive-chapter field cream wrap"><h2>Where we started</h2><div class="reading"><p class="note">The original team description below reflects past membership and competition plans.</p>${paragraphs(collections.team)}</div></section>${joinStrip()}`;
   }
 
   function projectsPage() {
-    return `${heading("Research archive / Former Independence iGEM", "Questions that<br>pushed us <em>further.</em>", "Three research directions from our iGEM history, preserved in full. STEM Connect no longer competes in iGEM.")}
-      <section class="archive-banner wrap"><span class="archive-label">Historical research</span><p>The original descriptions below include plans and future-tense language from the time they were written. They are archival proposals, not statements of current research, validated outcomes, or medical guidance. The former “2025–present” label is historical.</p></section>
-      <nav class="project-index wrap" aria-label="Research on this page">${collections.projects.map((project, index) => `<a href="#/our-projects?project=${project.id}"><span>0${index + 1}</span>${escape(project.title)}<span aria-hidden="true">↓</span></a>`).join("")}</nav>
-      <div class="project-list wrap">${collections.projects.map((project, index) => `<article class="research-article" id="${project.id}"><aside><span class="project-number">0${index + 1}</span><p class="eyebrow">${project.period}</p><span class="archive-label">Archived proposal</span></aside><div class="reading"><h2>${project.title}</h2>${paragraphs(project.body)}${index === 0 ? `<div class="readings"><h3>Original readings & credit</h3>${external("https://doi.org/10.1161/CIRCRESAHA.124.325023", "Circulation Research · DOI 10.1161/CIRCRESAHA.124.325023")}${external("https://www.science.org/doi/10.1126/science.adf6582", "Science · DOI 10.1126/science.adf6582")}${external("https://li.biol.vt.edu/", "Original image credit · Li Laboratory, Virginia Tech")}</div>` : ""}</div></article>`).join("")}</div>
-      <section class="archive-links wrap"><p>Follow the story behind the research.</p>${link("progress-and-updates-blog", "Read the archived updates")}</section>`;
+    const shortTitles = ["Innate immunity", "Lyme vaccine", "Gene drives"];
+    const pictures = [6, 7, 5];
+    return `${heading("Research archive", "Three proposals from our Independence iGEM years. Our focus today is community outreach.", "sage")}
+      <div class="archive-summary wrap field paper"><p>The original plans below retain their historical wording. They describe proposals, not current research or established results.</p><nav class="project-index" aria-label="Research on this page">${collections.projects.map((project, index) => link(`our-projects?project=${project.id}`, shortTitles[index])).join("")}</nav></div>
+      ${collections.projects.map((project, index) => `<article class="research-article field ${["cream", "sage", "paper"][index]} wrap" id="${project.id}"><div class="research-aside"><h2>${shortTitles[index]}</h2>${photo(pictures[index])}<p>${project.period}</p></div><div class="reading"><p class="original-title">${escape(project.title)}</p>${paragraphs(project.body)}${index === 0 ? `<div class="readings"><h3>Readings & credit</h3>${external("https://doi.org/10.1161/CIRCRESAHA.124.325023", "Circulation Research · DOI 10.1161/CIRCRESAHA.124.325023")}${external("https://www.science.org/doi/10.1126/science.adf6582", "Science · DOI 10.1126/science.adf6582")}${external("https://li.biol.vt.edu/", "Original image credit · Li Laboratory, Virginia Tech")}</div>` : ""}</div></article>`).join("")}
+      <div class="archive-close field lime wrap">${link("progress-and-updates-blog", "Read the original updates")}</div>`;
   }
 
   function galleryPage() {
-    return `${heading("Photo gallery", "A little science.<br><em>A lot of life.</em>", "From the lab bench to the activity table. Real moments from our student research and community outreach archive.")}
-      <p class="gallery-note wrap">Historical photos are preserved from the original site and supplied STEM Day collection. Exact event dates are not confirmed; image filenames do not establish when an event took place.</p>
-      <section class="gallery-grid wrap" aria-label="Community and research photographs">${PHOTOS.map((item, index) => photo(index, index % 3 === 0 ? "gallery-wide" : "")).join("")}</section>
-      <section class="social-strip wrap"><div><p class="eyebrow">Stay connected</p><h2>More from <em>our community.</em></h2></div>${external(INSTAGRAM, "@independence_igem")}</section>`;
+    return `${heading("Science, in company", "Real school science and outreach, from our community and research archive.", "forest")}
+      <div class="gallery-intro wrap field cream"><p>Exact STEM Day dates are unconfirmed. The photographs preserve our community's activities.</p></div><section class="gallery-grid field paper wrap" aria-label="Community and research photographs">${PHOTOS.map((item, index) => photo(index)).join("")}</section><section class="social-chapter field sage wrap"><h2>Keep in touch</h2><nav aria-label="Community social media">${external(INSTAGRAM, "@independence_igem")}</nav></section>`;
   }
 
   function updatesPage() {
-    return `${heading("Updates archive", "Notes from<br><em>the journey.</em>", "Original updates from Independence iGEM. A record of the students, ideas, and events that came before STEM Connect.")}
-      <section class="archive-banner wrap"><span class="archive-label">2024–2025 archive</span><p>These entries retain their original wording. Interest meetings, project plans, competition references, and event announcements are historical.</p></section>
-      <div class="timeline wrap">${collections.updates.map((update) => `<article class="update-entry"><p class="update-date">${escape(update.date)}</p><div class="reading"><h2>${update.heading}</h2>${paragraphs(update.body)}</div></article>`).join("")}</div>${joinStrip()}`;
+    return `${heading("How we got here", "Four original updates from Independence iGEM. Meeting invitations, events and competition plans are historical.", "cream")}
+      <div class="timeline">${collections.updates.map((update, index) => `<article class="update-entry field ${["sage", "paper", "cream", "forest"][index]} wrap"><div><h2>${update.heading}</h2><p class="update-date">${escape(update.date)}</p></div><div class="reading">${paragraphs(update.body)}</div></article>`).join("")}</div>${joinStrip()}`;
   }
 
   function stemDayPage() {
-    return `${heading("STEM Day / Event archive", "For the joy<br>of <em>finding out.</em>", "A school full of hands-on science. A community of students helping younger minds explore.")}
-      <section class="stem-main wrap">${photo(0, "stem-main-photo", true)}<aside class="event-ticket"><p class="eyebrow">Original 2026 listing</p><h2>STEM<br><em>Day.</em></h2><dl><div><dt>Listed date</dt><dd>May 16, 2026</dd></div><div><dt>Location</dt><dd>Independence High School<br>${ADDRESS}</dd></div><div><dt>Entry in the listing</dt><dd>Free · All ages<br>No sign-ups required</dd></div></dl><p class="fine-print">Past listing. The source also displayed February 28, creating a date conflict. No future event date is announced here.</p></aside></section>
-      <section class="mission wrap"><p class="eyebrow">Hands-on, minds open</p><div><h2>One question leads<br>to <em>another.</em></h2><div class="reading"><p>STEM Day brings young visitors through a series of student-led science, technology, engineering, and math activities. The archived listing described 20+ stations, a free prize at the end, and more than 300 visitors in the prior year.</p><p>The original program named Vortex Canon, Planetarium, Air Trajectory, Strawberry DNA Extraction, Ocean Zones, Elephant Toothpaste, Hovercrafts, and dozens more.</p><p class="fine-print">The photos show our community activities and are not presented as proof of an event on the listed date.</p></div></div></section>
-      <section class="activity-section wrap"><div class="section-top"><p class="eyebrow">From the activity planning archive</p><h2>Room to <em>explore.</em></h2></div><div class="activity-list">${STEM_ACTIVITY_HIGHLIGHTS.map((activity, index) => `<article><span class="activity-number">${String(index + 1).padStart(2, "0")}</span><div><h3>${activity.title}</h3><p>${activity.body}</p></div></article>`).join("")}</div></section>
-      <section class="photo-pair wrap">${photo(1)}${photo(2)}</section><section class="social-strip wrap"><div><p class="eyebrow">Keep the connection going</p><h2>Stay <em>curious.</em></h2><p>The original site hosts the STEM Day newsletter. Its event dates may be historical.</p></div><div class="link-stack">${external(NEWSLETTER, "STEM Day newsletter · Original site")}${link("photo-gallery", "Explore the photo archive")}</div></section>`;
+    return `${heading("A school of discovery", "Student volunteers bring hands-on science to younger learners, from fossil digs to strawberry DNA.", "sage")}
+      <section class="event-chapter field paper wrap">${photo(0, "event-photo", true)}<div class="event-details"><h2>STEM Day</h2><p class="lede">Past event listing.<br>May 16, 2026.</p><p>Independence High School<br>${ADDRESS}</p><p>Free entry for all ages. No sign-ups required in the original listing.</p><p class="note">The original site also showed February 28, so the date is unconfirmed. No next event is announced.</p>${external(NEWSLETTER, "Visit the newsletter", "button-link")}</div></section>
+      <section class="program-chapter field cream wrap"><h2>Learning by doing</h2><div class="reading"><p>The original program described 20+ stations, a free prize at the end, and more than 300 visitors in the prior year.</p><p>Vortex Canon, Planetarium, Air Trajectory, Strawberry DNA Extraction, Ocean Zones, Elephant Toothpaste, Hovercrafts, and dozens more were named in the listing.</p><p>Explore the planning archive below. The photos show our activities; exact event dates are unconfirmed.</p></div></section>
+      ${activityBrowser()}
+      <section class="activity-archive field paper wrap"><h2>All the activities</h2><div class="activity-list">${STEM_ACTIVITY_HIGHLIGHTS.map((activity) => `<article><h3>${activity.title}</h3><p>${activity.body}</p></article>`).join("")}</div></section>
+      <section class="photo-duo field sage wrap">${photo(1)}${photo(2)}</section><section class="social-chapter field cream wrap"><h2>Stay curious</h2><div><p>The newsletter is hosted on our original site and may retain past dates.</p><nav aria-label="More STEM Day resources">${external(NEWSLETTER, "Visit the newsletter")}${link("photo-gallery", "See the photo archive")}</nav></div></section>`;
   }
 
   function sponsorsPage() {
-    return `${heading("Our supporters", "Help a good<br>idea <em>grow.</em>", "Community support gives students space to learn, lead, and share their curiosity with the next generation.")}
-      <section class="support-feature wrap"><div class="reading"><h2>Local support.<br><em>Lasting connections.</em></h2><p>Science outreach takes materials, time, and people who believe young minds deserve room to explore. If your business or organization would like to support STEM Connect, start a conversation with our team.</p><p>We can discuss current needs and confirm how your support can help. Our original competition budget and sponsorship materials are historical.</p>${link("contact-us", "Talk with the team", "button-link")}</div>${photo(2)}</section>
-      <section class="document-section wrap"><p class="eyebrow">From our archive</p><div><h2>A letter from<br><em>an earlier chapter.</em></h2><p>The Independence High School iGEM Letter of Support is outdated. It describes the former competition program and must not be used as a current sponsorship offer, budget, or statement of tax treatment.</p>${external("assets/igem-letter-of-support.pdf", "Read the historical letter · PDF")}<details class="source-detail"><summary>Original sponsorship introduction</summary>${paragraphs(collections.sponsors[0])}</details></div></section>`;
+    return `${heading("Support<br>science", "Help students bring hands-on science into the community.", "sage")}
+      <section class="support-chapter field paper wrap"><div class="reading"><h2>Start something local</h2><p>Science outreach takes materials, time, and people who believe young minds deserve room to explore. If your business or organization would like to support STEM Connect, start a conversation with our team.</p><p>We can discuss current materials and outreach needs.</p>${link("contact-us", "Contact the team", "button-link")}</div>${photo(2)}</section>
+      <section class="archive-chapter field cream wrap"><h2>Our earlier chapter</h2><div class="reading"><p>The historical Independence High School iGEM Letter of Support describes the former competition program. Its budget and tax language are outdated.</p>${external("assets/igem-letter-of-support.pdf", "Read the historical letter · PDF")}<details class="source-detail"><summary>Original sponsorship introduction</summary>${paragraphs(collections.sponsors[0])}</details></div></section>${joinStrip()}`;
   }
 
   function donationsPage() {
-    return `${heading("Support STEM Connect", "More discovery.<br><em>Made possible by you.</em>", "Thank you for helping students find their interests in science, build confidence, and bring learning into the community.")}
-      <section class="donation-layout wrap"><div class="reading"><h2>Start with<br><em>a conversation.</em></h2><p>Your support can help students create hands-on STEM experiences and share their curiosity. Please contact the team to confirm the current donation process before sending a contribution.</p>${link("contact-us", "Confirm how to donate", "button-link")}<p class="fine-print">The original site made a tax-deductibility claim. We have not verified current tax treatment. Confirm it with the school before relying on that claim.</p></div><aside class="legacy-donation"><p class="eyebrow">Historical instructions / Check by mail</p><h3>Before you send a check</h3><ol><li><strong>Confirm the current payee.</strong> The original instructions named “Independence High School iGEM.” This is a legacy name. Ask the team or school for the correct current payee before writing or mailing a check.</li><li><strong>Confirm the mailing process.</strong> The original site directed supporters to mail checks to Independence High School.</li><li><strong>Original mailing address</strong><address>Independence High School<br>${ADDRESS}</address></li></ol><p>There is no online payment checkout on this site.</p></aside></section>${joinStrip()}`;
+    return `${heading("Help ideas<br>grow", "Thank you for supporting student-led discovery and community outreach.", "forest")}
+      <section class="donation-chapter field paper wrap"><div class="reading"><h2>Let's talk first</h2><p>Contact the team to confirm the current donation process before sending a contribution.</p>${link("contact-us", "Confirm how to donate", "button-link")}<p class="note">Confirm current tax treatment with the school. There is no online checkout here.</p>${photo(0)}</div><aside class="legacy-donation"><h2>Check by mail</h2><p>The original instructions named “Independence High School iGEM” as the payee. Ask the team or school to confirm the current payee and mailing process before sending a check.</p><p>Original mailing address</p><address>Independence High School<br>${ADDRESS}</address><p>The earlier instructions made a tax-deductibility claim. Current tax treatment is unconfirmed.</p></aside></section>${joinStrip()}`;
   }
 
   function contactPage() {
-    return `${heading("Get in touch", "Every connection<br>starts with <em>hello.</em>", "Want to join, support a student activity, or ask about STEM Day? We’d like to hear from you.")}
-      <section class="contact-layout wrap"><div class="contact-primary"><p class="eyebrow">Send a message</p><h2>Let’s start<br><em>something good.</em></h2><p>Our contact form is hosted on the original Independence iGEM website. It opens in a new tab.</p>${external(CONTACT, "Open the original contact form", "button-link")}<p class="fine-print">The hosted form still uses our former name.</p></div><div class="contact-details"><article><p class="eyebrow">Around school</p><h3>${MEETING}</h3><p>${CONFIRM_MEETING}</p></article><article><p class="eyebrow">Find us</p><h3>Independence High School</h3><address>${ADDRESS}</address></article><article><p class="eyebrow">On Instagram</p>${external(INSTAGRAM, "@independence_igem")}<p>Our original account, still connecting our community.</p></article><article><p class="eyebrow">STEM Day newsletter</p>${external(NEWSLETTER, "Visit the original newsletter page")}<p>Hosted on the original site. Event information there may be historical.</p></article></div></section>`;
+    return `${heading("Come say hello", "Join the community, ask about activities or talk about supporting STEM Connect.", "sage")}
+      <section class="contact-chapter field paper wrap"><div class="contact-primary"><h2>One hello away</h2><p>Our contact form is hosted on the original site under the Independence iGEM name.</p>${external(CONTACT, "Open contact form", "button-link")}${photo(3)}</div><div class="contact-details"><article><h2>Room 2517</h2><p>Wednesdays after school.<br>Independence High School.</p><p>${CONFIRM_MEETING}</p></article><article><h3>Find us at school</h3><address>Independence High School<br>${ADDRESS}</address></article><article><h3>Follow our community</h3>${external(INSTAGRAM, "@independence_igem")}</article><article><h3>STEM Day newsletter</h3><p>Hosted on the original site. Event information there may be historical.</p>${external(NEWSLETTER, "Visit the newsletter")}</article></div></section>`;
   }
 
   function buildCollections(data) {
@@ -179,7 +195,7 @@
     const olderUpdates = updateTexts[3].split(/\n?-{5,}\n?/).map((entry) => entry.trim()).filter(Boolean);
     return {
       projects: [
-        { id: "innate-immunity", title: projects[2], period: "2025 archive · Originally labeled 2025–present", body: projects[0] },
+        { id: "innate-immunity", title: projects[2], period: "2025 proposal. Originally labelled 2025–present.", body: projects[0] },
         { id: "mrna-vaccine", title: "Lyme disease mRNA vaccine", period: "2023–2025", body: projects[3] },
         { id: "gene-drives", title: projects[7], period: "2021–2022", body: projects[5] },
       ],
@@ -207,15 +223,15 @@
     const route = ROUTES.find((item) => item.id === (routeId || "home"));
     const main = document.getElementById("main-content");
     closeMenu();
-    main.innerHTML = route ? route.build() : heading("A wrong turn, a new question", "Let’s get you<br><em>connected.</em>", "We couldn’t find that page.") + `<div class="wrap not-found">${link("home", "Back to home", "button-link")}</div>`;
+    main.innerHTML = route ? route.build() : heading("Page not found", "We couldn’t find that page.") + `<div class="wrap not-found">${link("home", "Back to home", "button-link")}</div>`;
     document.title = `${route?.title || "Page not found"} | STEM Connect`;
     document.querySelectorAll("[data-route]").forEach((anchor) => {
       const active = anchor.dataset.route === route?.id;
       if (active) anchor.setAttribute("aria-current", "page");
       else anchor.removeAttribute("aria-current");
     });
-    main.classList.remove("page-enter");
-    requestAnimationFrame(() => main.classList.add("page-enter"));
+    bindActivities(main);
+    animateSections(main);
     window.scrollTo({ top: 0, behavior: "instant" });
     const project = new URLSearchParams(query).get("project");
     const target = route?.id === "our-projects" && project ? document.getElementById(project) : null;
@@ -232,8 +248,44 @@
     }, { once: true }));
   }
 
+  function bindActivities(main) {
+    main.querySelectorAll("[data-interest]").forEach((button) => button.addEventListener("click", () => {
+      const interest = INTERESTS.find((item) => item.id === button.dataset.interest);
+      main.querySelectorAll("[data-interest]").forEach((control) => control.setAttribute("aria-pressed", String(control === button)));
+      main.querySelector("#activity-results").innerHTML = activityResult(interest);
+    }));
+  }
+
+  let motionObserver;
+  function animateSections(main) {
+    motionObserver?.disconnect();
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) return;
+    const headlineLines = main.querySelectorAll(".line > span");
+    headlineLines.forEach((line, index) => {
+      line.style.setProperty("--entry-delay", `${110 * index}ms`);
+      line.classList.add("signature-line");
+    });
+    const seen = new Set();
+    motionObserver = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting || seen.has(entry.target)) continue;
+        const element = entry.target;
+        seen.add(element);
+        motionObserver.unobserve(element);
+        const picture = element.matches(".photo-frame");
+        const image = picture ? element.querySelector("img") : null;
+        const index = [...element.parentElement.children].indexOf(element) % 3;
+        const target = image || element;
+        target.style.setProperty("--entry-delay", `${index * 70}ms`);
+        target.classList.add(picture ? "picture-enter" : "text-enter");
+      }
+    }, { threshold: .08 });
+    const targets = [...main.querySelectorAll("h1:not(:has(.line)), h2, h3, .hero-intro > *, .brand-statement, .statement-bottom > *, .photo-frame, .reading > p, .interest-controls > button, .chapter-top > p, .interest-stories article > p, .interest-stories > .note, .board-list > p, .board-story > p, .history-text > p, .join-copy > p, .team-story > p, .contact-primary > p, .contact-details article > p, .event-details > p, .archive-summary > p, .update-date, .research-aside > p"), ...document.querySelectorAll(".site-footer .photo-frame, .footer-brand, .footer-motto")];
+    targets.forEach((element) => motionObserver.observe(element));
+  }
+
   function shell(root) {
-    root.innerHTML = `<a class="skip-link" href="#main-content">Skip to content</a><header class="site-header"><div class="header-inner"><a class="brand" href="#/home" data-route="home" aria-label="STEM Connect home"><img src="assets/stem-connect.svg" alt="" width="44" height="44" /><span>stem<span class="brand-connect">connect</span></span></a><button id="nav-toggle" class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">Menu <span aria-hidden="true">+</span></button><nav id="primary-nav" aria-label="Primary">${ROUTES.filter((route) => route.id !== "home").map((route) => `<a href="#/${route.id}" data-route="${route.id}">${route.label}</a>`).join("")}</nav></div></header><main id="main-content"></main><footer class="site-footer"><div class="footer-top wrap"><div><a class="footer-brand" href="#/home">stem <em>connect</em><img src="assets/stem-connect.svg" alt="" /></a><p>Connecting students through STEM.<br>Inspiring the next generation.</p></div><div class="footer-contact"><p>Independence High School<br>${ADDRESS}</p>${external(INSTAGRAM, "@independence_igem")}</div></div><nav class="footer-nav wrap" aria-label="All pages">${ROUTES.map((route) => `<a href="#/${route.id}" data-route="${route.id}">${route.label}</a>`).join("")}</nav><div class="footer-bottom wrap"><span>STEM Connect · Student-led in Ashburn, VA</span><span>Formerly Independence iGEM</span><span>a site by <a href="https://tarushv.com" target="_blank" rel="noopener noreferrer">tarushv<span class="sr-only"> (opens in a new tab)</span></a></span></div></footer>`;
+    root.innerHTML = `<a class="skip-link" href="#main-content">Skip to content</a><header class="site-header"><div class="header-inner"><a class="brand" href="#/home" data-route="home" aria-label="STEM Connect home"><img src="assets/stem-connect.svg" alt="" width="40" height="40" /><span>stem connect</span></a><nav class="quick-nav" aria-label="Primary">${link("about-igem", "About")}${link("stem-day", "STEM Day")}${link("photo-gallery", "Gallery")}</nav><div class="header-actions">${link("about-igem", "Join", "button-link")}<button id="nav-toggle" class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">Menu <span aria-hidden="true">+</span></button></div><nav id="primary-nav" aria-label="All pages">${ROUTES.map((route) => `<a href="#/${route.id}" data-route="${route.id}">${route.label}</a>`).join("")}</nav></div></header><main id="main-content"></main><footer class="site-footer field forest"><div class="wrap"><a class="footer-brand" href="#/home">STEM Connect</a><div class="footer-middle"><div><p class="footer-motto">Connecting students through STEM.<br>Inspiring the next generation.</p><p>Independence High School<br>${ADDRESS}</p>${external(INSTAGRAM, "@independence_igem")}</div><nav class="footer-nav" aria-label="Explore all pages">${ROUTES.map((route) => `<a href="#/${route.id}" data-route="${route.id}">${route.label}</a>`).join("")}</nav></div><div class="footer-bottom"><span>Student-led in Ashburn, Virginia.<br>Formerly Independence iGEM.</span><span>A site by <a href="https://tarushv.com" target="_blank" rel="noopener noreferrer">tarushv<span class="sr-only"> (opens in a new tab)</span></a></span></div><div class="footer-photos">${photo(1)}${photo(7)}${photo(2)}</div></div></footer>`;
     const toggle = document.getElementById("nav-toggle");
     const nav = document.getElementById("primary-nav");
     toggle.addEventListener("click", () => {
@@ -256,7 +308,7 @@
         render();
       }
     });
-    matchMedia("(min-width: 1180px)").addEventListener("change", () => closeMenu());
+    matchMedia("(min-width: 800px)").addEventListener("change", () => closeMenu());
   }
 
   async function boot() {

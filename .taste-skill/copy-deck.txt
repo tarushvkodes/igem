@@ -1,0 +1,195 @@
+# Copy deck, before markup
+
+Home headline: STEM Connect
+Support: Student-led science and outreach at Independence High School in Ashburn, Virginia.
+Action: Join STEM Connect
+Masthead fact: Room 2517. Wednesdays after school.
+Brand statement: Connecting students through STEM. Inspiring the next generation.
+Community statement: We take the questions we ask after school and turn them into hands-on discoveries for younger learners.
+Activity title: Find your experiment
+Support: Pick an interest. Explore activities from our STEM Day planning archive.
+Meeting title: See you in 2517
+Body: Bring your interests to activity planning, mentoring, and hands-on science. No research background needed. Wednesdays after school at Independence High School. Confirm the current schedule before visiting.
+History title: A shared history
+Body: We began as Independence iGEM. Today, STEM Connect focuses on community outreach. Our research and photographs stay here as a record of what came before.
+Close: Join STEM Connect
+
+About headline: Make science together
+Body: STEM Connect is a student-led community at Independence High School in Ashburn, Virginia. We explore science, technology, engineering and math through hands-on discovery, community outreach and student leadership. We plan interactive activities and mentor younger learners. Formerly Independence iGEM, we no longer compete in iGEM.
+Meeting: Wednesdays after school. Room 2517. Confirm the current schedule with the team before visiting.
+Historical introduction: Original competition introduction and past interest-meeting notice follow in full. These are historical, not current invitations.
+
+Team headline: Our people
+Body: Students, makers, mentors and question-askers. From designing an activity to welcoming families, there are many ways to contribute.
+Photo: Independence iGEM team. August 2024 archive.
+Archive: Original team description follows in full. Membership and competition plans are historical.
+
+Research headline: Research archive
+Body: Three earlier Independence iGEM proposals. Original plans and future-tense wording are historical; these are not current research or established results.
+Short section titles: Innate immunity. Lyme vaccine. Gene drives.
+Original titles, periods, full descriptions and all three original readings follow.
+
+Gallery headline: Science, in company
+Body: Our school, our experiments and the people who make them happen. Community and research photographs from our archive; exact STEM Day dates are unconfirmed.
+Photo captions describe the visible subjects. Instagram action: Follow our community.
+
+Updates headline: How we got here
+Body: Four original updates from Independence iGEM. Meeting invitations and competition plans are historical.
+All four original entries follow in full.
+
+STEM Day headline: A school of discovery
+Body: Student volunteers bring hands-on science to younger learners, from fossil digs to strawberry DNA.
+Listing title: Past event listing
+May 16, 2026. Independence High School. Free entry for all ages; no sign-ups required in the archived listing. The original site also showed February 28, so the date is unconfirmed. No next event is announced.
+Program: The original listing described 20+ stations, a free prize at the end and more than 300 visitors the prior year. Vortex Canon, Planetarium, Air Trajectory, Strawberry DNA Extraction, Ocean Zones, Elephant Toothpaste and Hovercrafts were named.
+All eight planning descriptions follow. Newsletter action opens the real hosted page, which may retain past dates.
+
+Sponsors headline: Support student science
+Body: Help students bring hands-on science into the community. Contact the team to discuss current materials and outreach needs.
+Letter: The historical iGEM Letter of Support describes the former competition program. Its budget and tax language are outdated. Full original sponsorship introduction remains available.
+
+Donations headline: Keep curiosity going
+Body: Thank you for supporting student-led discovery. Contact the team to confirm the current donation process before sending a contribution.
+Legacy instructions: The former payee was Independence High School iGEM. Confirm the current payee and mailing process first. Original mailing address is Independence High School, 23115 Learning Circle, Ashburn, VA 20148. Confirm current tax treatment with the school. There is no online checkout here.
+
+Contact headline: Come say hello
+Body: Join the community, ask about activities or talk about supporting STEM Connect.
+Action: Open contact form
+Body: Hosted on our original site under the Independence iGEM name.
+School, Room 2517, Wednesdays after school, Instagram and real newsletter links follow.
+
+## Full activity copy from the existing site
+  const STEM_ACTIVITY_HIGHLIGHTS = [
+    {
+      title: "Hovercraft + Paper Airplane Lab",
+      body:
+        "Young visitors experiment with lift, drag, balance, and thrust by building simple flyers and testing how design changes affect flight time, height, and control.",
+    },
+    {
+      title: "Water Wonders",
+      body:
+        "A playful chemistry station explores polarity, surface tension, capillary action, and solubility through penny-drop tests, color-mixing challenges, and water movement demos.",
+    },
+    {
+      title: "Chemical Reactions Corner",
+      body:
+        "Color changes, precipitation reactions, and safe dry-ice demonstrations help students see how scientists recognize when a reaction is happening and why timing matters.",
+    },
+    {
+      title: "Strawberry DNA Bracelets",
+      body:
+        "Kids help mash, filter, and separate strawberry DNA, then take home a tiny bracelet keepsake that turns a big genetics idea into something tangible.",
+    },
+    {
+      title: "Microscopes, Fossils, and Nature Stations",
+      body:
+        "From bug observations and fossil digs to plant propagation and ocean-themed activities, these stations connect biology, Earth science, and curiosity-driven discovery.",
+    },
+    {
+      title: "Engineering + Coding Challenges",
+      body:
+        "Visitors can tinker with micro:bits, try BattleBots-inspired design ideas, explore cyber puzzles, and see how problem-solving and iteration power modern technology.",
+    },
+    {
+      title: "Health + Public Science",
+      body:
+        "Interactive demos on heart rate, blood pressure, and Glo Germ hygiene show how science supports everyday health decisions in ways students can measure for themselves.",
+    },
+    {
+      title: "Make-and-Take Creativity",
+      body:
+        "Cloud clay, jellyfish salt painting, and environmental filter-building bring an artistic, hands-on finish to the day while still tying back to real scientific concepts.",
+    },
+  ];
+
+
+## Historical copy retained in full
+
+about-igem
+
+What is IGEM?
+
+International Genetically Engineered Machines (iGEM) is an international student competition founded by MIT focused in the fields of synthetic biology. High schools, colleges, and entrepreneurial teams from all across the globe come together every year to compete in iGEM. Ambitious students dare to change the world by creating biological systems to that have the potential to solve problems in their communities or in the world. iGEM is a great opportunity for students with different backgrounds to come together and pursue science research and engineering!
+
+If you're interested in science research, iGEM is for you! Come to room 2517 for our interest meeting on Wednesday, September 10th after school or Thursday, September 11th at 9 AM.
+
+This could be you!
+
+What is iGEM?
+
+our-team
+
+The Independence High School iGEM team is a biology team composed of around 20 members in all years of high school. The team is in its first year competing at the MIT-run international competition, so the aspiring team relies much on the support of the community. The members of our team are all highly devoted towards gaining a better understanding in the fields of synthetic biology. We strive to create and innovate in directions that will benefit society.
+ In the process, we are developing outstanding future researchers and biologists that will go on to have successful careers in any field of science they pursue.
+
+Our Team
+
+our-projects
+
+This year, we will work on developing non-toxic treatments for the innate immune system. Through a decade of study, the innate immune system has been revealed to demonstrate a previously unexpected paradigm-- capability of memory. However, this memory has been shown to be the underlying cause of chronic low-grade inflammation, chronic expression of pro-inflammatory cytokines, and innate immune system imbalance in diseases like obesity, atherosclerosis, sepsis, and even some types of cancer. This type of "memory" is characterized as an evolutionary response to acute injury, and it primary functions through the toll-like receptor 4 intracellular pathway (TLR4). Recently, studies have demonstrated that a drug known as 4-phenylbutyric acid (4-PBA), a drug previously used to treat urinary diseases, is capable of a type "reprogramming" by inhibiting the TLR4 pathway. However, 4-PBA and similar phenylbutyrates have also been demonstrated to cause acute hepatotoxicity, exacerbate bipolar and related disorders, cause amenorrhea, cause extreme appetite loss, cause neurotoxicity, etc.
+
+This year, we will research alternatives to 4-PBA by looking for different molecules with similar attributes and potentials to inhibit the TLR4 pathway, and subsequently running tests on them. Phase 1 will consist of utilization of predictive software to simulate interactions of the molecular alternatives, and Phase 2 will consist of successful candidates of Phase 1 being tested on murine macrophage cultures through western blot and ELISA assays. If Phase 2 demonstrates success, we will look into potentially performing a Phase 3 involving flow cytometry to gain more detailed insight.
+
+This is our most ambitious project yet, so stay tuned and support us throughout the year!
+
+Readings: https://doi.org/10.1161/CIRCRESAHA.124.325023, https://www.science.org/doi/10.1126/science.adf6582, image courtesy of https://li.biol.vt.edu/
+
+2025-present project:
+
+Restoring balance in innate immunity
+
+This year, we will work on developing an mRNA vaccine for lyme disease. Although mRNA vaccines have been thought to be more efficient than traditional vaccines for many years, only in 2020 was the first mRNA vaccine approved by the FDA (for COVID-19). We hope to innovate in the vaccine field by creating an mRNA vaccine designed to combat against lyme disease, building on a previous lyme mRNA vaccine created by University of Pennsylvania in 2023.
+
+2023-2025 project:
+Lyme disease mRNA vaccine
+
+We will create a bacteria that will mimic insect specific symbiotic bacteria (Wolbachia) to combat a vector-borne disease (lyme disease), we will use Drosophila Melanogaster (fruit flies) as our insect model and proof of principle. To create our mimic, we’ll add surface protein genes that are found in Wolbachia to BL21 or DH5-alpha cells (we will confirm the surface proteins by ELISA using antibodies against Wolbachia surface protein). Once our mimic is well established through several fruit fly generations (we will confirm this by PCR), we will add a fluorescent gene that will be activated by products generated by the Lyme disease bacteria (we will first do in-vitro studies to make sure it works). If this works, we will do the same work on ticks which are the natural vectors for lyme disease and we will add another gene that will inactivate the lyme bacteria. If our insects are released in the wild, they will mate and pass on our mimic bacteria. If they come in contact with the lyme disease, our ticks will generate the fluorescent marker which flags the insect as a lyme disease active organism, making them easier to identify, and at the same time, it will inactivate the lyme bacteria. If this works, we will be able to use this technology with other variants of lymes disease to combat Lymes and its side effects.
+
+2021-2022 project:
+
+Lyme-bacteria-inactivating gene drives
+
+progress-and-updates-blog
+
+SEPTEMBER 2025:
+
+Happy September! As the school year starts back up, so are we! Our project idea is in its final drafts, and our interest meeting is just around the corner. We look forward to a successful year of iGEM!
+
+------------------------------------------------------------------------
+
+JUNE 2024:
+Happy June! STEM day was a huge success! Both the kids and the volunteers had a wonderful time learning about and teaching science. Looking ahead, we are planning to meet in the summer to further our progress on our recent project, and current sponsor Mr. Saavedra will sadly be leaving us.
+
+------------------------------------------------------------------------
+
+MAY 2024:
+Happy May! All of our new members have learned so much over these past few months about the basics of biotechnology and common protocols performed in the lab. Now, we prepare for our biggest fundraising event of the year, STEM day. Be sure to come check it out to participate in some cool science activities!
+
+------------------------------------------------------------------------
+
+JANUARY 2024: 
+Happy new year! Our club has been rapidly growing, from what felt like a few kids to a 20 person team with specialized departments! Many of us are fairly inexperienced, so we are all learning so much about biotechnology. We know that this year will be monumental in our club's history!
+
+Progress & Updates Blog
+
+sponsors
+
+Thank you for taking the time to look at our Sponsors Page. As a first year school, it is very hard raising enough funds to compete in the iGEM competition. That is why we rely on companies and businesses for financial support. For more information on the program, budget, and on how your company can get involved, see the Independence iGEM Letter of Support below.
+
+Sponsors:
+
+Independence High School iGEM Letter of Support (OUTDATED)
+
+donations
+
+Thank you for your consideration for your TAX-DEDUCTIBLE donation towards Independence iGEM!
+
+Thank you for your donation towards Independence High School iGEM! Your donation will go towards helping young scientists find their passion in doing original science research. 
+
+Instructions to donate:
+
+Write a check with the specified amount with the recipient as <Independence High School iGEM>
+
+Mail your TAX-DEDUCTIBLE donation check to our school address!
+
+Address: 23115 Learning Cir, Ashburn, VA 20148

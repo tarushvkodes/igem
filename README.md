@@ -26,6 +26,14 @@ Meetings are listed as Wednesdays after school in room 2517 with a request to co
 
 Donation guidance preserves the legacy check payee “Independence High School iGEM” and school mailing address, with instructions to confirm the current payee and process before mailing. Tax treatment is unverified. The old support letter is explicitly historical.
 
+## Taste Skill design
+
+The current design follows [Taste Skill v2](https://github.com/Leonxlnx/taste-skill/tree/main/skills/taste-skill), upstream commit `f624f37a8c650b9cc550253104925efe4c8de246`. It uses the Colour chapters direction, seed `222383801`, with the established green palette. Room 2517 and real school activity photographs connect the sections.
+
+The home page interest picker groups eight archived activities into four interests. The full activity descriptions remain on the STEM Day page. Motion respects reduced-motion preferences, and the no-JavaScript fallback includes meeting information and hosted contact links.
+
+The direction, copy deck, critique, and verification reports are in `.taste-skill/`. Generated browser screenshots are ignored. To run the fallback checks, set `TASTE_SKILL_ROOT` to a local copy of the upstream skill and run `node .taste-skill/verify-runtime.mjs http://localhost:8080`.
+
 ## Maintenance and checks
 
 Edit current program copy and route presentation in `js/app.js`. Keep original historical copy in `site-extract.json`. The app derives the full project and update collections from that source. Update image captions only when their dates and subjects can be verified.
