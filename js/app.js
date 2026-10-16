@@ -1,63 +1,23 @@
 (function () {
   "use strict";
 
-  const ASSET_VERSION = window.__ASSET_VERSION__ || "2026-04-17-2";
-
-  const NAV_ROUTES = [
-    "home",
-    "about-igem",
-    "stem-day",
-    "progress-and-updates-blog",
-    "sponsors",
-    "donations",
-    "contact-us",
+  const INSTAGRAM = "https://www.instagram.com/independence_igem/";
+  const CONTACT = "https://independenceigem.square.site/contact-us";
+  const NEWSLETTER = "https://independenceigem.square.site/stem-day";
+  const ADDRESS = "23115 Learning Circle, Ashburn, VA 20148";
+  const MEETING = "Wednesdays after school · Room 2517";
+  const CONFIRM_MEETING = "Please confirm the current meeting schedule with the team before visiting.";
+  const PHOTOS = [
+    { src: "stem-day-2026-station.webp", alt: "Student volunteers guiding a young visitor through a hands-on science station", caption: "Small discoveries. Shared excitement.", group: "Community archive" },
+    { src: "stem-day-2026-fossils.webp", alt: "Children exploring a fossil dig table beside a volunteer in a dinosaur costume", caption: "A little digging, a lot of discovery.", group: "Community archive" },
+    { src: "stem-day-2026-face-painting.webp", alt: "A student volunteer painting a visitor’s face at a community activity table", caption: "Science makes room for creativity.", group: "Community archive" },
+    { src: "stem-day-2026-poster.webp", alt: "A handmade STEM Day welcome poster outside Independence High School", caption: "An invitation to get curious.", group: "Event materials" },
+    { src: "archive-1.jpeg", alt: "Blue gloved hands forming a heart in front of an Indy Nation shirt", caption: "A love of science, and a sense of belonging.", group: "Historical iGEM gallery" },
+    { src: "archive-2.jpeg", alt: "Gloved hands handling a laboratory bottle beside colorful sample tubes", caption: "Learning our way around the lab.", group: "Historical iGEM gallery" },
+    { src: "archive-3.jpeg", alt: "Gloved hand connecting a cable to an illuminated gel electrophoresis tank", caption: "Seeing the science in a different light.", group: "Historical iGEM gallery" },
+    { src: "archive-4.jpeg", alt: "A gloved hand using a micropipette above laboratory sample tubes", caption: "Practice, precision, and a good question.", group: "Historical iGEM gallery" },
+    { src: "archive-5.png", alt: "A student pipetting at a school laboratory bench with electrophoresis equipment", caption: "Research starts with hands-on learning.", group: "Historical iGEM gallery" },
   ];
-
-  const NAV_LABELS = {
-    home: "Home",
-    "about-igem": "About",
-    "stem-day": "STEM Day",
-    "progress-and-updates-blog": "Updates",
-    sponsors: "Sponsors",
-    donations: "Donate",
-    "contact-us": "Contact",
-  };
-
-  const PAGE_TITLES = {
-    "about-igem": "About Our STEM Program",
-  };
-
-  const STEM_PHOTOS = [
-    {
-      src: "assets/stem-day-2026-poster.webp",
-      alt: "STEM Day 2026 sign outside Independence High School",
-      caption: "The welcome sign that greeted families at STEM Day 2026.",
-      className: "stem-photo-card stem-photo-card--poster",
-      position: "50% 42%",
-    },
-    {
-      src: "assets/stem-day-2026-station.webp",
-      alt: "Students leading a STEM activity station during STEM Day 2026",
-      caption: "Student volunteers guiding visitors through a hands-on STEM station.",
-      className: "stem-photo-card stem-photo-card--feature",
-      position: "64% 48%",
-    },
-    {
-      src: "assets/stem-day-2026-face-painting.webp",
-      alt: "Face painting activity table at STEM Day 2026",
-      caption: "Creative stations mixed art, science, and community fun.",
-      className: "stem-photo-card",
-      position: "58% 52%",
-    },
-    {
-      src: "assets/stem-day-2026-fossils.webp",
-      alt: "Fossil dig station with a dinosaur costume at STEM Day 2026",
-      caption: "The fossil dig brought out some prehistoric energy.",
-      className: "stem-photo-card",
-      position: "68% 44%",
-    },
-  ];
-
   const STEM_ACTIVITY_HIGHLIGHTS = [
     {
       title: "Hovercraft + Paper Airplane Lab",
@@ -101,657 +61,219 @@
     },
   ];
 
-  const state = {
-    source: null,
-    site: null,
-    navItems: [],
-    projectSections: [],
-    updates: [],
-  };
+  const ROUTES = [
+    { id: "home", label: "Home", title: "Home", build: homePage },
+    { id: "about-igem", label: "About", title: "About & join", build: aboutPage },
+    { id: "our-team", label: "Team", title: "Our people", build: teamPage },
+    { id: "our-projects", label: "Research", title: "Research archive", build: projectsPage },
+    { id: "photo-gallery", label: "Gallery", title: "Photo gallery", build: galleryPage },
+    { id: "progress-and-updates-blog", label: "Updates", title: "Updates archive", build: updatesPage },
+    { id: "stem-day", label: "STEM Day", title: "STEM Day", build: stemDayPage },
+    { id: "sponsors", label: "Sponsors", title: "Our supporters", build: sponsorsPage },
+    { id: "donations", label: "Donate", title: "Support curiosity", build: donationsPage },
+    { id: "contact-us", label: "Contact", title: "Get in touch", build: contactPage },
+  ];
+  let collections;
 
-  function getRoute() {
-    const raw = window.location.hash.replace(/^#\/?/, "").trim();
-    if (raw === "photo-gallery") return "home";
-    return NAV_ROUTES.includes(raw) ? raw : "home";
+  function escape(text) {
+    return String(text).replace(/[&<>"']/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character]);
   }
 
-  function getPage(route) {
-    return state.source.pages[route] ?? state.source.pages.home;
+  function paragraphs(text) {
+    return text.split(/\n\s*\n/).filter(Boolean).map((part) => `<p>${escape(part)}</p>`).join("");
   }
 
-  function buildSite(data) {
-    return {
-      name: "Independence High School iGEM",
-      instagramHandle: data.site.instagram,
-      instagramUrl: `https://www.instagram.com/${data.site.instagram}/`,
-      address: data.site.address.replace("Learning Cir", "Learning Circle"),
-      meeting:
-        "Interested in STEM outreach, leadership, and hands-on science at Indy? Join us on Wednesdays after school in room 2517 at Independence High School.",
-      logo: "assets/igem-logo.png",
-      sponsorPdf: "assets/igem-letter-of-support.pdf",
-    };
+  function link(route, label, className = "text-link") {
+    return `<a class="${className}" href="#/${route}">${label}<span aria-hidden="true">↗</span></a>`;
   }
 
-  function buildNavItems(data) {
-    return NAV_ROUTES.map((route) => data.nav.find((item) => item.route === route))
-      .filter(Boolean)
-      .map((item) => ({
-        ...item,
-        shortName: NAV_LABELS[item.route] ?? item.name,
-      }));
+  function external(href, label, className = "text-link") {
+    return `<a class="${className}" href="${href}" target="_blank" rel="noopener noreferrer">${label}<span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a>`;
   }
 
-  function buildProjectSections(data) {
-    const projectPage = data.pages["our-projects"];
-    return [
-      {
-        years: projectPage.texts[1],
-        title: projectPage.texts[2],
-        body: projectPage.texts[0],
-      },
-      {
-        years: projectPage.texts[4],
-        title: "Lyme disease mRNA vaccine",
-        body: projectPage.texts[3],
-      },
-      {
-        years: projectPage.texts[6],
-        title: projectPage.texts[7],
-        body: projectPage.texts[5],
-      },
-    ];
+  function photo(index, className = "", eager = false) {
+    const item = PHOTOS[index];
+    return `<figure class="photo ${className}"><div class="photo-frame"><img src="assets/${item.src}" alt="${escape(item.alt)}" loading="${eager ? "eager" : "lazy"}" decoding="async"${eager ? ' fetchpriority="high"' : ""} /></div><figcaption><span>${item.caption}</span><span>${item.group}</span></figcaption></figure>`;
   }
 
-  function buildUpdates(data) {
-    const updatesPage = data.pages["progress-and-updates-blog"];
-    return [
-      {
-        title: updatesPage.texts[0],
-        body: updatesPage.texts[1],
-      },
-      {
-        title: "June 2024 / May 2024 / January 2024",
-        body: updatesPage.texts[3],
-      },
-    ];
+  function heading(eyebrow, title, intro = "") {
+    return `<header class="page-intro wrap"><p class="eyebrow">${eyebrow}</p><h1 tabindex="-1">${title}</h1>${intro ? `<p class="page-lede">${intro}</p>` : ""}</header>`;
   }
 
-  function initFromData(data) {
-    state.source = data;
-    state.site = buildSite(data);
-    state.navItems = buildNavItems(data);
-    state.projectSections = buildProjectSections(data);
-    state.updates = buildUpdates(data);
-  }
-
-  function textEl(tag, className, text) {
-    const el = document.createElement(tag);
-    if (className) el.className = className;
-    el.textContent = text;
-    return el;
-  }
-
-  function appendChildren(parent, children) {
-    children.filter(Boolean).forEach((child) => parent.appendChild(child));
-    return parent;
-  }
-
-  function createGrid(className, children) {
-    const grid = document.createElement("div");
-    grid.className = className;
-    return appendChildren(grid, children);
-  }
-
-  function createParagraph(text, className = "") {
-    return textEl("p", className, text);
-  }
-
-  function createLink({ href, label, external, className = "" }) {
-    const link = document.createElement("a");
-    link.href = href;
-    link.textContent = label;
-    if (className) link.className = className;
-    if (external) {
-      link.target = "_blank";
-      link.rel = "noreferrer";
-    }
-    return link;
-  }
-
-  function createInstagramLink() {
-    return createLink({
-      href: state.site.instagramUrl,
-      label: "@" + state.site.instagramHandle,
-      external: true,
-    });
-  }
-
-  function pageHeader(title, intro, variant) {
-    const sec = document.createElement("section");
-    sec.className =
-      "page-header" + (variant === "hero" ? " page-header--hero" : "");
-
-    sec.appendChild(textEl("h1", "", title));
-    if (intro) sec.appendChild(textEl("p", "page-header-intro", intro));
-    return sec;
-  }
-
-  function sectionCard(title, children, className) {
-    const sec = document.createElement("section");
-    sec.className = "section-card" + (className ? " " + className : "");
-    if (title) sec.appendChild(textEl("h2", "", title));
-    return appendChildren(sec, children);
-  }
-
-  function buttonRow(links) {
-    const row = document.createElement("div");
-    row.className = "button-row";
-
-    links.forEach(({ href, label, secondary, external }) => {
-      row.appendChild(
-        createLink({
-          href,
-          label,
-          external,
-          className: "button-link" + (secondary ? " secondary" : ""),
-        }),
-      );
-    });
-
-    return row;
-  }
-
-  function createStack(cards) {
-    return createGrid("stack", cards);
-  }
-
-  function createProjectCard(project) {
-    return sectionCard(project.title, [
-      textEl("p", "meta-line", project.years),
-      createParagraph(project.body),
-    ]);
-  }
-
-  function createUpdateCard(entry) {
-    return sectionCard(entry.title, [createParagraph(entry.body)]);
-  }
-
-  function stemPhotoCard(photo) {
-    const figure = document.createElement("figure");
-    figure.className = photo.className;
-
-    const frame = document.createElement("div");
-    frame.className = "image-frame image-frame--stem-gallery";
-
-    const img = document.createElement("img");
-    img.src = photo.src;
-    img.alt = photo.alt;
-    img.loading = "lazy";
-    img.decoding = "async";
-    if (photo.position) img.style.objectPosition = photo.position;
-
-    frame.appendChild(img);
-    figure.appendChild(frame);
-    return figure;
-  }
-
-  function createStemShowcase() {
-    const showcase = document.createElement("section");
-    showcase.className = "stem-showcase";
-
-    const stemPage = getPage("stem-day");
-    const details = sectionCard(
-      "STEM Day 2.0 at a Glance",
-      [
-        createParagraph(
-          "STEM Day 2.0 will bring families into Independence High School for a full lineup of student-led science, engineering, technology, and creativity stations designed to keep younger learners moving, making, and asking questions.",
-        ),
-        createParagraph(
-          "The 2026 lineup pairs returning favorites with new demos, mixing high-energy crowd-pleasers, take-home projects, and hands-on investigations across biology, chemistry, physics, environmental science, coding, and health.",
-        ),
-        createParagraph(
-          stemPage.texts[16] +
-            stemPage.texts[17] +
-            stemPage.texts[18] +
-            "\n" +
-            stemPage.texts[19] +
-            "\n" +
-            stemPage.texts[20],
-        ),
-      ],
-      "stem-details stem-details--feature",
-    );
-
-    const photoGrid = createGrid(
-      "stem-photo-grid",
-      STEM_PHOTOS.map(stemPhotoCard),
-    );
-
-    showcase.appendChild(details);
-    showcase.appendChild(photoGrid);
-    return showcase;
-  }
-
-  function createStemActivitiesGrid() {
-    return createGrid(
-      "content-grid",
-      STEM_ACTIVITY_HIGHLIGHTS.map((activity) =>
-        sectionCard(
-          activity.title,
-          [createParagraph(activity.body)],
-          "stem-activity-card",
-        ),
-      ),
-    );
+  function joinStrip() {
+    return `<section class="join-strip wrap"><div><p class="eyebrow">There’s a place for your curiosity</p><h2>Come with a question.<br>Leave with <em>a connection.</em></h2></div>${link("about-igem", "Find your place", "round-link")}</section>`;
   }
 
   function homePage() {
-    const home = getPage("home");
-    const updates = getPage("progress-and-updates-blog");
-
-    return [
-      pageHeader(home.texts[0], state.site.meeting, "hero"),
-      createGrid("content-grid content-grid--two", [
-        sectionCard("News & updates", [
-          createParagraph(home.texts[1]),
-          createParagraph(updates.texts[1]),
-          buttonRow([
-            { href: "#/stem-day", label: "STEM Day", secondary: true },
-            {
-              href: "#/progress-and-updates-blog",
-              label: "All updates",
-              secondary: true,
-            },
-          ]),
-        ]),
-        sectionCard("Support the team", [
-          createParagraph(home.texts[6]),
-          createParagraph(home.texts[8]),
-          buttonRow([
-            { href: "#/sponsors", label: "Sponsors" },
-            { href: "#/donations", label: "Donate", secondary: true },
-          ]),
-        ]),
-      ]),
-      sectionCard(
-        "STEM Leadership at Indy",
-        [
-          createParagraph(
-            "Our current focus is building a strong student-led STEM community through outreach, event planning, mentoring, and hands-on learning experiences for younger students.",
-          ),
-          createParagraph(
-            "iGEM remains a future possibility, but right now we are prioritizing accessible STEM programming and leadership opportunities that make an immediate impact on our school and community.",
-          ),
-          buttonRow([
-            { href: "#/about-igem", label: "About Us" },
-            { href: "#/stem-day", label: "STEM Day", secondary: true },
-            { href: "#/contact-us", label: "Contact", secondary: true },
-          ]),
-        ],
-        "join-card",
-      ),
-    ];
+    return `<section class="home-hero wrap"><div class="hero-copy"><p class="eyebrow"><span class="live-dot"></span> Student-led. Community-minded.</p><h1 tabindex="-1">Curiosity<br>brings us<br><em>together.</em></h1><p class="hero-lede">Connecting students through STEM.<br>Inspiring the next generation.</p>${link("about-igem", "Get to know us", "button-link")}<p class="hero-location">Independence High School<br>Ashburn, Virginia</p></div><div class="hero-visual">${photo(0, "hero-photo", true)}<div class="hero-stamp" aria-hidden="true"><img src="assets/stem-connect.svg" alt="" /><span>Ideas grow<br>when we connect.</span></div><span class="photo-index" aria-hidden="true">01 / IN OUR ELEMENT</span></div></section>
+      <div class="word-band" aria-hidden="true"><span>Ask.</span><i>✳</i><span>Explore.</span><i>✳</i><span>Connect.</span><i>✳</i><span>Repeat.</span></div>
+      <section class="mission wrap"><p class="eyebrow">A shared spark</p><div><h2>Big ideas begin<br>with a simple <em>“what if?”</em></h2><div class="mission-bottom"><p>We’re STEM Connect, a student-led community at Independence High School. We bring science beyond the classroom through hands-on learning, outreach, and opportunities to lead.</p>${link("our-team", "Meet our community")}</div></div></section>
+      <section class="feature-event wrap"><div class="event-image">${photo(1)}</div><div class="event-copy"><p class="eyebrow">Out in the community / Event archive</p><h2>Little hands.<br><em>Big discoveries.</em></h2><p>From strawberry DNA to flying hovercrafts, STEM Day opens a world of questions for younger learners and the students who guide them.</p><div class="event-facts"><div><strong>20+</strong><span>stations in the source listing</span></div><div><strong>300+</strong><span>visitors reported for the prior year</span></div></div>${link("stem-day", "Explore STEM Day")}</div></section>
+      <section class="paths wrap"><div class="section-top"><p class="eyebrow">Follow your curiosity</p><p>More ways to connect.</p></div>${link("our-projects", '<span><small>01 / Our foundations</small>Research with a purpose</span>', "path-row")}${link("photo-gallery", '<span><small>02 / Moments that matter</small>See us in our element</span>', "path-row")}${link("sponsors", '<span><small>03 / Make it possible</small>Help the next idea grow</span>', "path-row")}</section>${joinStrip()}`;
   }
 
   function aboutPage() {
-    return [
-      pageHeader(
-        "About Our STEM Program",
-        "We are building a student-led STEM community at Independence High School centered on outreach, leadership, and hands-on learning.",
-      ),
-      createGrid("content-grid content-grid--two", [
-        sectionCard("What We Focus On", [
-          createParagraph(
-            "Our students design and lead STEM experiences that help younger learners explore science, technology, engineering, and math in a welcoming, exciting way.",
-          ),
-          createParagraph(
-            "That includes community events like STEM Day, peer leadership, planning interactive activities, and creating opportunities for students to grow as communicators, mentors, and problem-solvers.",
-          ),
-        ]),
-        sectionCard("Where iGEM Fits In", [
-          createParagraph(
-            "The iGEM competition is still something we may pursue in the future as our program grows and the right opportunity comes together.",
-          ),
-          createParagraph(
-            "For now, our priority is strengthening local STEM outreach and giving students meaningful leadership experience that benefits both our team and the wider community.",
-          ),
-        ]),
-      ]),
-    ];
+    return `${heading("About STEM Connect", "Good questions.<br><em>Great company.</em>", "Connecting students through STEM. Inspiring the next generation.")}
+      <section class="split-section wrap"><div class="reading"><h2>Science is better<br>when it’s <em>shared.</em></h2><p>STEM Connect is a student-led community at Independence High School in Ashburn, Virginia. We create opportunities to explore science, technology, engineering, and math together.</p><p>Our focus is hands-on discovery, community outreach, and student leadership. We plan interactive activities, mentor younger learners, and make room for different interests and experience levels.</p><p>Formerly Independence iGEM, we no longer compete in iGEM. Our earlier research remains here as a clearly marked archive of the work that shaped us.</p>${link("our-projects", "Explore our research archive")}</div>${photo(4, "about-photo")}</section>
+      <section class="meeting-panel wrap"><p class="eyebrow">Join us</p><div><h2>Bring your curiosity.<br><em>We’ll bring the questions.</em></h2><p>No research background needed. Come explore outreach, activity planning, mentoring, and hands-on science with other students.</p><p class="meeting-time">${MEETING}</p><p>Independence High School<br>${CONFIRM_MEETING}</p>${link("contact-us", "Connect with the team", "button-link")}</div></section>
+      <section class="archive-note wrap"><p class="eyebrow">Where we started / Original iGEM introduction</p><div class="reading">${paragraphs(collections.about[1])}<p class="fine-print">The introduction above is preserved as historical context. STEM Connect does not currently participate in the competition.</p><h3>Historical interest meeting notice</h3>${paragraphs(collections.about[2])}<p class="fine-print">This is a past notice from the original site, not a current invitation. Use the meeting information above and confirm before visiting.</p></div></section>`;
   }
 
   function teamPage() {
-    const page = getPage("our-team");
-    return [
-      pageHeader(page.title, page.texts[0]),
-      createGrid("content-grid two-up", [
-        sectionCard("About the Team", [createParagraph(page.texts[0])]),
-        sectionCard("Meetings", [createParagraph(state.site.meeting)]),
-      ]),
-    ];
+    return `${heading("Our people", "Different interests.<br><em>One shared spark.</em>", "Students, makers, mentors, and question-askers. A community built by showing up for each other.")}
+      <section class="team-feature wrap"><figure class="photo team-photo"><div class="photo-frame"><img src="assets/team-2024.png" alt="Historical Independence iGEM team posing together on school bleachers" loading="eager" /></div><figcaption><span>The Independence iGEM team, from our archive.</span><span>Source photo dated August 2024</span></figcaption></figure><div class="team-caption"><p class="eyebrow">Our foundations</p><p>Our name has changed. Our curiosity connects us.</p></div></section>
+      <section class="mission wrap"><p class="eyebrow">Student-led, together</p><div><h2>Find your people.<br>Find your <em>next question.</em></h2><div class="mission-bottom"><p>There are many ways to contribute, from designing an activity and explaining a scientific idea to welcoming families and helping an event run. Bring the skills you have and make space for something new.</p>${link("about-igem", "Join STEM Connect")}</div></div></section>
+      <section class="archive-note wrap"><p class="eyebrow">Original team description / Historical</p><div class="reading">${paragraphs(collections.team)}<p class="fine-print">This original description documents an earlier iGEM team. The membership count and competition plans are historical, not a current roster or commitment.</p></div></section>${joinStrip()}`;
   }
 
   function projectsPage() {
-    return [
-      pageHeader(getPage("our-projects").title),
-      createStack(state.projectSections.map(createProjectCard)),
-    ];
+    return `${heading("Research archive / Former Independence iGEM", "Questions that<br>pushed us <em>further.</em>", "Three research directions from our iGEM history, preserved in full. STEM Connect no longer competes in iGEM.")}
+      <section class="archive-banner wrap"><span class="archive-label">Historical research</span><p>The original descriptions below include plans and future-tense language from the time they were written. They are archival proposals, not statements of current research, validated outcomes, or medical guidance. The former “2025–present” label is historical.</p></section>
+      <nav class="project-index wrap" aria-label="Research on this page">${collections.projects.map((project, index) => `<a href="#/our-projects?project=${project.id}"><span>0${index + 1}</span>${escape(project.title)}<span aria-hidden="true">↓</span></a>`).join("")}</nav>
+      <div class="project-list wrap">${collections.projects.map((project, index) => `<article class="research-article" id="${project.id}"><aside><span class="project-number">0${index + 1}</span><p class="eyebrow">${project.period}</p><span class="archive-label">Archived proposal</span></aside><div class="reading"><h2>${project.title}</h2>${paragraphs(project.body)}${index === 0 ? `<div class="readings"><h3>Original readings & credit</h3>${external("https://doi.org/10.1161/CIRCRESAHA.124.325023", "Circulation Research · DOI 10.1161/CIRCRESAHA.124.325023")}${external("https://www.science.org/doi/10.1126/science.adf6582", "Science · DOI 10.1126/science.adf6582")}${external("https://li.biol.vt.edu/", "Original image credit · Li Laboratory, Virginia Tech")}</div>` : ""}</div></article>`).join("")}</div>
+      <section class="archive-links wrap"><p>Follow the story behind the research.</p>${link("progress-and-updates-blog", "Read the archived updates")}</section>`;
   }
 
-  function stemDayPage() {
-    const page = getPage("stem-day");
-    return [
-      pageHeader(page.texts[0], page.texts[1]),
-      createStemShowcase(),
-      sectionCard(
-        "Upcoming STEM Day 2.0 Activities",
-        [
-          createParagraph(
-            "These public-facing highlights are drawn from the 2026 planning materials and grouped to show the range of experiences families can expect on Saturday, May 16, 2026.",
-          ),
-          createStemActivitiesGrid(),
-        ],
-        "stem-activity-section",
-      ),
-    ];
+  function galleryPage() {
+    return `${heading("Photo gallery", "A little science.<br><em>A lot of life.</em>", "From the lab bench to the activity table. Real moments from our student research and community outreach archive.")}
+      <p class="gallery-note wrap">Historical photos are preserved from the original site and supplied STEM Day collection. Exact event dates are not confirmed; image filenames do not establish when an event took place.</p>
+      <section class="gallery-grid wrap" aria-label="Community and research photographs">${PHOTOS.map((item, index) => photo(index, index % 3 === 0 ? "gallery-wide" : "")).join("")}</section>
+      <section class="social-strip wrap"><div><p class="eyebrow">Stay connected</p><h2>More from <em>our community.</em></h2></div>${external(INSTAGRAM, "@independence_igem")}</section>`;
   }
 
   function updatesPage() {
-    return [
-      pageHeader(getPage("progress-and-updates-blog").title),
-      createStack(state.updates.map(createUpdateCard)),
-    ];
+    return `${heading("Updates archive", "Notes from<br><em>the journey.</em>", "Original updates from Independence iGEM. A record of the students, ideas, and events that came before STEM Connect.")}
+      <section class="archive-banner wrap"><span class="archive-label">2024–2025 archive</span><p>These entries retain their original wording. Interest meetings, project plans, competition references, and event announcements are historical.</p></section>
+      <div class="timeline wrap">${collections.updates.map((update) => `<article class="update-entry"><p class="update-date">${escape(update.date)}</p><div class="reading"><h2>${update.heading}</h2>${paragraphs(update.body)}</div></article>`).join("")}</div>${joinStrip()}`;
+  }
+
+  function stemDayPage() {
+    return `${heading("STEM Day / Event archive", "For the joy<br>of <em>finding out.</em>", "A school full of hands-on science. A community of students helping younger minds explore.")}
+      <section class="stem-main wrap">${photo(0, "stem-main-photo", true)}<aside class="event-ticket"><p class="eyebrow">Original 2026 listing</p><h2>STEM<br><em>Day.</em></h2><dl><div><dt>Listed date</dt><dd>May 16, 2026</dd></div><div><dt>Location</dt><dd>Independence High School<br>${ADDRESS}</dd></div><div><dt>Entry in the listing</dt><dd>Free · All ages<br>No sign-ups required</dd></div></dl><p class="fine-print">Past listing. The source also displayed February 28, creating a date conflict. No future event date is announced here.</p></aside></section>
+      <section class="mission wrap"><p class="eyebrow">Hands-on, minds open</p><div><h2>One question leads<br>to <em>another.</em></h2><div class="reading"><p>STEM Day brings young visitors through a series of student-led science, technology, engineering, and math activities. The archived listing described 20+ stations, a free prize at the end, and more than 300 visitors in the prior year.</p><p>The original program named Vortex Canon, Planetarium, Air Trajectory, Strawberry DNA Extraction, Ocean Zones, Elephant Toothpaste, Hovercrafts, and dozens more.</p><p class="fine-print">The photos show our community activities and are not presented as proof of an event on the listed date.</p></div></div></section>
+      <section class="activity-section wrap"><div class="section-top"><p class="eyebrow">From the activity planning archive</p><h2>Room to <em>explore.</em></h2></div><div class="activity-list">${STEM_ACTIVITY_HIGHLIGHTS.map((activity, index) => `<article><span class="activity-number">${String(index + 1).padStart(2, "0")}</span><div><h3>${activity.title}</h3><p>${activity.body}</p></div></article>`).join("")}</div></section>
+      <section class="photo-pair wrap">${photo(1)}${photo(2)}</section><section class="social-strip wrap"><div><p class="eyebrow">Keep the connection going</p><h2>Stay <em>curious.</em></h2><p>The original site hosts the STEM Day newsletter. Its event dates may be historical.</p></div><div class="link-stack">${external(NEWSLETTER, "STEM Day newsletter · Original site")}${link("photo-gallery", "Explore the photo archive")}</div></section>`;
   }
 
   function sponsorsPage() {
-    const page = getPage("sponsors");
-    const iframeSec = sectionCard(page.texts[2], []);
-    const iframe = document.createElement("iframe");
-    iframe.className = "pdf-frame";
-    iframe.src = state.site.sponsorPdf;
-    iframe.title = "Independence High School iGEM Letter of Support";
-    iframeSec.appendChild(iframe);
-
-    return [
-      pageHeader(page.title, page.texts[0]),
-      createGrid("content-grid two-up", [
-        sectionCard("Sponsors", [
-          createParagraph(page.texts[0]),
-          buttonRow([
-            {
-              href: state.site.sponsorPdf,
-              label: "Open Letter of Support",
-              external: true,
-            },
-          ]),
-        ]),
-        iframeSec,
-      ]),
-    ];
+    return `${heading("Our supporters", "Help a good<br>idea <em>grow.</em>", "Community support gives students space to learn, lead, and share their curiosity with the next generation.")}
+      <section class="support-feature wrap"><div class="reading"><h2>Local support.<br><em>Lasting connections.</em></h2><p>Science outreach takes materials, time, and people who believe young minds deserve room to explore. If your business or organization would like to support STEM Connect, start a conversation with our team.</p><p>We can discuss current needs and confirm how your support can help. Our original competition budget and sponsorship materials are historical.</p>${link("contact-us", "Talk with the team", "button-link")}</div>${photo(2)}</section>
+      <section class="document-section wrap"><p class="eyebrow">From our archive</p><div><h2>A letter from<br><em>an earlier chapter.</em></h2><p>The Independence High School iGEM Letter of Support is outdated. It describes the former competition program and must not be used as a current sponsorship offer, budget, or statement of tax treatment.</p>${external("assets/igem-letter-of-support.pdf", "Read the historical letter · PDF")}<details class="source-detail"><summary>Original sponsorship introduction</summary>${paragraphs(collections.sponsors[0])}</details></div></section>`;
   }
 
   function donationsPage() {
-    const page = getPage("donations");
-    const steps = document.createElement("ol");
-    steps.className = "steps-list";
-
-    [2, 3, 4].forEach((index) => {
-      steps.appendChild(textEl("li", "", page.texts[index]));
-    });
-
-    return [
-      pageHeader(page.title, page.texts[0]),
-      sectionCard("Instructions to Donate", [
-        createParagraph(page.texts[1]),
-        steps,
-      ]),
-    ];
+    return `${heading("Support STEM Connect", "More discovery.<br><em>Made possible by you.</em>", "Thank you for helping students find their interests in science, build confidence, and bring learning into the community.")}
+      <section class="donation-layout wrap"><div class="reading"><h2>Start with<br><em>a conversation.</em></h2><p>Your support can help students create hands-on STEM experiences and share their curiosity. Please contact the team to confirm the current donation process before sending a contribution.</p>${link("contact-us", "Confirm how to donate", "button-link")}<p class="fine-print">The original site made a tax-deductibility claim. We have not verified current tax treatment. Confirm it with the school before relying on that claim.</p></div><aside class="legacy-donation"><p class="eyebrow">Historical instructions / Check by mail</p><h3>Before you send a check</h3><ol><li><strong>Confirm the current payee.</strong> The original instructions named “Independence High School iGEM.” This is a legacy name. Ask the team or school for the correct current payee before writing or mailing a check.</li><li><strong>Confirm the mailing process.</strong> The original site directed supporters to mail checks to Independence High School.</li><li><strong>Original mailing address</strong><address>Independence High School<br>${ADDRESS}</address></li></ol><p>There is no online payment checkout on this site.</p></aside></section>${joinStrip()}`;
   }
 
   function contactPage() {
-    const instagram = document.createElement("p");
-    instagram.appendChild(createInstagramLink());
-
-    return [
-      pageHeader(getPage("contact-us").title),
-      createGrid("content-grid three-up", [
-        sectionCard("Address", [createParagraph(state.site.address)]),
-        sectionCard("Instagram", [instagram]),
-        sectionCard("Meetings", [createParagraph(state.site.meeting)]),
-      ]),
-    ];
+    return `${heading("Get in touch", "Every connection<br>starts with <em>hello.</em>", "Want to join, support a student activity, or ask about STEM Day? We’d like to hear from you.")}
+      <section class="contact-layout wrap"><div class="contact-primary"><p class="eyebrow">Send a message</p><h2>Let’s start<br><em>something good.</em></h2><p>Our contact form is hosted on the original Independence iGEM website. It opens in a new tab.</p>${external(CONTACT, "Open the original contact form", "button-link")}<p class="fine-print">The hosted form still uses our former name.</p></div><div class="contact-details"><article><p class="eyebrow">Around school</p><h3>${MEETING}</h3><p>${CONFIRM_MEETING}</p></article><article><p class="eyebrow">Find us</p><h3>Independence High School</h3><address>${ADDRESS}</address></article><article><p class="eyebrow">On Instagram</p>${external(INSTAGRAM, "@independence_igem")}<p>Our original account, still connecting our community.</p></article><article><p class="eyebrow">STEM Day newsletter</p>${external(NEWSLETTER, "Visit the original newsletter page")}<p>Hosted on the original site. Event information there may be historical.</p></article></div></section>`;
   }
 
-  const PAGE_BUILDERS = {
-    home: homePage,
-    "about-igem": aboutPage,
-    "stem-day": stemDayPage,
-    "progress-and-updates-blog": updatesPage,
-    sponsors: sponsorsPage,
-    donations: donationsPage,
-    "contact-us": contactPage,
-  };
-
-  function pageContentForRoute(route) {
-    return (PAGE_BUILDERS[route] ?? PAGE_BUILDERS.home)();
+  function buildCollections(data) {
+    if (!data.pages || !ROUTES.every((route) => Array.isArray(data.pages[route.id]?.texts))) throw new Error("Site content is incomplete.");
+    const projects = data.pages["our-projects"].texts;
+    if (projects.length < 8) throw new Error("Research archive is incomplete.");
+    const updateTexts = data.pages["progress-and-updates-blog"].texts;
+    const olderUpdates = updateTexts[3].split(/\n?-{5,}\n?/).map((entry) => entry.trim()).filter(Boolean);
+    return {
+      projects: [
+        { id: "innate-immunity", title: projects[2], period: "2025 archive · Originally labeled 2025–present", body: projects[0] },
+        { id: "mrna-vaccine", title: "Lyme disease mRNA vaccine", period: "2023–2025", body: projects[3] },
+        { id: "gene-drives", title: projects[7], period: "2021–2022", body: projects[5] },
+      ],
+      updates: [{ date: "September 2025", heading: "A new school year", body: updateTexts[1] }, ...olderUpdates.map((entry, index) => {
+        const split = entry.indexOf(":");
+        return { date: entry.slice(0, split).trim().toLowerCase().replace(/^\w/, (c) => c.toUpperCase()), heading: ["Science, shared", "Getting ready for STEM Day", "A growing team"][index], body: entry.slice(split + 1).trim() };
+      })],
+      about: data.pages["about-igem"].texts,
+      team: data.pages["our-team"].texts[0],
+      sponsors: data.pages.sponsors.texts,
+    };
   }
 
-  function refreshStagger(el) {
-    el.classList.remove("stagger");
-    void el.offsetHeight;
-    el.classList.add("stagger");
-  }
-
-  function updateNavActive(route) {
-    document.querySelectorAll("#primary-nav a").forEach((link) => {
-      const href = link.getAttribute("href") || "";
-      const linkRoute = href.replace(/^#\/?/, "");
-      const isActive = linkRoute === route;
-
-      link.classList.toggle("is-active", isActive);
-      if (isActive) link.setAttribute("aria-current", "page");
-      else link.removeAttribute("aria-current");
-    });
-  }
-
-  function closeNavMenu() {
-    const nav = document.getElementById("primary-nav");
+  function closeMenu(restoreFocus = false) {
     const toggle = document.getElementById("nav-toggle");
-
-    if (nav) nav.classList.remove("is-open");
-    if (toggle) {
-      toggle.setAttribute("aria-expanded", "false");
-      toggle.textContent = "Menu";
-    }
+    const wasOpen = toggle.getAttribute("aria-expanded") === "true";
+    toggle.setAttribute("aria-expanded", "false");
+    toggle.innerHTML = 'Menu <span aria-hidden="true">+</span>';
+    document.getElementById("primary-nav").classList.remove("is-open");
+    if (restoreFocus && wasOpen) toggle.focus();
   }
 
-  function render() {
-    const route = getRoute();
+  function render(focus = true) {
+    const [routeId, query = ""] = location.hash.replace(/^#\/?/, "").split("?");
+    const route = ROUTES.find((item) => item.id === (routeId || "home"));
     const main = document.getElementById("main-content");
-    if (!main) return;
-
-    main.replaceChildren(...pageContentForRoute(route));
-    refreshStagger(main);
-    updateNavActive(route);
-    closeNavMenu();
-
-    const activePage = getPage(route);
-    document.title =
-      (PAGE_TITLES[route] ?? activePage.title) + " | " + state.site.name;
-    window.scrollTo(0, 0);
-  }
-
-  function buildBrand() {
-    const brand = document.createElement("a");
-    brand.className = "brand";
-    brand.href = "#/home";
-    brand.setAttribute("aria-label", "Independence High School iGEM — home");
-
-    const mark = document.createElement("span");
-    mark.className = "brand-mark";
-    const logo = document.createElement("img");
-    logo.src = state.site.logo;
-    logo.alt = "";
-    mark.appendChild(logo);
-
-    const brandText = document.createElement("div");
-    brandText.className = "brand-text";
-    brandText.appendChild(textEl("strong", "", state.site.name));
-
-    brand.appendChild(mark);
-    brand.appendChild(brandText);
-    return brand;
-  }
-
-  function buildNav() {
-    const nav = document.createElement("nav");
-    nav.id = "primary-nav";
-    nav.className = "top-nav";
-    nav.setAttribute("aria-label", "Primary");
-
-    state.navItems.forEach((item) => {
-      nav.appendChild(
-        createLink({
-          href: "#/" + item.route,
-          label: item.shortName,
-        }),
-      );
+    closeMenu();
+    main.innerHTML = route ? route.build() : heading("A wrong turn, a new question", "Let’s get you<br><em>connected.</em>", "We couldn’t find that page.") + `<div class="wrap not-found">${link("home", "Back to home", "button-link")}</div>`;
+    document.title = `${route?.title || "Page not found"} | STEM Connect`;
+    document.querySelectorAll("[data-route]").forEach((anchor) => {
+      const active = anchor.dataset.route === route?.id;
+      if (active) anchor.setAttribute("aria-current", "page");
+      else anchor.removeAttribute("aria-current");
     });
-
-    return nav;
+    main.classList.remove("page-enter");
+    requestAnimationFrame(() => main.classList.add("page-enter"));
+    window.scrollTo({ top: 0, behavior: "instant" });
+    const project = new URLSearchParams(query).get("project");
+    const target = route?.id === "our-projects" && project ? document.getElementById(project) : null;
+    if (target && target.classList.contains("research-article")) {
+      target.tabIndex = -1;
+      target.focus({ preventScroll: true });
+      target.scrollIntoView({ behavior: "instant", block: "start" });
+    } else if (focus) main.querySelector("h1").focus({ preventScroll: true });
+    main.querySelectorAll("img").forEach((img) => img.addEventListener("error", () => {
+      const message = document.createElement("p");
+      message.className = "image-error";
+      message.textContent = "This archive photo couldn’t load. Please try again later.";
+      img.replaceWith(message);
+    }, { once: true }));
   }
 
-  function buildFooter() {
-    const footer = document.createElement("footer");
-    footer.className = "site-footer";
-
-    const left = document.createElement("div");
-    left.appendChild(textEl("strong", "", state.site.name));
-    left.appendChild(createParagraph(state.site.address));
-
-    const right = document.createElement("div");
-    right.appendChild(createParagraph(state.site.meeting));
-    right.appendChild(createInstagramLink());
-
-    const credit = document.createElement("div");
-    credit.className = "site-footer-credit";
-    credit.appendChild(document.createTextNode("a site by "));
-    credit.appendChild(
-      createLink({
-        href: "https://tarushv.com",
-        label: "tarushv",
-        external: true,
-      }),
-    );
-
-    footer.appendChild(left);
-    footer.appendChild(right);
-    footer.appendChild(credit);
-    return footer;
-  }
-
-  function setupMenuToggle(toggle, nav) {
+  function shell(root) {
+    root.innerHTML = `<a class="skip-link" href="#main-content">Skip to content</a><header class="site-header"><div class="header-inner"><a class="brand" href="#/home" data-route="home" aria-label="STEM Connect home"><img src="assets/stem-connect.svg" alt="" width="44" height="44" /><span>stem<span class="brand-connect">connect</span></span></a><button id="nav-toggle" class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">Menu <span aria-hidden="true">+</span></button><nav id="primary-nav" aria-label="Primary">${ROUTES.filter((route) => route.id !== "home").map((route) => `<a href="#/${route.id}" data-route="${route.id}">${route.label}</a>`).join("")}</nav></div></header><main id="main-content"></main><footer class="site-footer"><div class="footer-top wrap"><div><a class="footer-brand" href="#/home">stem <em>connect</em><img src="assets/stem-connect.svg" alt="" /></a><p>Connecting students through STEM.<br>Inspiring the next generation.</p></div><div class="footer-contact"><p>Independence High School<br>${ADDRESS}</p>${external(INSTAGRAM, "@independence_igem")}</div></div><nav class="footer-nav wrap" aria-label="All pages">${ROUTES.map((route) => `<a href="#/${route.id}" data-route="${route.id}">${route.label}</a>`).join("")}</nav><div class="footer-bottom wrap"><span>STEM Connect · Student-led in Ashburn, VA</span><span>Formerly Independence iGEM</span><span>a site by <a href="https://tarushv.com" target="_blank" rel="noopener noreferrer">tarushv<span class="sr-only"> (opens in a new tab)</span></a></span></div></footer>`;
+    const toggle = document.getElementById("nav-toggle");
+    const nav = document.getElementById("primary-nav");
     toggle.addEventListener("click", () => {
-      const open = nav.classList.toggle("is-open");
-      toggle.setAttribute("aria-expanded", open ? "true" : "false");
-      toggle.textContent = open ? "Close" : "Menu";
+      const open = toggle.getAttribute("aria-expanded") !== "true";
+      toggle.setAttribute("aria-expanded", String(open));
+      toggle.innerHTML = open ? 'Close <span aria-hidden="true">−</span>' : 'Menu <span aria-hidden="true">+</span>';
+      nav.classList.toggle("is-open", open);
     });
-
-    window.addEventListener("keydown", (event) => {
-      if (event.key === "Escape" && nav.classList.contains("is-open")) {
-        closeNavMenu();
+    document.addEventListener("keydown", (event) => { if (event.key === "Escape") closeMenu(true); });
+    document.addEventListener("click", (event) => {
+      if (!event.target.closest(".site-header")) closeMenu();
+      const anchor = event.target.closest("a");
+      if (anchor?.getAttribute("href") === "#main-content") {
+        event.preventDefault();
+        const main = document.getElementById("main-content");
+        main.tabIndex = -1;
+        main.focus();
+      } else if (anchor?.getAttribute("href") === location.hash) {
+        event.preventDefault();
+        render();
       }
     });
-  }
-
-  function buildShell(root) {
-    const shell = document.createElement("div");
-    shell.className = "app-shell";
-
-    const skip = createLink({
-      href: "#main-content",
-      label: "Skip to main content",
-      className: "skip-link",
-    });
-    shell.appendChild(skip);
-
-    const header = document.createElement("header");
-    header.className = "site-header";
-
-    const accent = document.createElement("div");
-    accent.className = "header-accent";
-    accent.setAttribute("aria-hidden", "true");
-    header.appendChild(accent);
-
-    const bar = document.createElement("div");
-    bar.className = "header-bar";
-    bar.appendChild(buildBrand());
-
-    const toggle = document.createElement("button");
-    toggle.type = "button";
-    toggle.className = "nav-toggle";
-    toggle.id = "nav-toggle";
-    toggle.setAttribute("aria-expanded", "false");
-    toggle.setAttribute("aria-controls", "primary-nav");
-    toggle.textContent = "Menu";
-    bar.appendChild(toggle);
-    header.appendChild(bar);
-
-    const nav = buildNav();
-    header.appendChild(nav);
-    shell.appendChild(header);
-
-    setupMenuToggle(toggle, nav);
-
-    const main = document.createElement("main");
-    main.id = "main-content";
-    main.className = "page stagger";
-    main.tabIndex = -1;
-    shell.appendChild(main);
-
-    shell.appendChild(buildFooter());
-    root.appendChild(shell);
-  }
-
-  function fixLegacyHash() {
-    const raw = window.location.hash.replace(/^#\/?/, "").trim();
-    if (raw === "photo-gallery") {
-      window.location.hash = "/home";
-    }
-  }
-
-  function renderLoadError(root, error) {
-    root.innerHTML =
-      "<p style=\"padding:2rem;font-family:system-ui\">Could not load site data (site-extract.json). Serve this folder over HTTP (not file://) or check the path.</p>";
-    console.error(error);
+    matchMedia("(min-width: 1180px)").addEventListener("change", () => closeMenu());
   }
 
   async function boot() {
     const root = document.getElementById("app");
-    if (!root) return;
-
     try {
-      const dataUrl = new URL("site-extract.json", window.location.href);
-      dataUrl.searchParams.set("v", ASSET_VERSION);
-      const res = await fetch(dataUrl, { cache: "no-store" });
-      if (!res.ok) throw new Error("HTTP " + res.status);
-      initFromData(await res.json());
+      const response = await fetch("site-extract.json?v=2026-10-15");
+      if (!response.ok) throw new Error(`Content request failed (${response.status}).`);
+      collections = buildCollections(await response.json());
+      shell(root);
+      render(false);
+      window.addEventListener("hashchange", () => render());
     } catch (error) {
-      renderLoadError(root, error);
-      return;
+      root.innerHTML = `<main class="loading-screen"><img src="assets/stem-connect.svg" width="64" height="64" alt="" /><h1>We couldn’t load the site.</h1><p>Please try again. If you’re previewing locally, serve this folder over HTTP.</p><button class="button-link" id="retry-load" type="button">Try again ↗</button>${external(CONTACT, "Contact us on the original site")}</main>`;
+      document.getElementById("retry-load").addEventListener("click", boot, { once: true });
+      console.error("STEM Connect could not load.", error);
     }
-
-    buildShell(root);
-    window.addEventListener("hashchange", render);
-
-    if (!window.location.hash) window.location.hash = "/home";
-    fixLegacyHash();
-    render();
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", boot);
-  } else {
-    boot();
-  }
+  boot();
 })();

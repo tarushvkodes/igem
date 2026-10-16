@@ -1,6 +1,6 @@
 {
-  "name": "independence-igem-site",
+  "name": "stem-connect-site",
   "private": true,
   "version": "1.0.0",
-  "description": "Static HTML/CSS/JS site (no bundler). Open index.html via a local HTTP server for development."
+  "description": "STEM Connect. Static HTML, CSS, and JavaScript for GitHub Pages."
 }

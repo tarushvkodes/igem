@@ -1,0 +1,8 @@
+ts	phase	decision	why	evidence	result
+2026-10-15T23:56:00Z	frame	Preserve ten content destinations and rebuild as STEM Connect	User requested full redesign and content parity	site-extract.json	implementation pending
+2026-10-15T23:56:00Z	design	Keep static stack and use route registry with historical content labels	Preserve GitHub Pages compatibility and distinguish past iGEM work	js/app.js	implementation pending
+2026-10-16T00:06:51.849525+00:00	implementation	Integrated Codex Sol rebuild from isolated worktree	User requested Codex-only workers after earlier provider failures	js/app.js; css/styles.css	all ten destinations restored
+2026-10-16T00:06:51.849637+00:00	verification	Checked all ten routes at 390px and 1440px in T3 preview	Verify real navigation and mobile layout	http://localhost:8080	one h1 each; correct titles; focus h1; no overflow
+2026-10-16T00:06:51.849640+00:00	content	Compared all three complete project descriptions with source in live DOM	Preserve research content without presenting old proposals as current	site-extract.json; js/app.js	all three exact paragraph comparisons passed
+2026-10-16T00:06:51.849641+00:00	verification	Checked local images and application/PDF requests	Ensure real static artifacts exist	assets/; index.html	11 image paths exist; application and PDF HTTP 200
+2026-10-16T00:09:00Z	review	Codex Astra final review passed functional checks and found one unsupported year in image alt text	Keep historical labels accurate	js/app.js:14	removed year from poster alt text; no functional findings

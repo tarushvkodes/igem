@@ -1,39 +1,35 @@
-# Independence High School iGEM
+# STEM Connect
 
-Static **HTML, CSS, and JavaScript** site (no Vite, no React). Works on **GitHub Pages** as-is.
+Student-led STEM outreach at Independence High School in Ashburn, Virginia. The site uses static HTML, CSS, and JavaScript and runs on GitHub Pages without a bundler or server backend.
 
-## Files
+## Preview locally
 
-| Path | Role |
-|------|------|
-| `index.html` | Page shell |
-| `css/styles.css` | Styles |
-| `js/app.js` | Hash routing (`#/home`, …) and rendering |
-| `site-extract.json` | Page copy and nav metadata |
-| `assets/` | Images and PDF (logo, STEM photo, letter of support) |
+Run `python3 -m http.server 8080` from this directory, then visit `http://localhost:8080/`. The content request requires HTTP, so opening `index.html` directly with `file://` will show the load error state.
 
-## Local preview
+## Structure
 
-`fetch()` needs **HTTP** (opening `index.html` as `file://` will not load the JSON).
+- `index.html` contains metadata, the favicon, the loading state, and the application entry point.
+- `js/app.js` contains the explicit ten-route registry, source-to-content collections, page builders, accessible menu, and hash router.
+- `css/styles.css` contains the green and cream design, responsive layouts, focus styles, and reduced-motion support.
+- `site-extract.json` preserves source content from the original Independence iGEM site.
+- `assets/` contains the STEM Connect mark, real community and historical research photos, the historical team photo, and the outdated support letter.
 
-```bash
-# Python
-python -m http.server 8080
-```
+All original hash destinations remain available. Home, about/join, team, projects, gallery, archived updates, STEM Day, sponsors, donations, and contact appear in the complete navigation. Project links use the same hash router with a `project` query parameter. Unknown routes show a recovery page.
 
-Then open `http://localhost:8080/`.
+## Content and historical context
 
-```bash
-# Node (one-off)
-npx --yes serve .
-```
+STEM Connect no longer competes in iGEM. Three full research descriptions and their original readings are preserved as archived proposals. Four dated updates retain their original wording. The historical team photo comes from the original site with an August 2024 filename. Gallery photos are not assigned to specific event dates without evidence.
 
-## GitHub Pages
+STEM Day is an event archive. The source lists May 16, 2026 and also displays a conflicting February 28 date. The site preserves the May 16 listing, free admission, no-sign-up details, 20+ stations, and 300+ prior-year visitors without announcing a future event or claiming a dated recap.
 
-Use **Source: GitHub Actions**. The workflow copies `index.html`, `site-extract.json`, `css/`, `js/`, and `assets/` into `dist/` and publishes that folder.
+Meetings are listed as Wednesdays after school in room 2517 with a request to confirm the current schedule. The original contact form and STEM Day newsletter remain accessible as clearly labeled links to the hosted Square pages. Instagram remains `independence_igem`. No local form or payment backend is implied.
 
-For a **project site** at `https://<owner>.github.io/<repo>/`, relative URLs (`assets/…`, `site-extract.json`) resolve correctly. Hash links (`#/about-igem`) need no server rewrite.
+Donation guidance preserves the legacy check payee “Independence High School iGEM” and school mailing address, with instructions to confirm the current payee and process before mailing. Tax treatment is unverified. The old support letter is explicitly historical.
 
-## Editing content
+## Maintenance and checks
 
-Change text in `site-extract.json` or adjust layout/logic in `js/app.js`.
+Edit current program copy and route presentation in `js/app.js`. Keep original historical copy in `site-extract.json`. The app derives the full project and update collections from that source. Update image captions only when their dates and subjects can be verified.
+
+Run `node --check js/app.js` for JavaScript syntax. Preview all ten routes at desktop and mobile widths, including keyboard navigation, the mobile menu, research jump links, back/forward navigation, unknown routes, and a failed content request. Images have descriptive alt text and an inline failure message. The initial loading state and fetch-error retry work without dependencies.
+
+Relative asset paths and hash navigation support GitHub Pages project paths without rewrite rules. The existing CNAME and publishing workflow are unchanged. The footer retains the original `tarushv.com` credit.
