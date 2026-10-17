@@ -20,7 +20,7 @@ All original hash destinations remain available. Home, about/join, team, project
 
 STEM Connect no longer competes in iGEM. Three full research descriptions and their original readings are preserved as archived proposals. Four dated updates retain their original wording. The historical team photo comes from the original site with an August 2024 filename. Gallery photos are not assigned to specific event dates without evidence.
 
-STEM Day is an event archive. The source lists May 16, 2026 and also displays a conflicting February 28 date. The site preserves the May 16 listing, free admission, no-sign-up details, 20+ stations, and 300+ prior-year visitors without announcing a future event or claiming a dated recap.
+STEM Day 2026 is announced for Saturday, November 21 from 10:00 AM to 4:00 PM at Independence High School. The site lists free admission, no sign-up, 20+ hands-on stations, and family-friendly drop-in attendance.
 
 Meetings are listed as Wednesdays after school in room 2517 with a request to confirm the current schedule. The original contact form and STEM Day newsletter remain accessible as clearly labeled links to the hosted Square pages. Instagram remains `independence_igem`. No local form or payment backend is implied.
 

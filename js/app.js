@@ -6,6 +6,8 @@
   const NEWSLETTER = "https://independenceigem.square.site/stem-day";
   const ADDRESS = "23115 Learning Circle, Ashburn, VA 20148";
   const CONFIRM_MEETING = "Please confirm the current meeting schedule with the team before visiting.";
+  const STEM_DAY_DATE = "November 21, 2026";
+  const STEM_DAY_TIME = "10:00 AM–4:00 PM";
   const PHOTOS = [
     { src: "stem-day-2026-station.webp", alt: "Student volunteers guiding a young visitor through a hands-on science station", caption: "Students sharing hands-on science.", group: "Community archive" },
     { src: "stem-day-2026-face-painting.webp", alt: "Fossil dig trays beside a student volunteer in a dinosaur costume", caption: "Fossil trays and a prehistoric visitor.", group: "STEM Day archive" },
@@ -115,7 +117,7 @@
   }
 
   function activityResult(interest) {
-    return `<div class="interest-photo">${photo(interest.photo)}</div><div class="interest-stories">${interest.items.map((index) => `<article><h3>${STEM_ACTIVITY_HIGHLIGHTS[index].title}</h3><p>${STEM_ACTIVITY_HIGHLIGHTS[index].body}</p></article>`).join("")}<p class="note">From our activity planning archive. Future activities are not yet announced.</p>${link("stem-day", "Explore all activities")}</div>`;
+    return `<div class="interest-photo">${photo(interest.photo)}</div><div class="interest-stories">${interest.items.map((index) => `<article><h3>${STEM_ACTIVITY_HIGHLIGHTS[index].title}</h3><p>${STEM_ACTIVITY_HIGHLIGHTS[index].body}</p></article>`).join("")}<p class="note">From our activity planning archive. The 2026 station lineup may vary.</p>${link("stem-day", "Explore all activities")}</div>`;
   }
 
   function activityBrowser() {
@@ -154,7 +156,7 @@
 
   function galleryPage() {
     return `${heading("Science, in company", "Real school science and outreach, from our community and research archive.", "forest")}
-      <div class="gallery-intro wrap field cream"><p>Exact STEM Day dates are unconfirmed. The photographs preserve our community's activities.</p></div><section class="gallery-grid field paper wrap" aria-label="Community and research photographs">${PHOTOS.map((item, index) => photo(index)).join("")}</section><section class="social-chapter field sage wrap"><h2>Keep in touch</h2><nav aria-label="Community social media">${external(INSTAGRAM, "@independence_igem")}</nav></section>`;
+      <div class="gallery-intro wrap field cream"><p>Photographs from past STEM Day activities and our iGEM research archive.</p></div><section class="gallery-grid field paper wrap" aria-label="Community and research photographs">${PHOTOS.map((item, index) => photo(index)).join("")}</section><section class="social-chapter field sage wrap"><h2>Keep in touch</h2><nav aria-label="Community social media">${external(INSTAGRAM, "@independence_igem")}</nav></section>`;
   }
 
   function updatesPage() {
@@ -163,12 +165,12 @@
   }
 
   function stemDayPage() {
-    return `${heading("A school of discovery", "Student volunteers bring hands-on science to younger learners, from fossil digs to strawberry DNA.", "sage")}
-      <section class="event-chapter field paper wrap">${photo(0, "event-photo", true)}<div class="event-details"><h2>STEM Day</h2><p class="lede">Past event listing.<br>May 16, 2026.</p><p>Independence High School<br>${ADDRESS}</p><p>Free entry for all ages. No sign-ups required in the original listing.</p><p class="note">The original site also showed February 28, so the date is unconfirmed. No next event is announced.</p>${external(NEWSLETTER, "Visit the newsletter", "button-link")}</div></section>
-      <section class="program-chapter field cream wrap"><h2>Learning by doing</h2><div class="reading"><p>The original program described 20+ stations, a free prize at the end, and more than 300 visitors in the prior year.</p><p>Vortex Canon, Planetarium, Air Trajectory, Strawberry DNA Extraction, Ocean Zones, Elephant Toothpaste, Hovercrafts, and dozens more were named in the listing.</p><p>Explore the planning archive below. The photos show our activities; exact event dates are unconfirmed.</p></div></section>
+    return `${heading("STEM Day 2026", `${STEM_DAY_DATE} · ${STEM_DAY_TIME}. A free day of hands-on science for our community.`, "sage")}
+      <section class="event-chapter field paper wrap">${photo(0, "event-photo", true)}<div class="event-details"><p class="event-kicker">Save the date</p><h2>STEM Day</h2><p class="lede">Saturday, ${STEM_DAY_DATE}<br>${STEM_DAY_TIME}</p><p>Independence High School<br>${ADDRESS}</p><p>Free entry for all ages. No sign-up required.</p>${external(NEWSLETTER, "Visit the STEM Day page", "button-link")}</div></section>
+      <section class="program-chapter field cream wrap"><h2>Learning by doing</h2><div class="reading"><p>Explore 20+ hands-on stations designed and led by student volunteers, with a free prize at the end.</p><p>Past favorites include Vortex Canon, Planetarium, Air Trajectory, Strawberry DNA Extraction, Ocean Zones, Elephant Toothpaste, Hovercrafts, and more.</p><p>Bring the whole family and drop in any time from 10:00 AM to 4:00 PM.</p></div></section>
       ${activityBrowser()}
       <section class="activity-archive field paper wrap"><h2>All the activities</h2><div class="activity-list">${STEM_ACTIVITY_HIGHLIGHTS.map((activity) => `<article><h3>${activity.title}</h3><p>${activity.body}</p></article>`).join("")}</div></section>
-      <section class="photo-duo field sage wrap">${photo(1)}${photo(2)}</section><section class="social-chapter field cream wrap"><h2>Stay curious</h2><div><p>The newsletter is hosted on our original site and may retain past dates.</p><nav aria-label="More STEM Day resources">${external(NEWSLETTER, "Visit the newsletter")}${link("photo-gallery", "See the photo archive")}</nav></div></section>`;
+      <section class="photo-duo field sage wrap">${photo(1)}${photo(2)}</section><section class="social-chapter field cream wrap"><h2>Stay curious</h2><div><p>Follow along for activity previews and event updates.</p><nav aria-label="More STEM Day resources">${external(NEWSLETTER, "Visit the STEM Day page")}${link("photo-gallery", "See the photo archive")}</nav></div></section>`;
   }
 
   function sponsorsPage() {
@@ -184,7 +186,7 @@
 
   function contactPage() {
     return `${heading("Come say hello", "Join the community, ask about activities or talk about supporting STEM Connect.", "sage")}
-      <section class="contact-chapter field paper wrap"><div class="contact-primary"><h2>One hello away</h2><p>Our contact form is hosted on the original site under the Independence iGEM name.</p>${external(CONTACT, "Open contact form", "button-link")}${photo(3)}</div><div class="contact-details"><article><h2>Room 2517</h2><p>Wednesdays after school.<br>Independence High School.</p><p>${CONFIRM_MEETING}</p></article><article><h3>Find us at school</h3><address>Independence High School<br>${ADDRESS}</address></article><article><h3>Follow our community</h3>${external(INSTAGRAM, "@independence_igem")}</article><article><h3>STEM Day newsletter</h3><p>Hosted on the original site. Event information there may be historical.</p>${external(NEWSLETTER, "Visit the newsletter")}</article></div></section>`;
+      <section class="contact-chapter field paper wrap"><div class="contact-primary"><h2>One hello away</h2><p>Our contact form is hosted on the original site under the Independence iGEM name.</p>${external(CONTACT, "Open contact form", "button-link")}${photo(3)}</div><div class="contact-details"><article><h2>Room 2517</h2><p>Wednesdays after school.<br>Independence High School.</p><p>${CONFIRM_MEETING}</p></article><article><h3>Find us at school</h3><address>Independence High School<br>${ADDRESS}</address></article><article><h3>Follow our community</h3>${external(INSTAGRAM, "@independence_igem")}</article><article><h3>STEM Day</h3><p>The full activity listing is hosted on our original site.</p>${external(NEWSLETTER, "Visit the STEM Day page")}</article></div></section>`;
   }
 
   function buildCollections(data) {
