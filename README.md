@@ -10,7 +10,7 @@ Run `python3 -m http.server 8080` from this directory, then visit `http://localh
 
 - `index.html` contains metadata, the favicon, the loading state, and the application entry point.
 - `js/app.js` contains the explicit ten-route registry, source-to-content collections, page builders, accessible menu, and hash router.
-- `css/styles.css` contains the green and cream design, responsive layouts, focus styles, and reduced-motion support.
+- `css/styles.css` contains the Square-inspired green, white, and soft-gray design, responsive layouts, focus styles, and reduced-motion support.
 - `site-extract.json` preserves source content from the original Independence iGEM site.
 - `assets/` contains the STEM Connect mark, real community and historical research photos, the historical team photo, and the outdated support letter.
 
@@ -28,7 +28,7 @@ Donation guidance preserves the legacy check payee “Independence High School i
 
 ## Taste Skill design
 
-The current design follows [Taste Skill v2](https://github.com/Leonxlnx/taste-skill/tree/main/skills/taste-skill), upstream commit `f624f37a8c650b9cc550253104925efe4c8de246`. It uses the Colour chapters direction, seed `222383801`, with the established green palette. Room 2517 and real school activity photographs connect the sections.
+The current design builds on [Taste Skill v2](https://github.com/Leonxlnx/taste-skill/tree/main/skills/taste-skill), upstream commit `f624f37a8c650b9cc550253104925efe4c8de246`. Its green, white, near-black, and soft-gray palette is aligned with the original Square site. A persistent need-to-know strip keeps Room 2517, the Wednesday meeting schedule, and STEM Day details at the top of every route.
 
 The home page interest picker groups eight archived activities into four interests. The full activity descriptions remain on the STEM Day page. Motion respects reduced-motion preferences, and the no-JavaScript fallback includes meeting information and hosted contact links.
 
