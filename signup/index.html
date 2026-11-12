@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#479f7b" />
+    <title>Sign up | STEM Connect</title>
+    <meta name="description" content="Sign up for STEM Connect at Independence High School." />
+    <link rel="icon" type="image/svg+xml" href="/assets/stem-connect.svg" />
+    <link rel="preconnect" href="https://docs.google.com" />
+    <style>
+      html, body { margin: 0; height: 100%; background: #fff; }
+      iframe { position: fixed; inset: 0; width: 100%; height: 100%; border: 0; display: block; }
+    </style>
+  </head>
+  <body>
+    <iframe
+      id="form"
+      title="STEM Connect sign-up form"
+      src="https://docs.google.com/forms/d/e/1FAIpQLSd6og9774BgTAr23fI_k_f0tjFjbc26DXaOorcyS4aKAUJ5UA/viewform?embedded=true"
+      allow="fullscreen"
+    ><a href="https://docs.google.com/forms/d/e/1FAIpQLSd6og9774BgTAr23fI_k_f0tjFjbc26DXaOorcyS4aKAUJ5UA/viewform">Open the sign-up form</a></iframe>
+    <script>
+      // If the embedded form hasn't loaded in time, send the visitor to the form directly.
+      (function () {
+        var formUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSd6og9774BgTAr23fI_k_f0tjFjbc26DXaOorcyS4aKAUJ5UA/viewform';
+        var loaded = false;
+        document.getElementById('form').addEventListener('load', function () { loaded = true; });
+        setTimeout(function () { if (!loaded) location.replace(formUrl); }, 10000);
+      })();
+    </script>
+  </body>
+</html>

@@ -25,7 +25,7 @@ jobs:
         run: |
           mkdir -p dist
           cp index.html site-extract.json dist/
-          cp -r css js assets dist/
+          cp -r css js assets signup dist/
           touch dist/.nojekyll
 
       - name: Upload Pages artifact
