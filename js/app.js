@@ -4,6 +4,7 @@
   const INSTAGRAM = "https://www.instagram.com/independence_igem/";
   const CONTACT = "https://independenceigem.square.site/contact-us";
   const NEWSLETTER = "https://independenceigem.square.site/stem-day";
+  const VOLUNTEER_SIGNUP = "/signup/";
   const ADDRESS = "23115 Learning Circle, Ashburn, VA 20148";
   const CONFIRM_MEETING = "Please confirm the current meeting schedule with the team before visiting.";
   const STEM_DAY_DATE = "November 21, 2026";
@@ -125,7 +126,7 @@
   }
 
   function homePage() {
-    return `<section class="home-hero field paper">${masthead()}<div class="hero-bottom wrap"><div class="hero-intro"><p>Student-led science and outreach at Independence High School in Ashburn, Virginia.</p><div class="hero-links">${link("stem-day", "STEM Day 2026", "button-link")}${link("about-igem", "Join the club")}</div></div><h1 tabindex="-1"><span class="line"><span>STEM</span></span> <span class="line"><span>Connect</span></span></h1></div></section>
+    return `<section class="home-hero field paper">${masthead()}<div class="hero-bottom wrap"><div class="hero-intro"><p>Student-led science and outreach at Independence High School in Ashburn, Virginia.</p><div class="hero-links">${link("stem-day", "STEM Day 2026", "button-link")}${link("about-igem", "Join the club")}<a class="text-link" href="${VOLUNTEER_SIGNUP}">Volunteer at STEM Day</a></div></div><h1 tabindex="-1"><span class="line"><span>STEM</span></span> <span class="line"><span>Connect</span></span></h1></div></section>
       <section class="statement-chapter field sage"><div class="wrap"><p class="brand-statement">Connecting students through STEM. Inspiring the next generation.</p><div class="statement-bottom"><p>We take the questions we ask after school and turn them into hands-on discoveries for younger learners.</p>${link("our-team", "Meet our people")}</div></div></section>
       ${activityBrowser()}
       <section class="community-board field paper"><div class="board-heading"><h2>From our room<br>to the community</h2></div><div class="board-photo">${photo(0)}</div><div class="board-room"><p class="room-number">2517</p><p>Wednesdays after school.<br>Independence High School.</p>${link("about-igem", "Come along")}</div><div class="board-list"><p>Design an activity.<br>Mentor a younger learner.<br>Welcome a family.<br>Try something new.</p></div><div class="board-story"><p>We began as Independence iGEM. Today, STEM Connect focuses on outreach.</p>${link("our-projects", "Read our research history")}</div></section>
@@ -166,7 +167,7 @@
 
   function stemDayPage() {
     return `${heading("STEM Day 2026", `${STEM_DAY_DATE} · ${STEM_DAY_TIME}. A free day of hands-on science for our community.`, "sage")}
-      <section class="event-chapter field paper wrap">${photo(0, "event-photo", true)}<div class="event-details"><p class="event-kicker">Save the date</p><h2>STEM Day</h2><p class="lede">Saturday, ${STEM_DAY_DATE}<br>${STEM_DAY_TIME}</p><p>Independence High School<br>${ADDRESS}</p><p>Free entry for all ages. No sign-up required.</p>${external(NEWSLETTER, "Visit the STEM Day page", "button-link")}</div></section>
+      <section class="event-chapter field paper wrap">${photo(0, "event-photo", true)}<div class="event-details"><p class="event-kicker">Save the date</p><h2>STEM Day</h2><p class="lede">Saturday, ${STEM_DAY_DATE}<br>${STEM_DAY_TIME}</p><p>Independence High School<br>${ADDRESS}</p><p>Free entry for all ages. No sign-up required.</p><p>Independence students: help run a station or lead your own.</p><a class="button-link" href="${VOLUNTEER_SIGNUP}">Volunteer at STEM Day</a><p>${external(NEWSLETTER, "Visit the STEM Day page")}</p></div></section>
       <section class="program-chapter field cream wrap"><h2>Learning by doing</h2><div class="reading"><p>Explore 20+ hands-on stations designed and led by student volunteers, with a free prize at the end.</p><p>Past favorites include Vortex Canon, Planetarium, Air Trajectory, Strawberry DNA Extraction, Ocean Zones, Elephant Toothpaste, Hovercrafts, and more.</p><p>Bring the whole family and drop in any time from 10:00 AM to 4:00 PM.</p></div></section>
       ${activityBrowser()}
       <section class="activity-archive field paper wrap"><h2>All the activities</h2><div class="activity-list">${STEM_ACTIVITY_HIGHLIGHTS.map((activity) => `<article><h3>${activity.title}</h3><p>${activity.body}</p></article>`).join("")}</div></section>
