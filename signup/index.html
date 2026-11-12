@@ -7,27 +7,227 @@
     <title>Sign up | STEM Connect</title>
     <meta name="description" content="Sign up for STEM Connect at Independence High School." />
     <link rel="icon" type="image/svg+xml" href="/assets/stem-connect.svg" />
+    <link rel="preconnect" href="https://api.fontshare.com" />
+    <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin />
     <link rel="preconnect" href="https://docs.google.com" />
+    <link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600&display=swap" rel="stylesheet" />
     <style>
-      html, body { margin: 0; height: 100%; background: #fff; }
-      iframe { position: fixed; inset: 0; width: 100%; height: 100%; border: 0; display: block; }
+      :root {
+        --paper: #ffffff;
+        --cream: #f3f5f0;
+        --forest: #215e45;
+        --sage: #dcebe4;
+        --lime: #479f7b;
+        --charcoal: #141414;
+        --font: 'Switzer', 'Helvetica Neue', Arial, sans-serif;
+        --margin: clamp(20px, 2.2vw, 32px);
+      }
+      * { box-sizing: border-box; }
+      body { margin: 0; background: var(--paper); color: var(--charcoal); font: 400 clamp(17px, 1.25vw, 19px)/1.5 var(--font); letter-spacing: -.005em; -webkit-font-smoothing: antialiased; }
+      a { color: inherit; }
+      :focus-visible { outline: 3px solid currentColor; outline-offset: 5px; }
+      [hidden] { display: none !important; }
+      .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; clip: rect(0, 0, 0, 0); overflow: hidden; white-space: nowrap; border: 0; }
+      .wrap { padding-inline: var(--margin); }
+      .site-head { background: var(--lime); color: var(--charcoal); }
+      .site-head .wrap { min-height: 86px; display: flex; align-items: center; gap: 32px; }
+      .brand { display: inline-flex; align-items: center; min-height: 44px; gap: 12px; font-size: 24px; font-weight: 600; letter-spacing: -.04em; white-space: nowrap; text-decoration: none; }
+      .brand img { width: 40px; height: 40px; display: block; }
+      .back-link { margin-left: auto; font-weight: 500; text-decoration: underline; text-decoration-thickness: .065em; text-underline-offset: .25em; display: inline-flex; align-items: center; min-height: 44px; }
+      .band { background: var(--forest); color: var(--paper); padding-block: 56px 64px; }
+      .band h1 { margin: 0; font-size: clamp(52px, 8.3vw, 128px); font-weight: 600; letter-spacing: -.045em; line-height: .98; }
+      .band .facts { margin: 22px 0 0; font-size: clamp(20px, 2vw, 28px); line-height: 1.35; }
+      .band-action { margin: 26px 0 0; }
+      .band-button { background: var(--paper); color: var(--forest); min-height: 48px; display: inline-flex; align-items: center; padding: 12px 24px; text-decoration: none; font-weight: 500; }
+      .chapter { background: var(--sage); padding-block: 48px 72px; }
+      .form-shell { background: var(--cream); padding: clamp(14px, 2.2vw, 28px); }
+      .form-status { margin: 0 0 14px; font-weight: 500; }
+      .form-fallback { margin: 14px 0 0; }
+      .form-fallback-top { margin: 0 0 14px; }
+      .form-fallback a { display: inline-flex; align-items: center; min-height: 48px; font-weight: 500; text-decoration: underline; text-decoration-thickness: .065em; text-underline-offset: .25em; }
+      .form-failed { padding: clamp(20px, 3vw, 40px); background: var(--paper); border-top: 6px solid var(--forest); }
+      .form-failed h2 { margin: 0 0 12px; font-size: clamp(26px, 2.6vw, 36px); font-weight: 600; letter-spacing: -.03em; line-height: 1.1; }
+      .form-failed p { margin: 0 0 20px; max-width: 60ch; }
+      .form-failed .failed-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 0; }
+      .failed-button { background: var(--forest); color: var(--paper); min-height: 48px; display: inline-flex; align-items: center; justify-content: center; padding: 12px 24px; text-decoration: none; font-weight: 500; }
+      .retry-button { background: transparent; color: var(--charcoal); border: 2px solid var(--charcoal); min-height: 48px; display: inline-flex; align-items: center; justify-content: center; padding: 10px 22px; font: inherit; font-weight: 500; cursor: pointer; }
+      @media (min-width: 900px) {
+        .form-failed { display: grid; grid-template-columns: 1fr auto; column-gap: 48px; align-items: end; }
+        .form-failed h2, .form-failed p { grid-column: 1; }
+        .form-failed p { margin-bottom: 0; }
+        .form-failed p + p { margin-top: 10px; }
+        .form-failed .failed-actions { grid-column: 2; grid-row: 1 / span 3; flex-direction: column; align-items: stretch; flex-wrap: nowrap; }
+      }
+      @media (max-width: 599px) {
+        .form-failed .failed-actions { flex-direction: column; align-items: stretch; flex-wrap: nowrap; }
+      }
+      iframe { width: 100%; height: 1150px; border: 0; display: block; background: var(--paper); }
+      .signup-photo { margin: 0; aspect-ratio: 32 / 7; overflow: hidden; }
+      .signup-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 38%; display: block; }
+      .site-footer { background: var(--forest); color: var(--paper); padding-block: 25px 15px; }
+      .footer-brand { display: block; font-size: clamp(44px, 13.2vw, 220px); line-height: 1.1; font-weight: 600; letter-spacing: -.065em; white-space: nowrap; text-decoration: none; }
+      .footer-motto { font-size: clamp(22px, 2.2vw, 32px); line-height: 1.25; margin: 65px 0 32px; }
+      .footer-home { display: inline-flex; align-items: center; min-height: 44px; font-weight: 500; text-decoration: underline; text-decoration-thickness: .065em; text-underline-offset: .25em; }
+      @media (max-width: 599px) {
+        .site-head .wrap { min-height: 72px; gap: 16px; }
+        .brand { font-size: 20px; gap: 8px; }
+        .brand img { width: 30px; height: 30px; }
+        .band { padding-block: 40px 46px; }
+        .signup-photo { aspect-ratio: 21 / 10; }
+        .signup-photo img { object-position: 50% 30%; }
+        .chapter { padding-block: 28px 48px; }
+        iframe { height: 1000px; }
+        .site-footer { padding-block: 18px 12px; }
+        .footer-brand { font-size: 12.3vw; letter-spacing: -.06em; }
+        .footer-motto { margin-top: 40px; }
+      }
     </style>
   </head>
   <body>
-    <iframe
-      id="form"
-      title="STEM Connect sign-up form"
-      src="https://docs.google.com/forms/d/e/1FAIpQLSd6og9774BgTAr23fI_k_f0tjFjbc26DXaOorcyS4aKAUJ5UA/viewform?embedded=true"
-      allow="fullscreen"
-    ><a href="https://docs.google.com/forms/d/e/1FAIpQLSd6og9774BgTAr23fI_k_f0tjFjbc26DXaOorcyS4aKAUJ5UA/viewform">Open the sign-up form</a></iframe>
+    <header class="site-head">
+      <div class="wrap">
+        <a class="brand" href="../" aria-label="STEM Connect home"><img src="../assets/stem-connect.svg" alt="" width="40" height="40" /><span>STEM Connect</span></a>
+        <a class="back-link" href="../">Back to home</a>
+      </div>
+    </header>
+    <main>
+      <section class="band">
+        <div class="wrap">
+          <h1>Join STEM Connect</h1>
+          <p class="facts">Wednesdays after school · Room 2517</p>
+          <p class="band-action"><a class="band-button" href="https://docs.google.com/forms/d/e/1FAIpQLSd6og9774BgTAr23fI_k_f0tjFjbc26DXaOorcyS4aKAUJ5UA/viewform">Open the sign-up form</a></p>
+        </div>
+      </section>
+      <figure class="signup-photo"><img src="../assets/archive-3.jpeg" alt="Gloved hand connecting a cable to an illuminated gel electrophoresis tank" width="1120" height="1120" /></figure>
+      <section class="chapter">
+        <div class="wrap">
+          <div class="form-shell">
+            <p class="form-status" id="form-status" role="status">Form loading…</p>
+            <p class="form-fallback form-fallback-top">Having trouble with the embedded form? <a href="https://docs.google.com/forms/d/e/1FAIpQLSd6og9774BgTAr23fI_k_f0tjFjbc26DXaOorcyS4aKAUJ5UA/viewform">Open the sign-up form directly</a>.</p>
+            <iframe
+              id="form"
+              title="STEM Connect sign-up form"
+              src="https://docs.google.com/forms/d/e/1FAIpQLSd6og9774BgTAr23fI_k_f0tjFjbc26DXaOorcyS4aKAUJ5UA/viewform?embedded=true"
+              allow="fullscreen"
+            ></iframe>
+            <div class="form-failed" id="form-failed" hidden>
+              <h2>The form didn't load</h2>
+              <p>Your network may be blocking the embedded form. The sign-up form itself works fine — open it directly instead. It takes about a minute.</p>
+              <p>Or just come by: Wednesdays after school, Room 2517.</p>
+              <p class="failed-actions"><a class="failed-button" href="https://docs.google.com/forms/d/e/1FAIpQLSd6og9774BgTAr23fI_k_f0tjFjbc26DXaOorcyS4aKAUJ5UA/viewform">Open the sign-up form</a><button class="retry-button" id="form-retry" type="button">Try the embedded form again</button></p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">
+        <a class="footer-brand" href="../">STEM Connect</a>
+        <p class="footer-motto">Connecting students through STEM.<br />Inspiring the next generation.</p>
+        <a class="footer-home" href="../">Home</a>
+      </div>
+    </footer>
     <script>
-      // If the embedded form hasn't loaded in time, send the visitor to the form directly.
-      (function () {
-        var formUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSd6og9774BgTAr23fI_k_f0tjFjbc26DXaOorcyS4aKAUJ5UA/viewform';
-        var loaded = false;
-        document.getElementById('form').addEventListener('load', function () { loaded = true; });
-        setTimeout(function () { if (!loaded) location.replace(formUrl); }, 10000);
-      })();
+      var formLoaded = false;
+      var netFailed = false;
+      var formEl = document.getElementById('form');
+      var formStatus = document.getElementById('form-status');
+      var formFailed = document.getElementById('form-failed');
+      var formTimer = null;
+      function showFailure() {
+        if (!formFailed.hidden) return;
+        // Announce first (the status is a live region), then consolidate:
+        // the panel becomes the single failure block, so the status line,
+        // the top fallback line, and the decorative photo step aside.
+        formStatus.textContent = "The form didn't load. Your network may be blocking it — use the button below to open the sign-up form directly.";
+        formEl.hidden = true;
+        formFailed.hidden = false;
+        var photo = document.querySelector('.signup-photo');
+        if (photo) photo.hidden = true;
+        setTimeout(function () {
+          // Visually consolidate WITHOUT display:none — the status is the
+          // live region, and hiding it outright could cancel the screen-
+          // reader announcement that fired when its text changed.
+          formStatus.classList.add('sr-only');
+          var topFallback = document.querySelector('.form-fallback-top');
+          if (topFallback) topFallback.hidden = true;
+        }, 700);
+      }
+      function armTimer() {
+        clearTimeout(formTimer);
+        formTimer = setTimeout(function () { if (!formLoaded) showFailure(); }, 8000);
+      }
+      var pendingLoad = false;
+      var confirmTimer = null;
+      function confirmLoad() {
+        if (netFailed || !pendingLoad) return;
+        pendingLoad = false;
+        // A load event alone does not prove the form rendered — a blocking
+        // network can hand the iframe an error page that still fires load.
+        // So the status stays visible as a labelled state, and the direct
+        // link above the form stays put either way.
+        formLoaded = true;
+        clearTimeout(formTimer);
+        formFailed.hidden = true;
+        formEl.hidden = false;
+        formStatus.hidden = false;
+        formStatus.classList.remove('sr-only');
+        formStatus.textContent = 'The form should appear below. If this area stays blank, your network may be blocking it.';
+        var photo = document.querySelector('.signup-photo');
+        if (photo) photo.hidden = false;
+        var topFallback = document.querySelector('.form-fallback-top');
+        if (topFallback) topFallback.hidden = false;
+      }
+      function probeNetwork() {
+        // A no-cors fetch to the form's own URL resolves (opaque) whenever
+        // the network can reach Google at all, and rejects when the network
+        // blocks it — the one reachability signal a cross-origin embed
+        // cannot give us itself. A load that arrives while the probe says
+        // the network is blocked can only be an error page, so the failure
+        // panel takes over; a confirmed load (probe resolved, or the probe
+        // grace period passed quietly) is trusted.
+        if (!window.fetch) return;
+        fetch(formEl.src, { mode: 'no-cors', credentials: 'omit' }).then(function () {
+          if (pendingLoad) confirmLoad();
+        }, function () {
+          if (formLoaded) return;
+          netFailed = true;
+          pendingLoad = false;
+          clearTimeout(formTimer);
+          clearTimeout(confirmTimer);
+          showFailure();
+        });
+      }
+      formEl.addEventListener('load', function () {
+        if (netFailed) return; // load from an error page after a failed probe
+        if (formLoaded) return;
+        // Hold the load as unconfirmed for a short grace period while the
+        // network probe settles — an error page and a real form both fire
+        // load, but only a reachable network lets the probe resolve.
+        pendingLoad = true;
+        clearTimeout(confirmTimer);
+        confirmTimer = setTimeout(confirmLoad, 1200);
+      });
+      document.getElementById('form-retry').addEventListener('click', function () {
+        formLoaded = false;
+        netFailed = false;
+        pendingLoad = false;
+        clearTimeout(confirmTimer);
+        formFailed.hidden = true;
+        formEl.hidden = false;
+        formStatus.hidden = false;
+        formStatus.classList.remove('sr-only');
+        formStatus.textContent = 'Form loading…';
+        var topFallback = document.querySelector('.form-fallback-top');
+        if (topFallback) topFallback.hidden = false;
+        var photo = document.querySelector('.signup-photo');
+        if (photo) photo.hidden = false;
+        formEl.src = formEl.src;
+        armTimer();
+        probeNetwork();
+      });
+      armTimer();
+      probeNetwork();
     </script>
   </body>
 </html>
