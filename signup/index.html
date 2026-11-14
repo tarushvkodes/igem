@@ -10,43 +10,29 @@
     <link rel="preload" href="../assets/fonts/switzer-400.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="../assets/fonts/switzer-600.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preconnect" href="https://docs.google.com" />
+    <link rel="stylesheet" href="../css/styles.css" />
     <style>
-      @font-face { font-family: 'Switzer'; src: url("../assets/fonts/switzer-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
-      @font-face { font-family: 'Switzer'; src: url("../assets/fonts/switzer-500.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
-      @font-face { font-family: 'Switzer'; src: url("../assets/fonts/switzer-600.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
-      /* Duplicated token block — mirrors the :root tokens in
-         css/styles.css; keep the two in sync. */
+      /* R19: tokens, fonts and chrome come from the shared sheet (../css/styles.css); below is this page's own layer + marked preservations. */
       :root {
-        --paper: #ffffff;
-        --cream: #f3f5f0;
-        --forest: #215e45;
-        --sage: #dcebe4;
-        --lime: #479f7b;
-        --charcoal: #141414;
-        --font: 'Switzer', 'Helvetica Neue', Arial, sans-serif;
-        --margin: clamp(20px, 2.2vw, 32px);
-        --small: 14px;
-        --body: clamp(17px, 1.25vw, 19px);
-        --lead: clamp(22px, 2.2vw, 32px);
-        --statement: clamp(28px, 2.8vw, 36px);
-        --head-sm: clamp(34px, 3.4vw, 46px);
-        --head: clamp(38px, 4.6vw, 68px);
-        --display: clamp(72px, 8.3vw, 128px);
-        --wordmark: clamp(44px, 10.6vw, 170px);
-        --wordmark-mobile: 12.3vw;
-        --brand: 24px;
-        /* Local exception: the signup H1 keeps its lower 52px floor. */
+        /* Ruled exception (R15): the signup H1 keeps its 52px floor. */
         --display-signup: clamp(52px, 8.3vw, 128px);
       }
-      * { box-sizing: border-box; }
-      body { margin: 0; background: var(--paper); color: var(--forest); font: 400 var(--body)/1.5 var(--font); letter-spacing: -.005em; -webkit-font-smoothing: antialiased; }
-      a { color: inherit; }
-      :focus-visible { outline: 3px solid currentColor; outline-offset: 5px; }
-      /* Focus outlines use the ground colour each control sits on, so the
-         outline is never the same colour as its background: charcoal on the
-         lime header (5.71:1) and on sage (14.95:1), paper on the forest band
-         and footer (7.63:1), forest on the white failure card (7.63:1),
-         charcoal on the white card for the retry button (18.42:1). */
+      /* No sticky header here, so no smooth scroll / scroll padding. */
+      html { scroll-behavior: auto; scroll-padding-top: 0; }
+      /* The shared sheet has no [hidden] rule; the state machine relies on it. */
+      [hidden] { display: none !important; }
+      /* Preservation: this page's paragraphs stay uncapped, as judged (the failure card's 60ch class cap still applies). */
+      p { max-width: none; text-wrap: wrap; }
+      /* Preservation: this page's headings keep plain wrapping, as judged. */
+      .band h1, .form-failed h2 { text-wrap: wrap; }
+      /* Preservation: this page's links keep their pre-dedupe behaviour (no transitions or press dip; hover underlines as below). */
+      a, button { transition: none; }
+      a:active, button:active { transform: none; }
+      @media (hover: hover) and (pointer: fine) {
+        a:hover { text-decoration: none; }
+        .back-link:hover, .form-fallback a:hover, .footer-nav a:hover, .footer-bottom a:hover { text-decoration: underline; text-underline-offset: .25em; }
+      }
+      /* Focus outline colour is chosen per ground, so it never matches its background (5.71–18.42:1). */
       .site-head a:focus-visible { outline-color: var(--charcoal); }
       .band-button:focus-visible { outline-color: var(--paper); }
       .failed-button:focus-visible { outline-color: var(--forest); }
@@ -54,22 +40,10 @@
       .form-fallback a:focus-visible { outline-color: var(--charcoal); }
       .site-footer a:focus-visible { outline-color: var(--paper); }
       iframe:focus-visible { outline-color: var(--charcoal); }
-      [hidden] { display: none !important; }
-      .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; clip: rect(0, 0, 0, 0); overflow: hidden; white-space: nowrap; border: 0; }
-      /* Skip link, matching the SPA shell's pattern: fixed off-screen
-         until focus, then pinned at the top-left. When visible it sits
-         over the lime header, so its focus outline takes charcoal —
-         the same treatment .site-head links get above (charcoal on
-         lime, 5.71:1); the outline itself follows the page's global
-         :focus-visible rule (3px solid, 5px offset). */
-      .skip-link { position: fixed; top: -90px; left: 20px; z-index: 20; background: var(--forest); color: var(--paper); padding: 16px; text-decoration: none; }
-      .skip-link:focus { top: 12px; }
-      .skip-link:focus-visible { outline-color: var(--charcoal); }
-      .wrap { padding-inline: var(--margin); }
+      /* Preservation: skip link keeps the charcoal ring alone (no paper halo), as judged. */
+      .skip-link:focus-visible { box-shadow: none; }
       .site-head { background: var(--lime); color: var(--charcoal); }
       .site-head .wrap { min-height: 86px; display: flex; align-items: center; gap: 32px; }
-      .brand { display: inline-flex; align-items: center; min-height: 44px; gap: 12px; font-size: var(--brand); font-weight: 600; letter-spacing: -.04em; white-space: nowrap; text-decoration: none; }
-      .brand img { width: 40px; height: 40px; display: block; }
       .back-link { margin-left: auto; font-weight: 500; text-decoration: underline; text-decoration-thickness: .065em; text-underline-offset: .25em; display: inline-flex; align-items: center; min-height: 44px; }
       .band { background: var(--forest); color: var(--paper); padding-block: 56px 64px; }
       .band h1 { margin: 0; font-size: var(--display-signup); font-weight: 600; letter-spacing: -.045em; line-height: .98; }
@@ -77,10 +51,7 @@
       .band-action { margin: 26px 0 0; }
       .band-button { background: var(--paper); color: var(--forest); min-height: 48px; display: inline-flex; align-items: center; padding: 12px 24px; text-decoration: none; font-weight: 500; }
       .chapter { background: var(--sage); padding-block: 48px 72px; }
-      /* Failure state only: the photo is hidden, so the sage chapter padding
-         that framed it would stand as an empty void around the failure card.
-         Collapse the chapter's vertical padding and keep the photo region
-         fully collapsed; loading/success states are untouched. */
+      /* Failure state only: collapse the chapter padding the hidden photo would leave empty. */
       body.form-failed-state .chapter { padding-block: 0; }
       body.form-failed-state .signup-photo { display: none; }
       .form-shell { background: transparent; padding: 0; }
@@ -88,72 +59,40 @@
       .form-fallback { margin: 14px 0 0; }
       .form-fallback-top { margin: 0 0 14px; }
       .form-fallback a { display: inline-flex; align-items: center; min-height: 48px; font-weight: 500; text-decoration: underline; text-decoration-thickness: .065em; text-underline-offset: .25em; }
-      /* R15: no border-top. The 6px forest rule sat between the sage
-         chapter's top edge and the card's white body, so in rendered
-         pixels the card's white top stepped 6px below the shell's top
-         edge (DOM border-box measures read flush, pixel measures did
-         not — the rule also merged invisibly with the forest band
-         above). The card only ever renders in this failed state, so
-         removing the rule makes its top edge — the white edge — flush
-         with the chapter top in both measures, ±0. */
+      /* Preservation: failure heading uncapped, as judged. */
+      .form-failed h2 { max-width: none; }
+      /* R15: no border-top — the card's white top edge sits flush with the chapter top. */
       .form-failed { padding: clamp(20px, 3vw, 40px); background: var(--paper); max-width: 720px; margin-inline: auto; }
-      /* Failure state: the status collapses to a live-region-only line, so
-         the card's top edge sits flush with the sage chapter's top edge. */
+      /* Failure state: status collapses to a live-region-only line; card top stays flush. */
       body.form-failed-state .form-status { margin: 0; }
       .form-failed h2 { margin: 0 0 12px; font-size: var(--lead); font-weight: 500; letter-spacing: -.025em; line-height: 1.1; }
       .form-failed p { margin: 0 0 20px; max-width: 60ch; }
       .form-failed .failed-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 0; }
       .failed-button { background: var(--forest); color: var(--paper); min-height: 48px; display: inline-flex; align-items: center; justify-content: center; padding: 12px 24px; text-decoration: none; font-weight: 500; }
       .retry-button { background: transparent; color: var(--charcoal); border: 2px solid var(--charcoal); min-height: 48px; display: inline-flex; align-items: center; justify-content: center; padding: 10px 22px; font: inherit; font-weight: 500; cursor: pointer; }
-      /* The failure card is capped at 720px and stays a single column at
-         every width, so its actions align with the text column instead of
-         floating to the right edge of the full-width shell. */
+      /* The 720px card is single-column at every width; its actions align to the text column. */
       @media (max-width: 599px) {
         .form-failed .failed-actions { flex-direction: column; align-items: stretch; flex-wrap: nowrap; }
       }
       iframe { width: 100%; height: 1150px; border: 0; display: block; background: var(--paper); }
       .signup-photo { margin: 0; aspect-ratio: 32 / 7; overflow: hidden; }
       .signup-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 38%; display: block; }
-      .site-footer { background: var(--forest); color: var(--paper); padding-block: 25px 15px; }
-      .footer-brand { display: block; font-size: var(--wordmark); line-height: 1.1; font-weight: 600; letter-spacing: -.065em; white-space: nowrap; text-decoration: none; }
-      /* R14: footer parity with the SPA — the motto + nav sit in a
-         .footer-middle block and the address/credits row (.footer-bottom)
-         closes the footer, mirroring the main site's structure and
-         measures in this stylesheet's tokens. The motto carries no <br>,
-         so on desktop it holds one line, as the SPA's does. */
-      .footer-middle { margin-top: 28px; }
-      .footer-motto { font-size: var(--lead); line-height: 1.25; margin-bottom: 0; }
-      .footer-nav { display: flex; flex-wrap: wrap; gap: 4px 22px; margin-top: 18px; }
-      .footer-nav a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: underline; text-decoration-thickness: .065em; text-underline-offset: .25em; }
-      .footer-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 30px; font-size: var(--small); margin-top: 18px; align-items: center; }
-      .footer-bottom a { text-decoration: underline; display: inline-flex; align-items: center; min-height: 44px; }
-      @media (max-width: 799px) {
-        .brand { font-size: 21px; gap: 9px; }
-        .brand img { width: 34px; height: 34px; }
-      }
+      /* Footer ground set here (the SPA takes it from field/forest classes). */
+      .site-footer { background: var(--forest); color: var(--paper); }
+      /* Preservation: motto keeps its judged top spacing (1em). */
+      .footer-motto { margin-top: 1em; }
+      /* Preservation: footer Instagram link without the shared .text-link block padding, as judged. */
+      .footer-address .text-link { padding-block: 0; }
       @media (max-width: 599px) {
-        /* --display / --head overrides removed: nothing on this page
-           consumes either token (the H1 uses --display-signup). */
-        :root { --lead: 24px; --body: 17px; }
         .site-head .wrap { min-height: 72px; gap: 16px; }
-        /* R14: header tracking parity with the main site — the ≤599px step
-           is -.045em (not the base -.04em), so "STEM Connect" reads as two
-           words in the signup header, as it does on the SPA. */
-        .brand { font-size: 20px; gap: 8px; letter-spacing: -.045em; }
-        .brand img { width: 30px; height: 30px; }
         .band { padding-block: 40px 46px; }
         .signup-photo { aspect-ratio: 21 / 10; }
         .signup-photo img { object-position: 50% 30%; }
         .chapter { padding-block: 28px 48px; }
         iframe { height: 1000px; }
-        .site-footer { padding-block: 18px 12px; }
-        /* Mobile wordmark carrier keeps -.06em, as on the main site:
-           measured at 360px, -.065em changes the wordmark text width
-           (267.13px -> 264.47px), so -.06em stays as part of the
-           --wordmark-mobile token rule to keep the render identical. */
-        .footer-brand { font-size: var(--wordmark-mobile); letter-spacing: -.06em; }
+        /* Preservation: footer keeps its judged 28px/18px margin steps at this width. */
         .footer-middle { margin-top: 28px; }
-        .footer-bottom { margin-top: 20px; flex-direction: column; align-items: flex-start; gap: 6px; }
+        .footer-nav { margin-top: 18px; }
       }
     </style>
   </head>
@@ -208,11 +147,13 @@
       var formEl = document.getElementById('form');
       var formStatus = document.getElementById('form-status');
       var formFailed = document.getElementById('form-failed');
+      var bandAction = document.querySelector('.band-action');
+      var bandFacts = document.querySelector('.band .facts');
+      var photo = document.querySelector('.signup-photo');
+      var photoImg = document.querySelector('.signup-photo img');
+      var topFallback = document.querySelector('.form-fallback-top');
       var formTimer = null;
-      // Hide an element without stranding keyboard focus: if the element
-      // being hidden contains the focused element, focus would drop to
-      // <body> — move it to the failure card's heading instead. When
-      // focus is anywhere else, nothing about focus changes.
+      // Hide without stranding focus: if focus is inside, move it to the failure heading.
       function hideWithFocusGuard(el) {
         if (!el) return;
         var focusInside = el.contains(document.activeElement);
@@ -224,30 +165,19 @@
       }
       function showFailure() {
         if (!formFailed.hidden) return;
-        // Announce first (the status is a live region), then consolidate:
-        // the panel becomes the single failure block, so the status line,
-        // the top fallback line, and the decorative photo step aside.
+        // Announce first (the status is a live region), then consolidate the panel.
         formStatus.textContent = "The form didn't load. Your network may be blocking it — use the button below to open the sign-up form directly.";
         document.body.classList.add('form-failed-state');
-        // Reveal the failure card first (same synchronous frame, no
-        // visual change) so the focus guard below can land focus on its
-        // heading when a hide strands it.
+        // Reveal the card first so the focus guard can land on its heading.
         formFailed.hidden = false;
         hideWithFocusGuard(formEl);
-        var bandAction = document.querySelector('.band-action');
         hideWithFocusGuard(bandAction);
-        // The meeting fact also steps aside in the failure state: the
-        // panel's come-by line carries it, exactly once per state.
-        var bandFacts = document.querySelector('.band .facts');
+        // The panel's come-by line carries the meeting fact in this state.
         hideWithFocusGuard(bandFacts);
-        var photo = document.querySelector('.signup-photo');
         hideWithFocusGuard(photo);
         setTimeout(function () {
-          // Visually consolidate WITHOUT display:none — the status is the
-          // live region, and hiding it outright could cancel the screen-
-          // reader announcement that fired when its text changed.
+          // Consolidate visually without display:none — hiding the live region could cancel its announcement.
           formStatus.classList.add('sr-only');
-          var topFallback = document.querySelector('.form-fallback-top');
           hideWithFocusGuard(topFallback);
         }, 700);
       }
@@ -257,47 +187,35 @@
       }
       var pendingLoad = false;
       var confirmTimer = null;
-      function confirmLoad() {
-        if (netFailed || !pendingLoad) return;
-        pendingLoad = false;
-        // A load event alone does not prove the form rendered — a blocking
-        // network can hand the iframe an error page that still fires load.
-        // So the status stays visible as a labelled state, and the direct
-        // link above the form stays put either way.
-        formLoaded = true;
-        // The photo's src is deferred until this confirmed-load path runs,
-        // so it never downloads in the failure state that hides it. The
-        // figure's aspect-ratio and the img width/height reserve its box,
-        // so assigning it here causes no layout shift.
-        var photoImg = document.querySelector('.signup-photo img');
-        if (photoImg && !photoImg.getAttribute('src')) {
-          photoImg.setAttribute('srcset', photoImg.getAttribute('data-srcset'));
-          photoImg.setAttribute('src', photoImg.getAttribute('data-src'));
-        }
-        clearTimeout(formTimer);
+      // Restore the chrome around a state change; the band action is left to the callers.
+      function restoreChrome(statusText) {
         document.body.classList.remove('form-failed-state');
         formFailed.hidden = true;
         formEl.hidden = false;
         formStatus.hidden = false;
         formStatus.classList.remove('sr-only');
-        formStatus.textContent = 'The form should appear below. If this area stays blank, your network may be blocking it.';
-        var bandAction = document.querySelector('.band-action');
-        if (bandAction) bandAction.hidden = false;
-        var bandFacts = document.querySelector('.band .facts');
+        formStatus.textContent = statusText;
         if (bandFacts) bandFacts.hidden = false;
-        var photo = document.querySelector('.signup-photo');
         if (photo) photo.hidden = false;
-        var topFallback = document.querySelector('.form-fallback-top');
         if (topFallback) topFallback.hidden = false;
       }
+      function confirmLoad() {
+        if (netFailed || !pendingLoad) return;
+        pendingLoad = false;
+        // A load event alone doesn't prove the form rendered (an error page fires load too); the status stays a labelled state.
+        formLoaded = true;
+        // Photo src is deferred to this confirmed-load path, so it never downloads in the failure state; its box is reserved, so no layout shift.
+        if (photoImg && !photoImg.getAttribute('src')) {
+          photoImg.setAttribute('srcset', photoImg.getAttribute('data-srcset'));
+          photoImg.setAttribute('src', photoImg.getAttribute('data-src'));
+        }
+        clearTimeout(formTimer);
+        restoreChrome('The form should appear below. If this area stays blank, your network may be blocking it.');
+        // R19: on confirmed load the band action retires (the direct link above the form is this state's single open-form action); it stays if it holds focus.
+        if (bandAction && !bandAction.contains(document.activeElement)) bandAction.hidden = true;
+      }
       function probeNetwork() {
-        // A no-cors fetch to the form's own URL resolves (opaque) whenever
-        // the network can reach Google at all, and rejects when the network
-        // blocks it — the one reachability signal a cross-origin embed
-        // cannot give us itself. A load that arrives while the probe says
-        // the network is blocked can only be an error page, so the failure
-        // panel takes over; a confirmed load (probe resolved, or the probe
-        // grace period passed quietly) is trusted.
+        // A no-cors fetch to the form URL is the reachability signal a cross-origin embed can't give: resolved = reachable, rejected = blocked.
         if (!window.fetch) return;
         fetch(formEl.src, { mode: 'no-cors', credentials: 'omit' }).then(function () {
           if (pendingLoad) confirmLoad();
@@ -313,9 +231,7 @@
       formEl.addEventListener('load', function () {
         if (netFailed) return; // load from an error page after a failed probe
         if (formLoaded) return;
-        // Hold the load as unconfirmed for a short grace period while the
-        // network probe settles — an error page and a real form both fire
-        // load, but only a reachable network lets the probe resolve.
+        // Hold the load unconfirmed for a grace period while the probe settles.
         pendingLoad = true;
         clearTimeout(confirmTimer);
         confirmTimer = setTimeout(confirmLoad, 1200);
@@ -325,20 +241,8 @@
         netFailed = false;
         pendingLoad = false;
         clearTimeout(confirmTimer);
-        document.body.classList.remove('form-failed-state');
-        formFailed.hidden = true;
-        formEl.hidden = false;
-        formStatus.hidden = false;
-        formStatus.classList.remove('sr-only');
-        formStatus.textContent = 'Form loading…';
-        var bandAction = document.querySelector('.band-action');
+        restoreChrome('Form loading…');
         if (bandAction) bandAction.hidden = false;
-        var bandFacts = document.querySelector('.band .facts');
-        if (bandFacts) bandFacts.hidden = false;
-        var topFallback = document.querySelector('.form-fallback-top');
-        if (topFallback) topFallback.hidden = false;
-        var photo = document.querySelector('.signup-photo');
-        if (photo) photo.hidden = false;
         formEl.src = formEl.src;
         armTimer();
         probeNetwork();

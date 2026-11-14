@@ -94,7 +94,7 @@
   }
 
   const INTERESTS = [
-    { id: "life", label: "Living things", items: [3, 4], photo: 1 },
+    { id: "life", label: "Living things", items: [3, 4], photo: 8 },
     { id: "chemistry", label: "Chemistry", items: [1, 2], photo: 5 },
     { id: "engineering", label: "Making & coding", items: [0, 5], photo: 7 },
     { id: "everyday", label: "Art & everyday science", items: [6, 7], photo: 2 },
@@ -155,7 +155,8 @@
   }
 
   function joinStrip() {
-    return `<section class="join-chapter field lime"><div class="join-image">${photo(3, "", false, false, false, false, "(max-width: 700px) 100vw, 16vw")}</div><div class="join-copy"><h2>See you in 2517</h2><p>Wednesdays after school at Independence High School. Bring your interests. No research background needed.</p>${link("about-igem", "Join the club", "button-link")}<p class="note">Confirm the current meeting schedule before visiting.</p></div></section>`;
+    // R21: strip = PHOTOS[4] — PHOTOS[3] renders once on Home, at tile D.
+    return `<section class="join-chapter field lime"><div class="join-image">${photo(4, "", false, false, false, false, "(max-width: 700px) 100vw, 16vw")}</div><div class="join-copy"><h2>See you in 2517</h2><p>Wednesdays after school at Independence High School. Bring your interests. No research background needed.</p>${link("about-igem", "Join the club", "button-link")}<p class="note">Confirm the current meeting schedule before visiting.</p></div></section>`;
   }
 
   function masthead() {
@@ -163,7 +164,8 @@
     // appears nowhere else on the home page, so it carries the same alt
     // text it has in the gallery (PHOTOS[0].alt). The other masthead
     // tiles stay decorative (alt="").
-    return `<div class="masthead">${photo(0, "mast-photo-a", true, false, false, false, "(max-width: 700px) 60vw, 33vw")}<div class="room-tile"><p class="room-number">Room<br>2517</p></div>${photo(1, "mast-photo-b", false, true, true, false, "(max-width: 700px) 50vw, 30vw")}${photo(6, "mast-photo-c", false, true, true, false, "(max-width: 700px) 50vw, 30vw")}${photo(3, "mast-photo-d", false, true, false, false, "(max-width: 700px) 50vw, 50vw")}</div>`;
+    // R21: tile C = PHOTOS[7] — PHOTOS[6] renders once on Home, at the board.
+    return `<div class="masthead">${photo(0, "mast-photo-a", true, false, false, false, "(max-width: 700px) 60vw, 33vw")}<div class="room-tile"><p class="room-number">Room<br>2517</p></div>${photo(1, "mast-photo-b", false, true, true, false, "(max-width: 700px) 50vw, 30vw")}${photo(7, "mast-photo-c", false, true, true, false, "(max-width: 700px) 50vw, 30vw")}${photo(3, "mast-photo-d", false, true, false, false, "(max-width: 700px) 50vw, 50vw")}</div>`;
   }
 
   function activityResult(interest) {
@@ -176,7 +178,7 @@
 
   function homePage() {
     return `<section class="home-hero field paper"><div class="hero-bottom wrap"><h1 tabindex="-1"><span class="line"><span>STEM</span></span> <span class="line"><span>Connect</span></span></h1><div class="hero-intro"><p>Student-led science and outreach at Independence High School in Ashburn, Virginia.</p><div class="hero-links">${link("about-igem", "Join the club", "button-link")}${link("stem-day", "STEM Day 2026", "button-link secondary")}<a class="text-link hero-volunteer" href="${VOLUNTEER_SIGNUP}">Volunteer at STEM Day</a></div></div></div>${masthead()}</section>
-      <section class="statement-chapter field sage"><div class="wrap"><p class="brand-statement">Connecting students through STEM. Inspiring the next generation.</p><div class="statement-bottom"><p>We take the questions we ask after school and turn them into hands-on discoveries for younger learners.</p>${link("our-team", "Meet our people", "text-link chapter-link")}</div></div></section>
+      <section class="statement-chapter field sage"><div class="wrap"><h2 class="brand-statement">Connecting students through STEM. Inspiring the next generation.</h2><div class="statement-bottom"><p>We take the questions we ask after school and turn them into hands-on discoveries for younger learners.</p>${link("our-team", "Meet our people", "text-link chapter-link")}</div></div></section>
       ${activityBrowser()}
       <section class="community-board field paper"><div class="board-heading"><h2>From our room<br>to the community</h2></div><div class="board-photo">${photo(6, "", false, false, false, false, "(max-width: 700px) 100vw, 40vw")}</div><div class="board-room"><p class="room-number">New faces welcome</p><p>No experience needed. Bring a question.</p>${link("about-igem", "Come along", "text-link chapter-link")}</div><div class="board-list"><p>Design an activity.<br>Mentor a younger learner.<br>Welcome a family.<br>Try something new.</p></div><div class="board-story"><p>We began as Independence iGEM. Today, STEM Connect focuses on outreach.</p>${link("our-projects", "Read our research history", "text-link chapter-link")}</div></section>
       ${joinStrip()}`;
@@ -230,7 +232,7 @@
     return `${heading("STEM Day 2026", `${STEM_DAY_DATE} · ${STEM_DAY_TIME}. A free day of hands-on science for our community.`, "sage", `<a class="button-link" href="${VOLUNTEER_SIGNUP}">Volunteer at STEM Day</a><p class="note">Families: free entry and no sign-up needed — drop in any time between 10 and 4.</p>`)}
       <section class="event-chapter field paper wrap">${photo(0, "event-photo", true, false, false, false, "(max-width: 700px) 100vw, 50vw")}<div class="event-details"><h2>STEM Day</h2><p>${STEM_DAY_DATE}</p><p>Independence High School<br>${ADDRESS}</p><p>Independence students: help run a station or lead your own.</p></div></section>
       <section class="program-chapter field cream wrap"><h2>Learning by doing</h2><div class="reading"><p>Explore 20+ hands-on stations designed and led by student volunteers, with a free prize at the end.</p><p>Past favorites include Vortex Canon, Planetarium, Air Trajectory, Strawberry DNA Extraction, Ocean Zones, Elephant Toothpaste, Hovercrafts, and more.</p><p>Bring the whole family and drop in any time.</p></div></section>
-      <section class="activity-archive field paper wrap"><h2>All the activities</h2><p class="note">From our activity planning archive. The 2026 station lineup may vary.</p><div class="activity-list">${STEM_ACTIVITY_HIGHLIGHTS.map((activity) => `<article><h3>${activity.title}</h3><p>${activity.body}</p></article>`).join("")}</div></section>
+      <section class="activity-archive field paper wrap"><h2>The activities</h2><p class="note">From our activity planning archive. The 2026 station lineup may vary.</p><div class="activity-list">${STEM_ACTIVITY_HIGHLIGHTS.map((activity) => `<article><h3>${activity.title}</h3><p>${activity.body}</p></article>`).join("")}</div></section>
       <section class="photo-duo field sage wrap">${photo(1, "", false, false, false, false, "(max-width: 700px) 100vw, 50vw")}${photo(2, "", false, false, false, false, "(max-width: 700px) 100vw, 50vw")}</section><section class="social-chapter field cream wrap"><h2>Stay curious</h2><div><p>Follow along for activity previews and event updates.</p><nav aria-label="More STEM Day resources">${link("photo-gallery", "See the photo archive", "text-link chapter-link")}</nav></div></section>`;
   }
 
