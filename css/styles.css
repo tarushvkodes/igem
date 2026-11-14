@@ -67,6 +67,7 @@ address { font-style: normal; }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; clip: rect(0,0,0,0); overflow: hidden; white-space: nowrap; border: 0; }
 .skip-link { position: fixed; top: -90px; left: 20px; z-index: 20; background: var(--forest); color: var(--paper); padding: 16px; }
 .skip-link:focus { top: 12px; }
+.skip-link:focus-visible { outline-color: var(--charcoal); box-shadow: 0 0 0 6px var(--paper); }
 .site-header { background: rgba(71, 159, 123, .93); -webkit-backdrop-filter: blur(14px) saturate(1.4); backdrop-filter: blur(14px) saturate(1.4); color: var(--charcoal); position: sticky; top: 0; z-index: 5; border-bottom: 1px solid rgba(255, 255, 255, .45); box-shadow: inset 0 -1px 0 rgba(255, 255, 255, .22), 0 8px 24px rgba(33, 94, 69, .10); }
 .need-to-know { min-height: 44px; padding: 0 var(--margin); background: var(--forest); color: var(--paper); display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: center; font-size: var(--small); line-height: 1.2; letter-spacing: .015em; }
 .need-to-know a { display: flex; align-items: center; gap: 10px; min-height: 44px; width: fit-content; white-space: nowrap; }
@@ -95,12 +96,13 @@ body.menu-open .header-actions .button-link { visibility: hidden; }
 .nav-toggle.has-current { text-decoration: none; }
 .nav-toggle.has-current::before { content: ""; width: 9px; height: 9px; background: currentColor; flex: none; }
 #primary-nav a:focus-visible { outline: 3px solid var(--paper); outline-offset: 5px; background-color: rgba(255, 255, 255, .18); text-decoration: none; }
+#primary-nav a.is-current:focus-visible { text-decoration: underline; text-underline-offset: .25em; }
 #primary-nav .menu-join:focus-visible { outline: 3px solid var(--paper); outline-offset: 5px; background: var(--paper); color: var(--forest); }
 #primary-nav .menu-join { grid-column: 1 / -1; justify-self: start; display: inline-flex; align-items: center; min-height: 48px; padding: 12px 24px; margin-top: 8px; background: var(--paper); color: var(--forest); font-size: var(--body); font-weight: 500; }
 #primary-nav .menu-join:hover { text-decoration: none; }
 #primary-nav .menu-wordmark { grid-column: 1 / -1; margin-top: clamp(24px, 5vh, 64px); font-size: var(--wordmark); line-height: 1.1; font-weight: 600; letter-spacing: -.065em; white-space: nowrap; }
 
-[aria-current='page']:not(.brand) { text-decoration: underline; text-underline-offset: .25em; }
+[aria-current='page']:not(.brand), .is-current { text-decoration: underline; text-underline-offset: .25em; }
 .photo { min-width: 0; }
 .photo-frame { overflow: hidden; background: var(--cream); }
 .photo-frame img { width: 100%; height: 100%; object-fit: cover; aspect-ratio: 4/3; }
@@ -292,7 +294,6 @@ figcaption { padding-top: 12px; max-width: 60ch; }
 .event-photo .photo-frame img { aspect-ratio: 1; }
 .event-details { padding: 20px 0 20px 30px; }
 .event-details h2 { margin-bottom: 30px; }
-.event-kicker { margin-bottom: 12px; font-size: var(--small); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
 .event-details .lede { margin-bottom: 25px; }
 .event-details .button-link { margin-top: 25px; }
 /* R17: the bottom padding is trimmed 100px -> 48px so the content-end ->
@@ -577,6 +578,13 @@ figcaption { padding-top: 12px; max-width: 60ch; }
   .footer-middle { display: block; margin-top: 24px; }
   .footer-nav { margin-top: 16px; }
   .footer-bottom { margin-top: 20px; flex-direction: column; align-items: flex-start; gap: 6px; }
+}
+@media (max-width: 345px) {
+  /* Below ~345px the board's room + list tiles cannot sit side by side:
+     their min-content widths (202px + 124px, driven by the room tile's
+     display line) exceed the board and the page scrolls sideways
+     (WCAG 1.4.10). Stack them full-width; 346px and up is untouched. */
+  .board-room, .board-list { grid-column: 1/3; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

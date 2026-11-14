@@ -228,9 +228,9 @@
 
   function stemDayPage() {
     return `${heading("STEM Day 2026", `${STEM_DAY_DATE} · ${STEM_DAY_TIME}. A free day of hands-on science for our community.`, "sage", `<a class="button-link" href="${VOLUNTEER_SIGNUP}">Volunteer at STEM Day</a><p class="note">Families: free entry and no sign-up needed — drop in any time between 10 and 4.</p>`)}
-      <section class="event-chapter field paper wrap">${photo(0, "event-photo", true, false, false, false, "(max-width: 700px) 100vw, 50vw")}<div class="event-details"><p class="event-kicker">Save the date</p><h2>STEM Day</h2><p>${STEM_DAY_DATE}</p><p>Independence High School<br>${ADDRESS}</p><p>Independence students: help run a station or lead your own.</p></div></section>
+      <section class="event-chapter field paper wrap">${photo(0, "event-photo", true, false, false, false, "(max-width: 700px) 100vw, 50vw")}<div class="event-details"><h2>STEM Day</h2><p>${STEM_DAY_DATE}</p><p>Independence High School<br>${ADDRESS}</p><p>Independence students: help run a station or lead your own.</p></div></section>
       <section class="program-chapter field cream wrap"><h2>Learning by doing</h2><div class="reading"><p>Explore 20+ hands-on stations designed and led by student volunteers, with a free prize at the end.</p><p>Past favorites include Vortex Canon, Planetarium, Air Trajectory, Strawberry DNA Extraction, Ocean Zones, Elephant Toothpaste, Hovercrafts, and more.</p><p>Bring the whole family and drop in any time.</p></div></section>
-      <section class="activity-archive field paper wrap"><h2>All the activities</h2><div class="activity-list">${STEM_ACTIVITY_HIGHLIGHTS.map((activity) => `<article><h3>${activity.title}</h3><p>${activity.body}</p></article>`).join("")}</div></section>
+      <section class="activity-archive field paper wrap"><h2>All the activities</h2><p class="note">From our activity planning archive. The 2026 station lineup may vary.</p><div class="activity-list">${STEM_ACTIVITY_HIGHLIGHTS.map((activity) => `<article><h3>${activity.title}</h3><p>${activity.body}</p></article>`).join("")}</div></section>
       <section class="photo-duo field sage wrap">${photo(1, "", false, false, false, false, "(max-width: 700px) 100vw, 50vw")}${photo(2, "", false, false, false, false, "(max-width: 700px) 100vw, 50vw")}</section><section class="social-chapter field cream wrap"><h2>Stay curious</h2><div><p>Follow along for activity previews and event updates.</p><nav aria-label="More STEM Day resources">${link("photo-gallery", "See the photo archive", "text-link chapter-link")}</nav></div></section>`;
   }
 
@@ -264,7 +264,7 @@
       ],
       updates: [{ date: "September 2025", heading: "A new school year", body: updateTexts[1] }, ...olderUpdates.map((entry, index) => {
         const split = entry.indexOf(":");
-        return { date: entry.slice(0, split).trim().toLowerCase().replace(/^\w/, (c) => c.toUpperCase()), heading: ["Science, shared", "Getting ready for STEM Day", "A growing team"][index], body: entry.slice(split + 1).trim() };
+        return { date: entry.slice(0, split).trim().toLowerCase().replace(/^\w/, (c) => c.toUpperCase()), heading: ["After STEM Day", "Getting ready for STEM Day", "A growing team"][index], body: entry.slice(split + 1).trim() };
       })],
       about: data.pages["about-igem"].texts,
       team: data.pages["our-team"].texts[0],
@@ -301,8 +301,18 @@
     document.title = `${route?.title || "Page not found"} | STEM Connect`;
     document.querySelectorAll("[data-route]").forEach((anchor) => {
       const active = anchor.dataset.route === route?.id;
-      if (active) anchor.setAttribute("aria-current", "page");
-      else anchor.removeAttribute("aria-current");
+      // aria-current belongs to the navigation landmarks only (brand,
+      // quick-nav, header label, off-set marker span): exactly one exposed
+      // carrier per page state. Everywhere else the current route is a
+      // visual state (.is-current), not a repeated ARIA claim.
+      const inNavLandmark = anchor.classList.contains("brand") || anchor.closest(".quick-nav");
+      if (inNavLandmark) {
+        if (active) anchor.setAttribute("aria-current", "page");
+        else anchor.removeAttribute("aria-current");
+      } else {
+        anchor.removeAttribute("aria-current");
+        anchor.classList.toggle("is-current", active);
+      }
     });
     const quickNav = document.querySelector(".quick-nav");
     if (quickNav) {
